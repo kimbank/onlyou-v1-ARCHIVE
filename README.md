@@ -57,6 +57,8 @@ __서버 실행 (개발자 모드)__
 npm run dev
 ```
 
+[http://localhost:3000](http://localhost:3000) 에서 확인
+
 
 # API Swagger Docs
 

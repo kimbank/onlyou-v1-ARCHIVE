@@ -101,7 +101,6 @@ export default function Home() {
           // 가입되지 않았으니 회원가입을 유도하는 코드
           setDangerMessage('가입되지 않았습니다. \n가입이 되었는데도 이 메시지가 보인다면 관리자에게 문의해주세요.');
           setDangerVisible(true);
-          setShowSignupModal(true);
         } else {
           throw new Error('UNKNOWN_ERROR');
         }

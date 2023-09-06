@@ -1,0 +1,112 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+body {
+  margin: 0;
+}
+
+/* fonts */
+
+@font-face {
+  font-family: Pretendard-Bold;
+  src: url(../public/Pretendard-Bold.otf);
+}
+
+@font-face {
+  font-family: Pretendard-SemiBold;
+  src: url(../public/Pretendard-SemiBold.otf);
+}
+
+@font-face {
+  font-family: Pretendard-Regular;
+  src: url(../public/Pretendard-Regular.otf);
+}
+
+@font-face {
+  font-family: NotoSerifKR-Medium;
+  src: url(../public/NotoSerifKR-Medium.otf);
+}
+
+/* heading */
+
+.heading1 {
+  font-family: Pretendard-Bold;
+  font-size: 32px;
+}
+
+.heading2 {
+  font-family: Pretendard-Bold;
+  font-size: 26px;
+}
+
+.heading3 {
+  font-family: Pretendard-Bold;
+  font-size: 23px;
+}
+
+.heading4 {
+  font-family: Pretendard-Bold;
+  font-size: 20px;
+}
+
+.heading5 {
+  font-family: Pretendard-Bold;
+  font-size: 17px;
+}
+
+.heading6 {
+  font-family: Pretendard-Bold;
+  font-size: 14px;
+}
+
+.heading7 {
+  font-family: Pretendard-Bold;
+  font-size: 11px;
+}
+
+/* paragraph */
+
+.basic {
+  font-family: Pretendard-Regular;
+  font-size: 16px;
+}
+
+.input {
+  font-family: Pretendard-Regular;
+  font-size: 14px;
+}
+
+/* other text style */
+
+.caption {
+  font-family: Pretendard-SemiBold;
+  font-size: 14px;
+}
+
+.Button {
+  font-family: Pretendard-SemiBold;
+  font-size: 14px;
+  letter-spacing: 1.25px;
+}
+
+.input-title {
+  font-family: Pretendard-Regular;
+  font-size: 14px;
+}
+
+.credit {
+  font-family: Pretendard-SemiBold;
+  font-size: 16px;
+}
+
+.nav-text {
+  font-family: Pretendard-Regular;
+  font-size: 10px;
+}
+
+.logo-title {
+  font-family: NotoSerifKR-Medium;
+  font-size: 16px;
+  color: #FF7700;
+}

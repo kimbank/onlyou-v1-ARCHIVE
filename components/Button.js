@@ -279,3 +279,32 @@ export function SubMiniButton({onClick, buttonName, disabled = false}) {
         </div>
     )
 }
+
+export function MainMiniButton({onClick, buttonName, disabled = false}) {
+    return (
+        <div>
+            <Button
+                onClick={onClick}
+                color="primary"
+                variant='contained'
+                sx={{
+                    borderRadius: '8px',
+                    height: '33px',
+                    padding: '8px 12px',
+                }}
+                disabled={disabled}
+            >
+                <Typography
+                    variant='subtitle1'
+                    sx={{
+                        fontFamily: 'Pretendard-Semibold',
+                        fontSize: '14px',
+                        letterSpacing: '1.25px',
+                    }}
+                >
+                    {buttonName}
+                </Typography>
+            </Button>
+        </div>
+    )
+}

@@ -83,7 +83,7 @@ export function TextInput({ buttonName, placeholder, setValue, disabled = false 
 
 // Figma: Long text
 // 세로 공간을 많이 차지하는게 좋지 않을 것 같아서 글이 세로로 늘어날수록 컴포넌트도 세로로 늘어나도록 해두었습니다.
-export function LongText({ buttonName }) {
+export function LongText({ buttonName, placeholder }) {
     return (
         <Container disableGutters
         sx={{

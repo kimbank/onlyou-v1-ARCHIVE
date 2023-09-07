@@ -1,0 +1,61 @@
+.motion-div-1 {
+    position: fixed; 
+    right: 0;
+    left: 0; 
+    bottom: 0; 
+    z-index: 1201; 
+    padding-bottom: 1.25rem; 
+    width: 100vw; 
+    background-color: #ffffff; 
+    cursor: grab;
+    border-radius: 20px 20px 0px 0px;
+}
+
+@media (min-width: 640px) { 
+    .motion-div {
+        display: none; 
+    }
+}
+
+.div-1 {
+    display: flex; 
+    margin-bottom: -0.25rem; 
+    justify-content: center; 
+    align-items: center; 
+    border-top-width: 1px; 
+    border-color: #E5E7EB; 
+    width: 100%;
+}
+
+.div-2 {
+    margin-right: -0.25rem; 
+    border-radius: 9999px; 
+    width: 1.5rem; 
+    height: 0.25rem; 
+    background-color: #D1D5DB; 
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms; 
+}
+
+.div-3 {
+    border-radius: 9999px; 
+    width: 1.5rem; 
+    height: 0.25rem; 
+    background-color: #D1D5DB; 
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms; 
+}
+
+.motion-div-2 {
+    position: fixed; 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; 
+    z-index: 1200;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* opacity: 0.1;  */
+    backdrop-filter: blur(2px); 
+}

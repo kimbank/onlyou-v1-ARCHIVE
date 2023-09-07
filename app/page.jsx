@@ -19,6 +19,8 @@ import NavBar from '@/components/NavBar'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from "@mui/material";
 
+import Modal from '@/components/shared/modal';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -39,9 +41,15 @@ const theme = createTheme({
 const buttonTitle = '버튼입니다.';
 
 export default function Home() {
-  const [alertVisible, setAlertVisible] = useState(false);
+  const [ showModal, setShowModal ] = useState(false);
 
   return (
+    <Container>
+    <Modal showModal={showModal} setShowModal={setShowModal}>
+      <h1>.</h1>
+      <br /><br /><br /><br /><br /><br />
+      <h1>.</h1>
+    </Modal>
     <ThemeProvider theme={theme}>
       <Header />
       <Container sx={{ marginBottom: '80px', }}>
@@ -57,6 +65,7 @@ export default function Home() {
             {/* 샘플 페이지 */}
             <Container sx={{
               display: 'flex',
+              flexFlow: 'row wrap'
             }}>
               <Link href='/login'>
                 <EditButton buttonName="로그인" />
@@ -70,6 +79,7 @@ export default function Home() {
               <Link href='/leave'>
                 <EditButton buttonName="탈퇴" />
               </Link>
+              <br />
               <Link href='/matching/before_participating'>
                 <EditButton buttonName="[매칭] 매칭 전" />
               </Link>
@@ -85,6 +95,10 @@ export default function Home() {
             </Container>
             {/* 샘플페이지 */}
 
+          <SwipeableEdgeDrawer />
+          <button onClick={() => setShowModal(true)}>
+            모달 후보
+          </button>
 
           <h1>다음은 버튼입니다.</h1>
           <MainButton buttonName={buttonTitle + "MainButton"}/>
@@ -124,5 +138,6 @@ export default function Home() {
         <NavBar />
       </Container>
     </ThemeProvider>
+    </Container>
   );
 }

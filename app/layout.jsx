@@ -1,6 +1,4 @@
 import './globals.css';
-
-// import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 
 export const metadata = {

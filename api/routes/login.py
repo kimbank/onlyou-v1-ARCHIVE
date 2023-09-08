@@ -12,7 +12,7 @@ from api.database.conn import db
 from api.database.schema.user.user import User
 from api.database.schema.login.auth import AuthSens
 
-from api.models import UserLoginAuth
+from api.models.models import UserLoginAuth
 
 
 router = APIRouter(prefix="/login")

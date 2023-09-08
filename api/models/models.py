@@ -4,7 +4,6 @@ from typing import List
 
 from pydantic import Field
 from pydantic.main import BaseModel
-from pydantic.networks import EmailStr, IPvAnyAddress
 
 
 class UserLoginAuth(BaseModel):
@@ -96,3 +95,4 @@ class GetAPIWhiteLists(CreateAPIWhiteLists):
 
     class Config:
         orm_mode = True
+

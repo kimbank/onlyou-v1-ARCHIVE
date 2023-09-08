@@ -17,7 +17,7 @@ from api.errors import exceptions as ex
 
 from api.common import config, consts
 from api.errors.exceptions import APIException, SqlFailureEx
-from api.models import UserToken
+from api.models.models import UserToken
 
 from api.utils.date_utils import D
 from api.utils.logger import api_logger

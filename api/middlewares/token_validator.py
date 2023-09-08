@@ -1,7 +1,6 @@
 import base64
 import hmac
 import time
-import typing
 import re
 
 import jwt
@@ -13,11 +12,11 @@ from starlette.responses import JSONResponse
 
 from api.common.consts import EXCEPT_PATH_LIST, EXCEPT_PATH_REGEX
 from api.database.conn import db
-from api.database.schema import User, ApiKeys
+from api.database.schema.schema import User, ApiKeys
 from api.errors import exceptions as ex
 
 from api.common import config, consts
-from api.errors.exceptions import APIException, SqlFailureEx, APIQueryStringEx
+from api.errors.exceptions import APIException, SqlFailureEx
 from api.models import UserToken
 
 from api.utils.date_utils import D

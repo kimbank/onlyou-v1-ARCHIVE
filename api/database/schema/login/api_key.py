@@ -7,7 +7,7 @@ from sqlalchemy import (
 )
 
 from api.database.conn import Base
-from api.database.schema.schema import BaseMixin
+from api.database.schema.mixin import BaseMixin
 
 class ApiKeys(Base, BaseMixin):
     __tablename__ = "api_keys"

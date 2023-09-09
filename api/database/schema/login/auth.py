@@ -9,7 +9,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import TINYINT
 from api.database.conn import Base
-from api.database.schema.schema import BaseMixin
+from api.database.schema.mixin import BaseMixin
 
 class AuthSens(Base, BaseMixin):
     __tablename__ = "auth_sens"

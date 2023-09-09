@@ -1,10 +1,9 @@
 from datetime import date, datetime
-
 from pydantic import BaseModel
 from pydantic.schema import Optional
 
 
-class User(BaseModel):
+class UserSchema(BaseModel):
     id: Optional[int]
     name: str
     mobile_number: str

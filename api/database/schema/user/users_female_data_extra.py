@@ -9,7 +9,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.mysql import TINYINT
 
 from api.database.conn import Base
-from api.database.schema.schema import BaseMixin
+from api.database.schema.mixin import BaseMixin
 from api.database.schema.user.user import User
 
 class UsersFemaleDataExtra(Base, BaseMixin):

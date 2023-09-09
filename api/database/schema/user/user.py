@@ -11,7 +11,7 @@ from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import relationship
 
 from api.database.conn import Base
-from api.database.schema.schema import BaseMixin
+from api.database.schema.mixin import BaseMixin
 
 class User(Base, BaseMixin):
     __tablename__ = 'users'

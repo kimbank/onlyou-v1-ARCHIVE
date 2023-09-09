@@ -12,7 +12,7 @@ from starlette.responses import JSONResponse
 
 from api.common.consts import EXCEPT_PATH_LIST, EXCEPT_PATH_REGEX
 from api.database.conn import db
-from api.database.schema.schema import User, ApiKeys
+from api.database.schema.mixin import User, ApiKeys
 from api.errors import exceptions as ex
 
 from api.common import config, consts

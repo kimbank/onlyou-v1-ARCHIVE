@@ -1,22 +1,18 @@
 from datetime import datetime, timedelta
 
-import bcrypt
-import jwt
 from fastapi import APIRouter, Depends
 
 # TODO:
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-from sqlalchemy.orm import joinedload, contains_eager
 from starlette.responses import JSONResponse
 from api.utils.sens_auth import send_auth_code, generate_verification_code, slack_chat_post
 
-from api.common.consts import JWT_SECRET, JWT_ALGORITHM
 from api.database.conn import db
-from api.database.schema import User, AuthSens
-from api.models import SnsType, Token, UserToken, UserRegister
+from api.database.schema.user.user import User
+from api.database.schema.login.auth import AuthSens
 
-from api.models import UserLoginAuth
+from api.models.models import UserLoginAuth
 
 
 router = APIRouter(prefix="/login")

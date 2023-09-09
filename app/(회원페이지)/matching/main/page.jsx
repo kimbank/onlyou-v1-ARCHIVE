@@ -49,43 +49,6 @@ function Title() {
     </Container>);
 }
 
-function OrangeBox({ functions = [], buttonfunctions = [] }) {
-  // 함수들을 순회하며 호출하는 함수
-  function callFunctions() {
-    return functions.map((func, index) => (
-      <div key={index}>{func()}</div>
-    ));
-  }
-  function callButtonFunctions() {
-    return buttonfunctions.map((func, index) => (
-      <div key={index}>{func()}</div>
-    ));
-  }
-
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      borderRadius: "24px",
-      border: 1,
-      padding: "24px",
-      gap: '32px',
-      borderColor: "#FFC999"
-    }}>
-      {/* 함수 호출 */}
-      {callFunctions()}
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: "8px",
-      }}>
-        {/* 함수 호출 */}
-        {callButtonFunctions()}
-      </Container>
-    </Container>
-  );
-}
-
 function AuthenticationItem() {
   return (
     <Container disableGutters sx={{
@@ -204,6 +167,15 @@ export default function Home() {
     setShowErrorModal(true);
   }
 
+  const user = {
+    id: 1,
+    name: 'taykim01',
+    kakao: "taykim01",
+    age: 20,
+    birth: "2001-01-01",
+    local: "서울특별시 성북구",
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -225,8 +197,33 @@ export default function Home() {
 
           {/* 매칭되어 나온 상대방 정보 및 버튼 모임입니다. 
               모두 주황 박스 안에 있습니다. */}
-          <OrangeBox functions={[AuthenticationItem, ProfileItem, TimeItem]} buttonfunctions={[KakaoItem, AcceptItem]} />
+          <Container disableGutters sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: "24px",
+              border: 1,
+              padding: "24px",
+              gap: '32px',
+              borderColor: "#FFC999"
+            }}>
 
+            {/* 함수 호출 */}
+            <AuthenticationItem />
+            <ProfileItem />
+            <TimeItem />
+
+            <Container disableGutters sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: "8px",
+            }}>
+
+              {/* 함수 호출 */}
+              <KakaoItem />
+              <AcceptItem />
+
+            </Container>
+          </Container>
           {/* 매칭 전과 미성사 일 때 표시되는 알람입니다. */}
           <InfoItem />
 

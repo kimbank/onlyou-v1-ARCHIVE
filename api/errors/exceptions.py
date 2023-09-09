@@ -1,5 +1,17 @@
 from api.common.consts import MAX_API_KEY, MAX_API_WHITELIST
 
+"""
+400 Bad Request [요청 문법 오류]
+401 Unauthorized [인증되지 않음]
+403 Forbidden [권한 없음]
+404 Not Found [리소스 찾을 수 없음]
+405 Method not allowed [요청 메소드 허용안됨]
+500 Internal Error [내부 런타임 문제 발생]
+502 Bad Gateway 
+504 Timeout
+200 OK
+201 Created
+"""
 
 class StatusCode:
     HTTP_500 = 500

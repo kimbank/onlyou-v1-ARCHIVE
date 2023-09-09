@@ -20,6 +20,8 @@ import { useErrorModal } from './error-modal';
 import Link from 'next/link'
 import { CheckedCheckbox, DefaultCheckbox } from '@/components/Checkbox';
 
+import Modal from '@/components/shared/modal';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -136,14 +138,21 @@ function KakaoItem() {
 }
 
 function AcceptItem() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'row',
       gap: "8px",
     }}>
-      <CheckedCheckbox buttonName='taykim01님 수락하기' />
-      <DefaultCheckbox buttonName='거절하기' />
+      <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
+      <DefaultCheckbox onClick={onReject} buttonName='거절하기' />
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <h1>.</h1>
+        <br /><br /><br /><br /><br /><br />
+        <h1>.</h1>
+      </Modal>
     </Container>);
 }
 
@@ -198,14 +207,14 @@ export default function Home() {
           {/* 매칭되어 나온 상대방 정보 및 버튼 모임입니다. 
               모두 주황 박스 안에 있습니다. */}
           <Container disableGutters sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              borderRadius: "24px",
-              border: 1,
-              padding: "24px",
-              gap: '32px',
-              borderColor: "#FFC999"
-            }}>
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: "24px",
+            border: 1,
+            padding: "24px",
+            gap: '32px',
+            borderColor: "#FFC999"
+          }}>
 
             {/* 함수 호출 */}
             <AuthenticationItem />

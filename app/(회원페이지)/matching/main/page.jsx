@@ -20,6 +20,8 @@ import { useErrorModal } from './error-modal';
 import Link from 'next/link'
 import { CheckedCheckbox, DefaultCheckbox } from '@/components/Checkbox';
 
+import Modal from '@/components/shared/modal';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -47,43 +49,6 @@ function Title() {
       <div className='heading2'>오늘의 인연이에요</div>
       <div className='basic' style={{ color: '#666563' }}>마감 전까지 선택을 완료해주세요!</div>
     </Container>);
-}
-
-function OrangeBox({ functions = [], buttonfunctions = [] }) {
-  // 함수들을 순회하며 호출하는 함수
-  function callFunctions() {
-    return functions.map((func, index) => (
-      <div key={index}>{func()}</div>
-    ));
-  }
-  function callButtonFunctions() {
-    return buttonfunctions.map((func, index) => (
-      <div key={index}>{func()}</div>
-    ));
-  }
-
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      borderRadius: "24px",
-      border: 1,
-      padding: "24px",
-      gap: '32px',
-      borderColor: "#FFC999"
-    }}>
-      {/* 함수 호출 */}
-      {callFunctions()}
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: "8px",
-      }}>
-        {/* 함수 호출 */}
-        {callButtonFunctions()}
-      </Container>
-    </Container>
-  );
 }
 
 function AuthenticationItem() {
@@ -173,14 +138,21 @@ function KakaoItem() {
 }
 
 function AcceptItem() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'row',
       gap: "8px",
     }}>
-      <CheckedCheckbox buttonName='taykim01님 수락하기' />
-      <DefaultCheckbox buttonName='거절하기' />
+      <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
+      <DefaultCheckbox onClick={onReject} buttonName='거절하기' />
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <h1>.</h1>
+        <br /><br /><br /><br /><br /><br />
+        <h1>.</h1>
+      </Modal>
     </Container>);
 }
 
@@ -204,6 +176,15 @@ export default function Home() {
     setShowErrorModal(true);
   }
 
+  const user = {
+    id: 1,
+    name: 'taykim01',
+    kakao: "taykim01",
+    age: 20,
+    birth: "2001-01-01",
+    local: "서울특별시 성북구",
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -225,8 +206,33 @@ export default function Home() {
 
           {/* 매칭되어 나온 상대방 정보 및 버튼 모임입니다. 
               모두 주황 박스 안에 있습니다. */}
-          <OrangeBox functions={[AuthenticationItem, ProfileItem, TimeItem]} buttonfunctions={[KakaoItem, AcceptItem]} />
+          <Container disableGutters sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: "24px",
+            border: 1,
+            padding: "24px",
+            gap: '32px',
+            borderColor: "#FFC999"
+          }}>
 
+            {/* 함수 호출 */}
+            <AuthenticationItem />
+            <ProfileItem />
+            <TimeItem />
+
+            <Container disableGutters sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: "8px",
+            }}>
+
+              {/* 함수 호출 */}
+              <KakaoItem />
+              <AcceptItem />
+
+            </Container>
+          </Container>
           {/* 매칭 전과 미성사 일 때 표시되는 알람입니다. */}
           <InfoItem />
 

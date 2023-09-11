@@ -31,15 +31,15 @@ async def api_logger(request: Request, response=None, error=None):
             msg=str(error.ex),
         )
 
-    email = user.email.split("@") if user and user.email else None
+    # email = user.email.split("@") if user and user.email else None
     user_log = dict(
         client=request.state.ip,
         user=user.id if user and user.id else None,
-        email="**" + email[0][2:-1] + "*@" + email[1] if user and user.email else None,
+        # email="**" + email[0][2:-1] + "*@" + email[1] if user and user.email else None,
     )
 
     log_dict = dict(
-        url=request.url.hostname + request.url.path,
+        # url=request.url.hostname + request.url.path,
         method=str(request.method),
         statusCode=status_code,
         errorDetail=error_log,

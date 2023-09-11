@@ -1,5 +1,7 @@
 'use client'
 
+import { redirect } from 'next/navigation'
+
 import Container from '@mui/material/Container';
 import { GuestHeader } from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -128,7 +130,7 @@ export default function Home() {
         if (res.data.msg.split(' ')[0] === "AUTH_SUCCESS") {
           setSuccessMessage('로그인에 성공했습니다.');
           setSuccessVisible(true);
-
+          window.location.href = '/';
           // 로그인 시키는 코드
         }
         else if (res.data.msg.split(' ')[0] === "TRY_LEFT") {

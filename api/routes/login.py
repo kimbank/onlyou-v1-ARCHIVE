@@ -1,19 +1,24 @@
 from datetime import datetime, timedelta
 
-from fastapi import APIRouter, Depends, Body, HTTPException
+import bcrypt
+import jwt
+from fastapi import APIRouter, Depends
+from fastapi.responses import Response
 
 # TODO:
 from sqlalchemy import func
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload, contains_eager
 from starlette.responses import JSONResponse
 from api.utils.sens_auth import send_auth_code, generate_verification_code, slack_chat_post
 
+from api.common.consts import JWT_SECRET, JWT_ALGORITHM
 from api.database.conn import db
+# from api.database.schema import User, AuthSens
 from api.database.schema.user.user import User
 from api.database.schema.login.auth import AuthSens
 
 from api.models.models import UserLoginAuth
-from api.models.user.user import UserCreate
 
 
 router = APIRouter(prefix="/login")
@@ -63,11 +68,12 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
                     slack_chat_post(auth_info.mobile_number, new_auth_code.code, sens_result)
                     
 
-
+                session.close()
                 return JSONResponse(status_code=200, content=dict(msg="NEW_CODE_CREATED"))
 
             # db에 가입 정보가 없음
             else:
+                session.close()
                 return JSONResponse(status_code=200, content=dict(msg="NOT_REGISTERED"))
 
 
@@ -79,7 +85,16 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
 
             # 인증번호가 일치함 [[ 로그인 성공 ]]
             if auth_info.code == auth_code.code:
-                return JSONResponse(status_code=200, content=dict(msg="AUTH_SUCCESS"))
+                # Todo: 정지 당했는 지 확인하고 일치해도 정지당했으면 로그인 불가하게
+                token = f"{create_access_token(data=dict(id=auth_code.users.id,mobile=auth_code.mobile_number))}"
+
+                response = Response(status_code=200, content='{"msg": "AUTH_SUCCESS"}')
+                response.set_cookie(key="access_token", value=token, httponly=True)
+
+                session.close()
+                # return JSONResponse(status_code=200, content=dict(msg="AUTH_SUCCESS")).set_cookie(key="access_token", value=token, httponly=True)
+                # response = JSONResponse(response, content=dict(msg="AUTH_SUCCESS"))
+                return response
 
             # 인증번호가 불일치함
             else:
@@ -101,16 +116,21 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
                     )
                     user_auth_block.date_auth_block = func.now()
                     session.commit()
+                    session.close()
 
                     return JSONResponse(status_code=200, content=dict(msg="AUTH_BLOCKED"))
 
                 # 인증 실패 시 count++ 후 전달
                 else:
+                    session.close()
                     return JSONResponse(status_code=200, content=dict(msg=f"TRY_LEFT {5 - auth_counter.count}"))
 
         # db에 최근 5분간 인증번호 발송 이력이 없음
         else:
+            session.close()
             return JSONResponse(status_code=200, content=dict(msg="AUTH_EXPIRED"))
+
+
 
 # 사용자 계정 정보 등록
 @router.post("/new_user")
@@ -126,3 +146,12 @@ async def register_user(user_account_info: UserCreate = Body(...), session: Sess
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
     return JSONResponse(status_code=200, content=dict(msg="USER_CREATED"))
+
+
+def create_access_token(*, data: dict = None, expires_delta: int = (7 * 24)):
+    to_encode = data.copy()
+    if expires_delta:
+        to_encode.update({"exp": datetime.utcnow() + timedelta(hours=expires_delta)})
+    encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+    return encoded_jwt

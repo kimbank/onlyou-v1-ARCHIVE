@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body, HTTPException
 
 # TODO:
 from sqlalchemy import func
@@ -13,6 +13,7 @@ from api.database.schema.user.user import User
 from api.database.schema.login.auth import AuthSens
 
 from api.models.models import UserLoginAuth
+from api.models.user.user import UserCreate
 
 
 router = APIRouter(prefix="/login")
@@ -110,3 +111,18 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
         # db에 최근 5분간 인증번호 발송 이력이 없음
         else:
             return JSONResponse(status_code=200, content=dict(msg="AUTH_EXPIRED"))
+
+# 사용자 계정 정보 등록
+@router.post("/new_user")
+async def register_user(user_account_info: UserCreate = Body(...), session: Session = Depends(db.session)):
+    try:
+        User.create(session, auto_commit=True,
+                    name=user_account_info.name,
+                    mobile_number=user_account_info.mobile_number,
+                    gender=user_account_info.gender,
+                    nickname=user_account_info.nickname,
+                    date_birth=user_account_info.date_birth
+                    )
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    return JSONResponse(status_code=200, content=dict(msg="USER_CREATED"))

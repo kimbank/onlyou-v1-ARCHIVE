@@ -90,3 +90,52 @@ _Axios를 이용하여 요청을 컨트롤 합니다._
 - [Next.js FastAPI Starter](https://vercel.com/templates/next.js/nextjs-fastapi-starter) - Next.js + FastAPI 조합 예제
 - [notification-api](https://github.com/riseryan89/notification-api) - FastAPI 한글 예제
 - [@asidorenko_](https://twitter.com/asidorenko_) - Next.js 트위터 네임드
+
+
+# 회원가입 API 구현
+
+## 요청 URL
+
+```markdown
+POST http://localhost:8000/api/login/new_user
+```
+
+## 요청 JSON 형식
+
+```json
+schema_extra = {
+	"name": "사용자",
+	"mobile_number": "01012345678",
+	"gender": 0,
+	"nickname": "온리유",
+	"date_birth": "2023-08-21",
+}
+```
+
+`gender` 만 숫자입니다. **(0: 여성, 1: 남성)**
+
+# 심사정보 등록 API
+
+## 요청 URL
+
+```markdown
+POST http://127.0.0.1:8000/api/promotion/create_promotion/{id}
+```
+
+## 요청 JSON 형식
+
+```json
+{
+	"job_type": "스타트업",
+	"job_name": "개발자",
+	"job_group": "IT",
+	"height": 160,
+	"education": 2,
+	"university_name": "○○대학교",
+	"divorce": 0
+}
+// job부분만 필수정보
+```
+
+앞으로 API 만들 때마다 요청 URL과 요청 JSON 형식을 안내하는걸 노션에 적어두겠습니다.
+더 필요한게 있다면 앞으로 추가하겠습니다~

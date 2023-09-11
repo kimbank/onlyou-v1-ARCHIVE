@@ -6,37 +6,50 @@ import EmailIcon from '@mui/icons-material/Email';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-export default function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('recents');
-
+export default function LabelBottomNavigation({ recent }) {
+  const pathname = usePathname();
+  const [value, setValue] = React.useState(pathname.split('/')[1]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // const new_recent = pathname.split('/')[1]
+  // if (recent == undefined) {
+  //   console.log('not undifined')
+  //   setValue(toString(new_recent))
+  // } else {
+  //   console.log(recent)
+  // }
+
+  // console.log(new_recent)
+  
+
   return (
     <BottomNavigation sx={{ width: '100%', height: '64px', borderRadius: '24px 24px 0 0', borderTop: '1px solid #FFAD66', boxShadow: '0px -2px 4px 0px rgba(0, 0, 0, 0.25)', position: 'fixed', bottom: 0, left: 0, right: 0 }} value={value} onChange={handleChange}>
-      <BottomNavigationAction
+      <BottomNavigationAction href='/matching/main'
         label="매칭"
-        value="match"
+        value="matching"
         icon={<FavoriteIcon />}
         showLabel
       />
-      <BottomNavigationAction
+      <BottomNavigationAction href='/agreement'
         label="성사"
-        value="success"
+        value="agreement"
         icon={<EmailIcon />}
         showLabel
       />
-      <BottomNavigationAction
+      <BottomNavigationAction href='/board'
         label="게시판"
         value="board"
         icon={<AssignmentIcon />}
         showLabel
       />
-      <BottomNavigationAction
+      <BottomNavigationAction href='/my_info'
         label="내정보"
-        value="myInfo"
+        value="my_info"
         icon={<AccountCircleIcon />}
         showLabel
       />

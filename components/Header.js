@@ -23,8 +23,8 @@ export function Header() {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '1px' }}>
-                    <Image src={Logo} alt="logo" width={83} height={18} />
+                <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '2px' }}>
+                    <Image src={Logo} alt="logo" width={84} height={30} />
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>
 
@@ -54,8 +54,8 @@ export function GuestHeader() {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '1px' }}>
-                    <Image src={Logo} alt="logo" width={83} height={18} />
+                <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '2px' }}>
+                    <Image src={Logo} alt="logo" width={84} height={30} />
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>
             </Container>

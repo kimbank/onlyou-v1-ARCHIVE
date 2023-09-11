@@ -73,6 +73,7 @@ def create_app():
     #     app.include_router(promotion.router, tags=["Services"], prefix="/api", dependencies=[Depends(API_KEY_HEADER)])
     # else:
     #     app.include_router(promotion.router, tags=["Services"], prefix="/api")
+    app.include_router(promotion.router, tags=["승급심사"], prefix="/api")
     app.include_router(leave.router, tags=["탈퇴"], prefix="/api")
     app.include_router(matching.router, tags=["매칭"], prefix="/api")
     app.include_router(application.router, tags=["매칭 신청서"], prefix="/api")

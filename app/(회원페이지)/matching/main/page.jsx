@@ -64,14 +64,14 @@ function AuthenticationItem() {
     </Container>);
 }
 
-function ProfileItem() {
+function ProfileItem({people}) {
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
       gap: '8px'
     }}>
-      <div className='heading3'>taykim01</div>
+      <div className='heading3'>{people["name"]}</div>
       <Container disableGutters sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -108,7 +108,7 @@ function ProfileItem() {
             <path d="M10 0C7.25 0 5 2.8 5 6.25C5 9.7 7.25 12.5 10 12.5C12.75 12.5 15 9.7 15 6.25C15 2.8 12.75 0 10 0ZM4.775 12.5C2.125 12.625 0 14.8 0 17.5V20H20V17.5C20 14.8 17.9 12.625 15.225 12.5C13.875 14.025 12.025 15 10 15C7.975 15 6.125 14.025 4.775 12.5Z" fill="#666563" />
           </svg>
         </div>
-        <div className='basic' style={{ color: '#666563' }}>2001년생</div>
+        <div className='basic' style={{ color: '#666563' }}>{people["date_birth"].split('-')[0]}년생</div>
       </Container>
 
     </Container>);
@@ -137,9 +137,9 @@ function KakaoItem() {
     </Container>);
 }
 
-function AcceptItem() {
+function AcceptItem({setAcceptFinal}) {
   const [showModal, setShowModal] = useState(false);
-
+  
   return (
     <Container disableGutters sx={{
       display: 'flex',
@@ -147,11 +147,23 @@ function AcceptItem() {
       gap: "8px",
     }}>
       <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
-      <DefaultCheckbox onClick={onReject} buttonName='거절하기' />
+      <DefaultCheckbox buttonName='거절하기' />
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        <h1>.</h1>
-        <br /><br /><br /><br /><br /><br />
-        <h1>.</h1>
+        <Container disableGutters sx={{ 
+          display: 'flex',  
+          flexDirection: 'column',
+          gap: '28px',
+          alignItems: 'left',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          padding: '48px',
+          borderRadius: '20px',
+        }}> 
+          <div className='heading3'>정말로 선택하시겠어요?</div>
+          <div className='basic' style={{ color: '#666563' }}>한 번 선택하면 변경할 수 없습니다.</div>
+          <MainButton buttonName='선택하기' onClick={() => {setShowModal(false); setAcceptFinal(true)}} />
+          </Container>
       </Modal>
     </Container>);
 }
@@ -171,18 +183,18 @@ function InfoItem() {
 export default function Home() {
   const [alertVisible, setAlertVisible] = useState(false);
   const { ErrorModal, setShowErrorModal } = useErrorModal();
+  const [acceptFinal, setAcceptFinal] = useState(false);
 
   function hadleLogin() {
     setShowErrorModal(true);
   }
 
   const user = {
-    id: 1,
-    name: 'taykim01',
-    kakao: "taykim01",
-    age: 20,
-    birth: "2001-01-01",
-    local: "서울특별시 성북구",
+    "name": "사용자",
+    "mobile_number": "01012345678",
+    "gender": 0,
+    "nickname": "온리유",
+    "date_birth": "2023-08-21",
   }
 
   return (
@@ -218,7 +230,7 @@ export default function Home() {
 
             {/* 함수 호출 */}
             <AuthenticationItem />
-            <ProfileItem />
+            <ProfileItem people = {user}/>
             <TimeItem />
 
             <Container disableGutters sx={{
@@ -229,7 +241,7 @@ export default function Home() {
 
               {/* 함수 호출 */}
               <KakaoItem />
-              <AcceptItem />
+              <AcceptItem setAcceptFinal={setAcceptFinal}/>
 
             </Container>
           </Container>

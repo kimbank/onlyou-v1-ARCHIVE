@@ -17,6 +17,7 @@ class UsersFemaleDataExtra(Base, BaseMixin):
 
     female_id = Column(Integer, ForeignKey(
         User.id, name='fk-users-users_female_data_extra'), primary_key=True, default=func.max(User.id))
+    fill_status = Column(Integer, nullable=False, default=0)
     created_at = Column(DateTime, nullable=False,
                         default=func.utc_timestamp(), comment='생성 일자')
     modified_at = Column(DateTime, nullable=False, default=func.utc_timestamp(

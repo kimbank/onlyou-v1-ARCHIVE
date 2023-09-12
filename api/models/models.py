@@ -47,7 +47,8 @@ class MessageOk(BaseModel):
 
 class UserToken(BaseModel):
     id: int
-    mobile_number: str = None
+    gender: int
+    mobile: str = None
 
     class Config:
         orm_mode = True

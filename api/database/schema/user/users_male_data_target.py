@@ -12,7 +12,7 @@ from api.database.conn import Base
 from api.database.schema.mixin import BaseMixin
 from api.database.schema.user.user import User
 
-class UsersMaleDataExtra(Base, BaseMixin):
+class UsersMaleDataTarget(Base, BaseMixin):
     __tablename__ = 'users_male_data_extra'
 
     male_id = Column(Integer, ForeignKey(

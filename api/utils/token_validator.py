@@ -31,62 +31,26 @@ from api.utils.logger import api_logger
 from api.utils.query_utils import to_dict
 
 
-async def access_control(request: Request, call_next):
-    request.state.req_time = D.datetime()
-    request.state.start = time.time()
-    request.state.inspect = None
-    request.state.user = None
-    request.state.service = None
-
-    ip = request.headers["x-forwarded-for"] if "x-forwarded-for" in request.headers.keys() else request.client.host
-    request.state.ip = ip.split(",")[0] if "," in ip else ip
-    headers = request.headers
-    # cookies = request.cookies
-
-    url = request.url.path
-    if len(str(request.url).split(',')) >= 2:
-        url = URL("".join(str(request.url).split(',')[1:])).path
-    print(request.headers.keys())
-    # print(request.headers[])
-    print(request.url.path)
-    if await url_pattern_check(url, EXCEPT_PATH_REGEX) or url in EXCEPT_PATH_LIST:
-        response = await call_next(request)
-        if url != "/":
-            await api_logger(request=request, response=response)
-        return response
+async def token_control(request: Request):
 
     try:
-        # if url.startswith("/api"):
-        #     if "authorization" in headers.keys():
-        #         token_info = await token_decode(access_token=headers.get("Authorization"))
-        #         request.state.user = UserToken(**token_info)
-        #         print(request.state.user)
-        #         # 토큰 없음
-        #     elif "Authorization" not in headers.keys():
-        #         raise ex.NotAuthorized()
         if request.cookies.get('access_token'):
-            print('token', request.cookies.get('access_token'))
+            # print('token', request.cookies.get('access_token'))
             token_info = await token_decode(request.cookies.get('access_token'))
-            request.state.user = UserToken(**token_info)
+            user_info = UserToken(**token_info)
         else:
             raise ex.NotAuthorized()
-        response = await call_next(request)
-        await api_logger(request=request, response=response)
+        # response = await call_next(request)
+        # await api_logger(request=request, response=response)
 
     except Exception as e:
         error = await exception_handler(e)
         error_dict = dict(status=error.status_code, msg=error.msg, detail=error.detail, code=error.code)
-        response = JSONResponse(status_code=error.status_code, content=error_dict)
+        # return error_dict
+        return False
         # await api_logger(request=request, error=error)
 
-    return response
-
-
-async def url_pattern_check(path, pattern):
-    result = re.match(pattern, path)
-    if result:
-        return True
-    return False
+    return user_info
 
 
 async def token_decode(access_token):

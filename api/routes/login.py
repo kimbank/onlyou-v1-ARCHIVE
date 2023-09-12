@@ -87,7 +87,7 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
             # 인증번호가 일치함 [[ 로그인 성공 ]]
             if auth_info.code == auth_code.code:
                 # Todo: 정지 당했는 지 확인하고 일치해도 정지당했으면 로그인 불가하게
-                token = f"{create_access_token(data=dict(id=auth_code.users.id,mobile=auth_code.mobile_number))}"
+                token = f"{create_access_token(data=dict(id=auth_code.users.id,gender=auth_code.users.gender,mobile=auth_code.mobile_number))}"
 
                 response = Response(status_code=200, content='{"msg": "AUTH_SUCCESS"}')
                 response.set_cookie(key="access_token", value=token, httponly=True)

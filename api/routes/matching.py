@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
+from starlette.requests import Request
+
 
 router = APIRouter(prefix="/matching")
 
 
-@router.get("/", )
-async def get_matching():
-    return {
-        "message": "GET API completed",
-    }
+@router.get("/status")
+async def get_matching(request: Request):
+    request

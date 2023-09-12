@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { Header } from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useState } from 'react';
+import { ReactComponent as CancelSelect }  from '@/public/cancel_select.svg';
 
 import { EditButton, ListButton, MainButton, MainHalfButton, SubButton, SubHalfButton, SubMiniButton, UploadButton } from '@/components/Button';
 import { SuccessNotification, DangerNotification, InfoText, DangerMiniNotification, Certification } from '@/components/Notification';
@@ -64,7 +65,7 @@ function AuthenticationItem() {
     </Container>);
 }
 
-function ProfileItem({people}) {
+function ProfileItem({ people }) {
   return (
     <Container disableGutters sx={{
       display: 'flex',
@@ -137,9 +138,9 @@ function KakaoItem() {
     </Container>);
 }
 
-function AcceptItem({setAcceptFinal}) {
+function AcceptItem({ setAcceptFinal }) {
   const [showModal, setShowModal] = useState(false);
-  
+
   return (
     <Container disableGutters sx={{
       display: 'flex',
@@ -149,8 +150,8 @@ function AcceptItem({setAcceptFinal}) {
       <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
       <DefaultCheckbox buttonName='거절하기' />
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        <Container disableGutters sx={{ 
-          display: 'flex',  
+        <Container disableGutters sx={{
+          display: 'flex',
           flexDirection: 'column',
           gap: '28px',
           alignItems: 'left',
@@ -159,11 +160,12 @@ function AcceptItem({setAcceptFinal}) {
           height: '100%',
           padding: '48px',
           borderRadius: '20px',
-        }}> 
+        }}>
+          <img src='/cancel_select.svg' style={{ width: '20px', height: '20px', marginLeft: "auto" }} onClick={() => {setShowModal(false)}} />  
           <div className='heading3'>정말로 선택하시겠어요?</div>
           <div className='basic' style={{ color: '#666563' }}>한 번 선택하면 변경할 수 없습니다.</div>
-          <MainButton buttonName='선택하기' onClick={() => {setShowModal(false); setAcceptFinal(true)}} />
-          </Container>
+          <MainButton buttonName='선택하기' onClick={() => { setShowModal(false); setAcceptFinal(true) }} />
+        </Container>
       </Modal>
     </Container>);
 }
@@ -230,7 +232,7 @@ export default function Home() {
 
             {/* 함수 호출 */}
             <AuthenticationItem />
-            <ProfileItem people = {user}/>
+            <ProfileItem people={user} />
             <TimeItem />
 
             <Container disableGutters sx={{
@@ -241,7 +243,7 @@ export default function Home() {
 
               {/* 함수 호출 */}
               <KakaoItem />
-              <AcceptItem setAcceptFinal={setAcceptFinal}/>
+              <AcceptItem setAcceptFinal={setAcceptFinal} />
 
             </Container>
           </Container>

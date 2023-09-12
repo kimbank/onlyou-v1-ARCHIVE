@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { Header } from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useState } from 'react';
+import { ReactComponent as CancelSelect } from '@/public/cancel_select.svg';
 
 import { EditButton, ListButton, MainButton, MainHalfButton, SubButton, SubHalfButton, SubMiniButton, UploadButton } from '@/components/Button';
 import { SuccessNotification, DangerNotification, InfoText, DangerMiniNotification, Certification } from '@/components/Notification';
@@ -64,24 +65,20 @@ function AuthenticationItem() {
     </Container>);
 }
 
-function ProfileItem() {
+function ProfileItem({ people }) {
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
       gap: '8px'
     }}>
-      <div className='heading3'>taykim01</div>
+      <div className='heading3'>{people["name"]}</div>
       <Container disableGutters sx={{
         display: 'flex',
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <div className='basic' style={{ color: '#666563' }}>
-          <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7.13982 0C5.83521 0 4.76779 1.06875 4.76779 2.375V4.75H0.237203C0.0948814 4.75 0.0237203 4.845 0.0237203 4.96375V10.6875C0.0237203 11.3525 0.545568 11.875 1.20974 11.875H17.814C18.4782 11.875 19 11.3525 19 10.6875V4.96375C19 4.82125 18.9051 4.75 18.7865 4.75H14.2559V2.375C14.2559 1.06875 13.1885 0 11.8839 0L7.13982 0ZM7.13982 2.375H11.8839V4.75H7.13982V2.375ZM0.0237203 14.0362V18.7862C0.0237203 18.905 0.118602 19 0.237203 19H18.7628C18.8814 19 18.9763 18.905 18.9763 18.7862V14.0362C18.5968 14.1788 18.2172 14.25 17.7903 14.25H1.18602C0.759051 14.25 0.379526 14.155 0 14.0362H0.0237203Z" fill="#666563" />
-          </svg>
-        </div>
+        <img src='/bag.svg' style={{ width: '20px', height: '20px' }} /> 
         <div className='basic' style={{ color: '#666563' }}>콩쥐/대표</div>
       </Container>
 
@@ -90,11 +87,7 @@ function ProfileItem() {
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <div className='basic' style={{ color: '#666563' }}>
-          <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 0L0 7.5H2.5V17.5H7.5V12.5H12.5V17.5H17.5V7.425L20 7.5L10 0Z" fill="#666563" />
-          </svg>
-        </div>
+        <img src='/house.svg' style={{ width: '20px', height: '20px' }} /> 
         <div className='basic' style={{ color: '#666563' }}>서울특별시 성북구</div>
       </Container>
 
@@ -103,12 +96,8 @@ function ProfileItem() {
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <div className='basic' style={{ color: '#666563' }}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 0C7.25 0 5 2.8 5 6.25C5 9.7 7.25 12.5 10 12.5C12.75 12.5 15 9.7 15 6.25C15 2.8 12.75 0 10 0ZM4.775 12.5C2.125 12.625 0 14.8 0 17.5V20H20V17.5C20 14.8 17.9 12.625 15.225 12.5C13.875 14.025 12.025 15 10 15C7.975 15 6.125 14.025 4.775 12.5Z" fill="#666563" />
-          </svg>
-        </div>
-        <div className='basic' style={{ color: '#666563' }}>2001년생</div>
+        <img src='/people.svg' style={{ width: '20px', height: '20px' }} /> 
+        <div className='basic' style={{ color: '#666563' }}>{people["date_birth"].split('-')[0]}년생</div>
       </Container>
 
     </Container>);
@@ -137,7 +126,7 @@ function KakaoItem() {
     </Container>);
 }
 
-function AcceptItem() {
+function AcceptItem({ setAcceptFinal }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -147,11 +136,24 @@ function AcceptItem() {
       gap: "8px",
     }}>
       <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
-      <DefaultCheckbox onClick={onReject} buttonName='거절하기' />
+      <DefaultCheckbox buttonName='거절하기' />
       <Modal showModal={showModal} setShowModal={setShowModal}>
-        <h1>.</h1>
-        <br /><br /><br /><br /><br /><br />
-        <h1>.</h1>
+        <Container disableGutters sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '28px',
+          alignItems: 'left',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          padding: '48px',
+          borderRadius: '20px',
+        }}>
+          <img src='/cancel_select.svg' style={{ width: '20px', height: '20px', marginLeft: "auto" }} onClick={() => { setShowModal(false) }} />
+          <div className='heading3'>정말로 선택하시겠어요?</div>
+          <div className='basic' style={{ color: '#666563' }}>한 번 선택하면 변경할 수 없습니다.</div>
+          <MainButton buttonName='선택하기' onClick={() => { setShowModal(false); setAcceptFinal(true) }} />
+        </Container>
       </Modal>
     </Container>);
 }
@@ -171,18 +173,18 @@ function InfoItem() {
 export default function Home() {
   const [alertVisible, setAlertVisible] = useState(false);
   const { ErrorModal, setShowErrorModal } = useErrorModal();
+  const [acceptFinal, setAcceptFinal] = useState(false);
 
   function hadleLogin() {
     setShowErrorModal(true);
   }
 
   const user = {
-    id: 1,
-    name: 'taykim01',
-    kakao: "taykim01",
-    age: 20,
-    birth: "2001-01-01",
-    local: "서울특별시 성북구",
+    "name": "사용자",
+    "mobile_number": "01012345678",
+    "gender": 0,
+    "nickname": "온리유",
+    "date_birth": "2023-08-21",
   }
 
   return (
@@ -218,7 +220,7 @@ export default function Home() {
 
             {/* 함수 호출 */}
             <AuthenticationItem />
-            <ProfileItem />
+            <ProfileItem people={user} />
             <TimeItem />
 
             <Container disableGutters sx={{
@@ -229,7 +231,7 @@ export default function Home() {
 
               {/* 함수 호출 */}
               <KakaoItem />
-              <AcceptItem />
+              <AcceptItem setAcceptFinal={setAcceptFinal} />
 
             </Container>
           </Container>

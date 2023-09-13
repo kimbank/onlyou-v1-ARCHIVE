@@ -22,7 +22,7 @@ const ButtonText = '버튼';
 
 // Figma: Main Button
 // CTA에 쓰이는 메인 버튼입니다.
-export function MainButton({ onClick, buttonName }) {
+export function MainButton({ onClick, buttonName, shadow = true }) {
     return (
         <div>
             <Button
@@ -33,6 +33,7 @@ export function MainButton({ onClick, buttonName }) {
                     borderRadius: '12px',
                     height: '56px',
                     width: '100%',
+                    boxShadow: !shadow && 'none', // initial, inherit, none, unset
                 }}
             >
                 <Typography
@@ -54,7 +55,7 @@ export function MainButton({ onClick, buttonName }) {
 
 
 // Figma: Main half Button
-export function MainHalfButton({onClick, buttonName}) {
+export function MainHalfButton({onClick, buttonName, shadow = 'none' }) {
     return (
         <div>
             <Button
@@ -65,6 +66,7 @@ export function MainHalfButton({onClick, buttonName}) {
                     borderRadius: '12px',
                     height: '56px',
                     width: '50%',
+                    boxShadow: shadow,
                 }}
             >
                 <Typography
@@ -171,6 +173,7 @@ export function EditButton({onClick, buttonName}) {
                         fontFamily: 'Pretendard-Semibold',
                         fontSize: '14px',
                         letterSpacing: '1.25px',
+                        textDecoration: 'none',
                     }}
                 >
                     {buttonName}

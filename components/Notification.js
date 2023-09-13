@@ -83,7 +83,7 @@ export function DangerNotification({ alertMessage, visible, setVisible /* visibl
 
 // Figma: Info text
 // 이 버튼은 위 notification과 달리, 나왔다가 들어갔다 하는 컴포넌트가 아니라서 애니메이션이 없습니다.
-export function InfoText({ title, alertMessage }) {
+export function InfoText({ title, alertMessage, shadow = true }) {
     return (
         <div>
             {/* 이슈: 버튼이 figma와 다르게 양 옆으로 화면을 체우지 않습니다. */}
@@ -97,7 +97,8 @@ export function InfoText({ title, alertMessage }) {
                     backgroundColor: '#F7F4F2',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    boxShadow: !shadow && 'none', // initial, inherit, none, unset
                 }}
             >
                 <InfoIcon sx={{
@@ -182,7 +183,7 @@ export function DangerMiniNotification({ alertMessage }) {
 // Figma: Certification
 // 인증마크입니다.
 // 이 버튼은 위 notification과 달리, 나왔다가 들어갔다 하는 컴포넌트가 아니라서 애니메이션이 없습니다.
-export function Certification({ alertMessage }) {
+export function Certification({ alertMessage, shadow = false }) {
     return (
         <div>
             <Button
@@ -194,7 +195,8 @@ export function Certification({ alertMessage }) {
                     padding: '8px 12px',
                     backgroundColor: '#F7F4F2',
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    boxShadow: !shadow && 'none'
                 }}
             >
                 <CheckIcon sx={{

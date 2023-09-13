@@ -3,6 +3,9 @@
 
 export default function Before() {
   return (
-    <h1>매칭/매칭전 페이지입니다.</h1>
+    <>
+      <h1>인연을 찾는 중이에요</h1>
+      <p>빠르게 인연을 찾아드릴게요!</p>
+    </>
   );
 }

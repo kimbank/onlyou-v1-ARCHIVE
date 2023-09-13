@@ -9,9 +9,19 @@ export default async function MatchingLayout({
   matching_before, matching_selection, matching_waiting,  matching_failure, matching_success
 }) {
   // Todo: fetch 통신 방법 및 토큰 validating 방식 개선 필요
-  const response = await fetch('http://127.0.0.1:8000/api/matching/status', {method: 'GET', cache: 'no-cache', credentials:'include', headers: {Authorization: cookies().get('access_token').value}})
-  const data = await response.json();
-  const status = data.msg;
+  let status = "error";
+
+  try {
+    await fetch('http://127.0.0.1:8000/api/matching/status',
+      { method: 'GET', cache: 'no-cache', credentials:'include', 
+        headers: { 
+          Authorization: cookies().get('access_token').value
+        }
+      })
+      .then(response => response.json())
+      .then(response => {status = response.msg}
+    )
+  } catch { }
   // console.log(status)
 
   switch (status) {

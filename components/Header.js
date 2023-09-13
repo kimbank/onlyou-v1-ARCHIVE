@@ -30,7 +30,7 @@ export function Header() {
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>
 
-                <Box sx={{ display: 'flex', gap: 2, paddingRight: '32px' }}>
+                <Box sx={{ display: 'flex', gap: 2, paddingRight: '24px' }}>
                     <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <Typography className='credit' sx={{ color: '#FF7700' }} >{ credit }</Typography>
                         <TollOutlinedIcon sx={{ color: '#FF7700' }} />

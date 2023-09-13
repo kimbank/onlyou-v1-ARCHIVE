@@ -89,6 +89,7 @@ export function InfoText({ title, alertMessage }) {
             {/* 이슈: 버튼이 figma와 다르게 양 옆으로 화면을 체우지 않습니다. */}
             <Button
                 variant='contained'
+                color="secondary"
                 sx={{
                     borderRadius: '8px',
                     // height: '33px',  // 수정: 230926 높이가 정해져 있어 Typograpy가 위 아래로 삐져 나오는 문제 발생.
@@ -147,6 +148,7 @@ export function DangerMiniNotification({ alertMessage }) {
         <div>
             <Button
                 variant='contained'
+                color="secondary"
                 sx={{
                     borderRadius: '8px',
                     height: '33px',
@@ -185,6 +187,7 @@ export function Certification({ alertMessage }) {
         <div>
             <Button
                 variant='contained'
+                color="secondary"
                 sx={{
                     borderRadius: '8px',
                     height: '33px',

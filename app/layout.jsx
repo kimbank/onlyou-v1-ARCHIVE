@@ -9,11 +9,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko-KR">
-      <body>
-        <div style={{'maxWidth': '720px', 'marginLeft': 'auto', 'marginRight': 'auto'}}>
+      <body style={{'backgroundColor': '#FFE4CC'}}>
+        <div style={{'maxWidth': '480px', 'minHeight': '100vh', 'marginLeft': 'auto', 'marginRight': 'auto', 'backgroundColor': '#fff'}}>
+          <br />
           <CssBaseline>
             {children}
           </CssBaseline>
+          <br /><br />
         </div>
       </body>
     </html>

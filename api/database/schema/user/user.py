@@ -40,4 +40,15 @@ class User(Base, BaseMixin):
     date_auth_block = Column(
         TIMESTAMP, nullable=True)
 
+    # 인증번호 외래키
     auth_sens = relationship("AuthSens")
+
+    # 여성 외래키
+    female_data = relationship("UsersFemaleData")
+    female_data_extra = relationship("UsersFemaleDataExtra")
+    female_data_target = relationship("UsersFemaleDataTarget")
+
+    # 남성 외래키
+    male_data = relationship("UsersMaleData")
+    male_data_extra = relationship("UsersMaleDataExtra")
+    male_data_target = relationship("UsersMaleDataTarget")

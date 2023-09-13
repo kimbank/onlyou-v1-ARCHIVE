@@ -7,6 +7,7 @@ from sqlalchemy import (
     func,
 )
 from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.orm import relationship
 
 from api.database.conn import Base
 from api.database.schema.mixin import BaseMixin
@@ -84,3 +85,5 @@ class UsersMaleDataExtra(Base, BaseMixin):
     sns = Column(TINYINT, comment='소셜 미디어 0: 비공개 1: 공개', nullable=True)
     conflict_resolution_method = Column(
         TINYINT, comment='갈등 해결 방식 0: SOFT 1: HARD', nullable=True)
+
+    user = relationship("User", uselist=False)

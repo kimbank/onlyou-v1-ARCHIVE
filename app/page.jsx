@@ -44,17 +44,17 @@ export default function Home() {
   const [ showModal, setShowModal ] = useState(false);
 
   return (
-    <Container>
-    <Modal showModal={showModal} setShowModal={setShowModal}>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <Container>
+    {/* <Modal showModal={showModal} setShowModal={setShowModal}>
       <h1>.</h1>
       <br /><br /><br /><br /><br /><br />
       <h1>.</h1>
-    </Modal>
-    <ThemeProvider theme={theme}>
-      <Header />
-      <Container sx={{ marginBottom: '80px', }}>
+    </Modal> */}
+      <Container sx={{ marginBottom: '80px', marginTop: '128px',}}>
         <Container disableGutters sx={{
-          marginTop: '128px',
+          
           display: 'flex',
           flexDirection: 'column',
           gap: '64px'
@@ -95,7 +95,7 @@ export default function Home() {
             </Container>
             {/* 샘플페이지 */}
 
-          <SwipeableEdgeDrawer />
+          <SwipeableEdgeDrawer clicked={showModal} setClicked={setShowModal}><h1>모달입니다.</h1><br/><br/></SwipeableEdgeDrawer>
           <button onClick={() => setShowModal(true)}>
             모달 후보
           </button>
@@ -135,9 +135,11 @@ export default function Home() {
           <h1>다음은 하단바입니다.</h1>
         </Container>
         
-        <NavBar />
+        
       </Container>
+      
+      </Container>
+      <NavBar />
     </ThemeProvider>
-    </Container>
   );
 }

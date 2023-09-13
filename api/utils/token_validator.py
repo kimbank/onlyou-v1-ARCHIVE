@@ -38,6 +38,9 @@ async def token_control(request: Request):
             # print('token', request.cookies.get('access_token'))
             token_info = await token_decode(request.cookies.get('access_token'))
             user_info = UserToken(**token_info)
+        elif "authorization" in request.headers.keys():
+            token_info = await token_decode(access_token=request.headers.get("Authorization"))
+            user_info = UserToken(**token_info)
         else:
             raise ex.NotAuthorized()
         # response = await call_next(request)

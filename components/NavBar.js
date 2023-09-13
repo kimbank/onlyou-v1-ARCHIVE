@@ -7,7 +7,6 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 
 export default function LabelBottomNavigation({ recent }) {
   const pathname = usePathname();
@@ -30,7 +29,7 @@ export default function LabelBottomNavigation({ recent }) {
   return (
     <BottomNavigation value={value} onChange={handleChange} sx={{
       width: '100%', height: '64px', borderRadius: '24px 24px 0 0', borderTop: '1px solid #FFAD66', boxShadow: '0px -2px 4px 0px rgba(0, 0, 0, 0.25)', position: 'fixed',
-      bottom: 0, left: 0, right: 0, maxWidth: '720px', left: '50%', transform: 'translate(-50%, 0)'
+      bottom: 0, left: 0, right: 0, maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)'
     }}>
       <BottomNavigationAction href='/matching'
         label="매칭"

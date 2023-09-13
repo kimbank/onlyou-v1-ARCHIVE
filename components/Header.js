@@ -16,7 +16,7 @@ export function Header() {
     return (
         <AppBar position='fixed' sx={{
             backgroundColor: '#FFFFFF', height: 60,
-            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '720px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.25)'
+            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: '0px 4px 4px -2px rgba(0, 0, 0, 0.25)'
         }}>
             <Container disableGutters sx={{
                 display: 'flex',
@@ -25,7 +25,7 @@ export function Header() {
             }}>
                 <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '6px', padding: '0 32px' }}>
                     <a href='/'>
-                        <Image src={Logo} alt="logo" width={84} height={30} />
+                        <Image src={Logo} alt="logo" width={84} height={30} priority={true} />
                     </a>
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>
@@ -49,7 +49,7 @@ export function GuestHeader() {
     return (
         <AppBar position='fixed' sx={{
             backgroundColor: '#FFFFFF', height: 60,
-            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '720px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: '0px 4px 4px -4px gray'
+            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: '0px 4px 4px -4px gray'
         }}>
             <Container disableGutters sx={{
                 display: 'flex',
@@ -58,7 +58,7 @@ export function GuestHeader() {
             }}>
                 <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '6px', padding: '0 32px' }}>
                     <a href='/'>
-                        <Image src={Logo} alt="logo" width={84} height={30} />
+                        <Image src={Logo} alt="logo" width={84} height={30} priority={true} />
                     </a>
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>

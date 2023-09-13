@@ -9,6 +9,7 @@ import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Container from '@mui/material/Container';
 import { MainButton } from './Button';
 
 
@@ -40,16 +41,18 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 
-function SwipeableEdgeDrawer({ title, content }) {
+// function SwipeableEdgeDrawer({ open, content }) {
+  function SwipeableEdgeDrawer({ clicked, setClicked, children }) {
   // const { window } = props;
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
+  const open = clicked;
+  const setOpen = setClicked;
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
-  // const container = window !== undefined ? () => window().document.body : undefined;
   const container = undefined;
+
 
   return (
     <Root>
@@ -62,10 +65,12 @@ function SwipeableEdgeDrawer({ title, content }) {
             overflow: 'visible',
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
+            maxWidth: '480px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           },
         }}
       />
-      <MainButton buttonName="팝업열기" onClick={toggleDrawer(true)}></MainButton>
       <SwipeableDrawer
         container={container}
         anchor="bottom"
@@ -90,8 +95,14 @@ function SwipeableEdgeDrawer({ title, content }) {
           }}
         >
           <Puller />
-          <Typography className='heading3' sx={{ px: 5, pt: 5, color: '#1E1D1C' }}>{title}</Typography>
-          <Typography className='basic' sx={{ px: 5, pt: 3, pb: 2, color: '#1E1D1C' }}>{content}</Typography>
+          
+          <Container sx={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            {children}
+          </Container>
+
         </StyledBox>
         <StyledBox
           sx={{

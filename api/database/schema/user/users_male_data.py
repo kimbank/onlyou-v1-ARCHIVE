@@ -18,7 +18,7 @@ class UsersMaleData(Base, BaseMixin):
     male_id = Column(Integer, ForeignKey(
         User.id, name='fk-users-users_male_data'), primary_key=True, default=func.max(User.id))
     fill_status = Column(Integer, nullable=False, default=0)
-    gender = Column(TINYINT, nullable=False, comment='[미공개 정보] 0 = 여성, 1 = 남성')
+    # gender = Column(TINYINT, nullable=False, comment='[미공개 정보] 0 = 여성, 1 = 남성')
     job_type = Column(String(45, collation='utf8mb4_unicode_ci'),
                       nullable=False, comment='[선택 공개 정보] 직장 유형')
     job_name = Column(String(45, collation='utf8mb4_unicode_ci'),

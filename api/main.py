@@ -13,7 +13,7 @@ from api.common.config import conf
 # from app.middlewares.token_validator import access_control
 # from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from api.middlewares.sqltap import sql_tap
-from api.routes import index, login, signup, promotion, leave, matching, application, my_info, agreement
+from api.routes import index, login, signup, promotion, leave, matching, application, my_info, agreement, user
 
 API_KEY_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
@@ -79,6 +79,7 @@ def create_app():
     app.include_router(application.router, tags=["매칭 신청서"], prefix="/api")
     app.include_router(my_info.router, tags=["내 정보"], prefix="/api")
     app.include_router(agreement.router, tags=["성사"], prefix="/api")
+    app.include_router(user.router, tags=["유저"], prefix="/api")
 
     return app
 

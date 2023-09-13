@@ -3,6 +3,6 @@
 
 export default function Agreement() {
   return (
-    <h1>매칭/신청서작성 페이지입니다.</h1>
+    <h1>매칭/매칭선택 페이지입니다.</h1>
   );
 }

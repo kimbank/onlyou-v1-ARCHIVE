@@ -3,9 +3,8 @@
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from "@mui/material";
 
-import { Header } from '@/components/Header';
+import { GuestHeader } from '@/components/Header';
 import Container from '@mui/material/Container';
-import NavBar from '@/components/NavBar'
 
 // export const metadata = {
 //   title: '온리유',
@@ -32,11 +31,10 @@ const theme = createTheme({
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <GuestHeader />
       <Container sx={{ marginTop: '128px', marginBottom: '80px' }}>
         {children}
       </Container>
-      <NavBar />
     </ThemeProvider>
   )
 }

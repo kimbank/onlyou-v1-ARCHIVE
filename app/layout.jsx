@@ -10,9 +10,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko-KR">
       <body>
-        <CssBaseline>
-          {children}
-        </CssBaseline>
+        <div style={{'maxWidth': '720px', 'marginLeft': 'auto', 'marginRight': 'auto'}}>
+          <CssBaseline>
+            {children}
+          </CssBaseline>
+        </div>
       </body>
     </html>
   )

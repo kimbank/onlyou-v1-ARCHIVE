@@ -168,10 +168,9 @@ export default function Home() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GuestHeader />
       <ErrorModal />
-      <Container sx={{ marginBottom: '80px', }}>
         <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
         <SuccessNotification alertMessage={successMessage} visible={successVisible} setVisible={setSuccessVisible} />
           
@@ -217,9 +216,6 @@ export default function Home() {
             </Container>
             {/* <Error title="앗, 가입되지 않은 전화번호에요." content="온리유에 가입하거나, 다른 번호로 로그인해주세요!" isError={isError} /> */}
           </Container>
-          
-          <NavBar />
-      </Container>
-    </ThemeProvider>
+      </>
   );
 }

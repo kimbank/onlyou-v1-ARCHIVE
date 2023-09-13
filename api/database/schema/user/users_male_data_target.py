@@ -2,6 +2,7 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
+    Date,
     DateTime,
     ForeignKey,
     func,
@@ -12,75 +13,101 @@ from api.database.conn import Base
 from api.database.schema.mixin import BaseMixin
 from api.database.schema.user.user import User
 
-class UsersMaleDataTarget(Base, BaseMixin):
-    __tablename__ = 'users_male_data_extra'
 
-    male_id = Column(Integer, ForeignKey(
-        User.id, name='fk-users-users_male_data_extra'), primary_key=True, default=func.max(User.id))
-    fill_status = Column(Integer, nullable=False, default=0)
+class UsersMaleDataTarget(Base, BaseMixin):
+    __tablename__ = 'users_male_data_target'
+    # _w: 가중치 (1 ~ 5)
+    male_id = Column(Integer, primary_key=True, default=func.max(User.id))
+    fill_status = Column()
     created_at = Column(DateTime, nullable=False,
                         default=func.utc_timestamp(), comment='생성 일자')
     modified_at = Column(DateTime, nullable=False, default=func.utc_timestamp(
     ), onupdate=func.utc_timestamp(), comment='변경 일자')
-    smoking_history = Column(
-        TINYINT, comment='[미공개 정보] 흡연 경력 0: 비흡연 1: 금연 2: 흡연', nullable=True)
-    drinking_life = Column(
-        TINYINT, comment='[미공개 정보] 음주 생활 0 ~ 4', nullable=True)
-    owned_car = Column(
-        TINYINT, comment='[미공개 정보] 자차 0: 미소유 1: 소유', nullable=True)
-    interests = Column(
-        String(45, collation='utf8mb4_unicode_ci'), comment='[미공개 정보] 관심사 (최대 3개)', nullable=True)
-    number_relationships = Column(
-        TINYINT, comment='[미공개 정보] 연애 횟수 0 ~ 4', nullable=True)
-    athletic_life = Column(
-        TINYINT, comment='[미공개 정보] 운동 생활 0 ~ 1', nullable=True)
-    pet_animal = Column(TINYINT, comment='[미공개 정보] 반려동물 0 ~ 3', nullable=True)
-    religion = Column(String(10), comment='[미공개 정보] 종교', nullable=True)
-    extrovert_or_introvert = Column(
-        TINYINT, comment='[미공개 정보] 외향/내향 0 ~ 4', nullable=True)
-    intutive_or_realistic = Column(
-        TINYINT, comment='[미공개 정보] 직관/현실 0 ~ 4', nullable=True)
-    emotional_or_rational = Column(
-        TINYINT, comment='[미공개 정보] 감성/이성 0 ~ 4', nullable=True)
-    impromptu_or_planned = Column(
-        TINYINT, comment='[미공개 정보] 즉흥/계획 0 ~ 4', nullable=True)
-    selfconfidence_or_careful = Column(
-        TINYINT, comment='[미공개 정보] 자기확신/신중 0 ~ 4', nullable=True)
-    marriage_values = Column(
-        TINYINT, comment='[미공개 정보] 결혼 가치관 0 ~ 2', nullable=True)
-    religious_values = Column(
-        TINYINT, comment='[미공개 정보] 종교의 중요성 0 ~ 2', nullable=True)
-    opposite_friends_values = Column(
-        TINYINT, comment='[미공개 정보] 이성 친구 가치관 0 ~ 2', nullable=True)
-    political_values = Column(
-        TINYINT, comment='[미공개 정보] 정치적 성향 0 ~ 3', nullable=True)
-    consumption_values = Column(
-        TINYINT, comment='[미공개 정보] 소비 가치관 0: 절약형 1: 투자형', nullable=True)
-    career_family_values = Column(
-        TINYINT, comment='[미공개 정보] 커리어와 가정 가치관 0 ~ 1', nullable=True)
-    animal_image = Column(String(6), comment='[미공개 정보] 동물 이미지', nullable=True)
-    double_eyelid = Column(
-        TINYINT, comment='[미공개 정보] 쌍커풀 0 ~ 2', nullable=True)
-    face_shape = Column(
-        TINYINT, comment='[미공개 정보] 얼굴상 0: 순함 1: 진함', nullable=True)
-    body_type = Column(TINYINT, comment='[미공개 정보] 체형 0 ~ 4', nullable=True)
-    skin_tone = Column(TINYINT, comment='[미공개 정보] 피부톤 0 ~ 2', nullable=True)
-    tattoo = Column(
-        TINYINT, comment='[미공개 정보] 문신 유무 0: 없음 1: 있음', nullable=True)
-    fashion_style = Column(
-        String(12), comment='[미공개 정보] 패션 스타일', nullable=True)
-    preffered_dating = Column(
-        TINYINT, comment='선호 데이트 0: 정적 1: 활동적', nullable=True)
-    preferred_contact_method = Column(
-        String(5), comment='선호 연락 수단 0: 전화 1: 문자', nullable=True)
-    attractiveness_level = Column(
-        TINYINT, comment='애교 레벨 0 ~ 4', nullable=True)
-    jealousy_level = Column(TINYINT, comment='질투 레벨 0 ~ 4', nullable=True)
-    love_initiative = Column(TINYINT, comment='연애 주도성 0 ~ 3', nullable=True)
-    dating_frequency = Column(TINYINT, comment='데이트 빈도 0 ~ 3', nullable=True)
-    contact_style = Column(
-        TINYINT, comment='연락 스타일 0: SOFT 1: HARD', nullable=True)
-    skinship = Column(TINYINT, comment='혼전순결 0: SOFT 1: HARD', nullable=True)
-    sns = Column(TINYINT, comment='소셜 미디어 0: 비공개 1: 공개', nullable=True)
-    conflict_resolution_method = Column(
-        TINYINT, comment='갈등 해결 방식 0: SOFT 1: HARD', nullable=True)
+    date_birth_s = Column(Date, comment="생년월일 시작")
+    date_birth_e = Column(Date, comment="생년월일 끝")
+    date_birth_w = Column(TINYINT)
+    residence_sgg = Column(String(255))
+    residence_w = Column(TINYINT)
+    job_type = Column(String(25))
+    job_type_w = Column(TINYINT)
+    job_name_id = Column(TINYINT)
+    job_name_w = Column(TINYINT)
+    height_s = Column(TINYINT)
+    height_e = Column(TINYINT)
+    height_w = Column(TINYINT)
+    education = Column(String(9))
+    education_w = Column(TINYINT)
+    divorce = Column(TINYINT)
+    divorce_w = Column(TINYINT)
+    smoking_history = Column(String(5))
+    smoking_history_w = Column(TINYINT)
+    drinking_life = Column(String(9))
+    drinking_life_w = Column(TINYINT)
+    owned_car = Column(String(9))
+    owned_car_w = Column(TINYINT)
+    interests = Column(String(41))
+    interests_w = Column(TINYINT)
+    number_relationships = Column(String(7))
+    number_relationships_w = Column(TINYINT)
+    athletic_life = Column(TINYINT)
+    athletic_life_w = Column(TINYINT)
+    pet_animal = Column(TINYINT)
+    pet_animal_w = Column(TINYINT)
+    religion = Column(String(11))
+    religion_w = Column(TINYINT)
+    extrovert_or_introvert = Column(String(11))
+    extrovert_or_introvert_w = Column(TINYINT)
+    intutive_or_realistic = Column(String(11))
+    intutive_or_realistic_w = Column(TINYINT)
+    emotional_or_rational = Column(String(11))
+    emotional_or_rational_w = Column(TINYINT)
+    impromptu_or_planned = Column(String(11))
+    impromptu_or_planned_w = Column(TINYINT)
+    selfconfidence_or_careful = Column(TINYINT)
+    selfconfidence_or_careful_w = Column(TINYINT)
+    marriage_values = Column(String(5))
+    marriage_values_w = Column(TINYINT)
+    religious_values = Column(String(5))
+    religious_values_w = Column(TINYINT)
+    opposite_friends_values = Column(String(5))
+    opposite_friends_values_w = Column(TINYINT)
+    political_values = Column(String(7))
+    political_values_w = Column(TINYINT)
+    consumption_values = Column(TINYINT)
+    consumption_values_w = Column(TINYINT)
+    career_family_values = Column(String(3))
+    career_family_values_w = Column(TINYINT)
+    animal_image = Column(String(11))
+    animal_image_w = Column(TINYINT)
+    double_eyelid = Column(String(5))
+    double_eyelid_w = Column(TINYINT)
+    face_shape = Column(String(3))
+    face_shape_w = Column(TINYINT)
+    body_type = Column(String(9))
+    body_type_w = Column(TINYINT)
+    skin_tone = Column(String(5))
+    skin_tone_w = Column(TINYINT)
+    tattoo = Column(String(3))
+    tattoo_w = Column(TINYINT)
+    fashion_style = Column(String(13))
+    fashion_style_w = Column(TINYINT)
+    preffered_dating = Column(TINYINT)
+    preffered_dating_w = Column(TINYINT)
+    preferred_contact_method = Column(String(5))
+    preferred_contact_method_w = Column(TINYINT)
+    attractiveness_level = Column(String(11))
+    attractiveness_level_w = Column(TINYINT)
+    jealousy_level = Column(String(11))
+    jealousy_level_w = Column(TINYINT)
+    love_initiative = Column(String(7))
+    love_initiative_w = Column(TINYINT)
+    dating_frequency = Column(String(7))
+    dating_frequency_w = Column(TINYINT)
+    contact_style = Column(TINYINT)
+    contact_style_w = Column(TINYINT)
+    skinship = Column(TINYINT)
+    skinship_w = Column(TINYINT)
+    sns = Column(TINYINT)
+    sns_w = Column(TINYINT)
+    conflict_resolution_method = Column(TINYINT)
+    conflict_resolution_method_w = Column(TINYINT)

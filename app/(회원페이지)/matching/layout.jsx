@@ -23,7 +23,7 @@ export default async function MatchingLayout({
     )
   } catch { }
   // console.log(status)
-  return matching_success;
+
   switch (status) {
     // 매칭 휴면 상태
     case "dormancy":

@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
-import { MyInfoHeader } from '@/components/Header';
-
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from "@mui/material";
 
+import { Header } from '@/components/Header';
 import Container from '@mui/material/Container';
+import NavBar from '@/components/NavBar'
 
 // export const metadata = {
 //   title: '온리유',
@@ -30,23 +29,14 @@ const theme = createTheme({
   },
 });
 
-function Menu() {
-
-  return (
-    <Container>
-      menu
-    </Container>
-  )
-}
-
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <MyInfoHeader />
+      <Header />
       <Container disableGutters sx={{ marginTop: '80px', marginBottom: '32px', padding: '0 32px', }}>
-        <Menu />
         {children}
       </Container>
+      <NavBar />
     </ThemeProvider>
   )
 }

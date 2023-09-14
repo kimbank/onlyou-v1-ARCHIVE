@@ -5,6 +5,7 @@ import { Button, Typography } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckIcon from '@mui/icons-material/Check';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import { Container } from "@mui/material";
@@ -214,6 +215,43 @@ export function Certification({ alertMessage, shadow = false }) {
                     className="caption"
                     sx={{
                         color: '#FF7700'
+                    }}
+                >
+                    {alertMessage}
+                </Typography>
+            </Button>
+        </div>
+    )
+}
+
+
+// 남은 시간을 알려줍입니다.
+// 이 버튼은 위 notification과 달리, 나왔다가 들어갔다 하는 컴포넌트가 아니라서 애니메이션이 없습니다.
+export function TimeInfo({ alertMessage, shadow = false }) {
+    return (
+        <div>
+            <Button
+                variant='contained'
+                color="secondary"
+                sx={{
+                    borderRadius: '8px',
+                    height: '33px',
+                    padding: '8px 12px',
+                    backgroundColor: '#F7F4F2',
+                    display: 'flex',
+                    alignItems: 'center',
+                    boxShadow: !shadow && 'none'
+                }}
+            >
+                <AccessTimeIcon sx={{
+                    marginRight: 1,
+                    color: '#FF8982'
+                }} />
+                <Typography
+                    variant='subtitle1'
+                    className="caption"
+                    sx={{
+                        color: '#FF8982'
                     }}
                 >
                     {alertMessage}

@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <GuestHeader />
-      <Container disableGutters sx={{ marginTop: '80px', marginBottom: '32px', padding: '0 32px', }}>
+      <Container disableGutters sx={{ marginTop: '80px', marginBottom: '16px', padding: '0 32px', }}>
         {children}
       </Container>
     </ThemeProvider>

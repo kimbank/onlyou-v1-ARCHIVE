@@ -6,7 +6,9 @@ import { Container, Box } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from "@/public/ONLYou.svg";
+import Cancel from '@/public/cancel.svg';
 
 const credit = 100
 
@@ -45,6 +47,7 @@ export function Header() {
     )
 }
 
+
 export function GuestHeader() {
     return (
         <AppBar position='fixed' sx={{
@@ -62,6 +65,46 @@ export function GuestHeader() {
                     </a>
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>
+            </Container>
+        </AppBar>
+    )
+}
+
+
+export function UserDetailHeader() {
+    return (
+        <AppBar position='fixed' sx={{
+            backgroundColor: '#FFFFFF', height: 60,
+            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: 'none'
+        }}>
+            <Container disableGutters sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                paddingRight: '32px',
+            }}>
+                <Link href="/matching" style={{ verticalAlign: 'center', display: 'flex' }}>
+                    <Image src={Cancel} width='16px' />
+                </Link>
+            </Container>
+        </AppBar>
+    )
+}
+
+
+export function MyInfoHeader({ onClick }) {
+    return (
+        <AppBar position='fixed' sx={{
+            backgroundColor: '#FFFFFF', height: 60,
+            display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: 'none'
+        }}>
+            <Container disableGutters sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                paddingRight: '32px',
+            }}>
+                <Image src={Cancel} width='24px' onClick={onClick}/>
             </Container>
         </AppBar>
     )

@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.pathname;
 
+  if (url.startsWith('/my_info_edit')) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
   if (url.startsWith('/login') || url.startsWith('/signup')) {
     if (request.cookies.has('access_token')) {
       return NextResponse.redirect(new URL('/', request.url));

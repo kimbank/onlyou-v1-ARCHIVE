@@ -12,6 +12,9 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Container from '@mui/material/Container';
 import { MainButton } from './Button';
 
+import Image from 'next/image';
+import Cancel from '@/public/cancel_select.svg';
+
 
 // Figma: Popup
 // 모달입니다.
@@ -33,7 +36,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
   height: 6,
-  backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
+  backgroundColor: '#fff',
   borderRadius: 3,
   position: 'absolute',
   top: 8,
@@ -86,25 +89,30 @@ const Puller = styled(Box)(({ theme }) => ({
         <StyledBox
           sx={{
             // position: 'absolute',
-            top: -drawerBleeding,
+            // top: -drawerBleeding,
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
             visibility: 'visible',
             right: 0,
             left: 0,
+            padding: '40px',
+            paddingTop: '28px',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <Puller />
-          
+          <Image src={Cancel} style={{alignSelf: 'flex-end'}} onClick={() => setOpen(false)} />
           <Container sx={{
             display: 'flex',
             flexDirection: 'column',
+            gap: '24px'
           }}>
             {children}
           </Container>
 
         </StyledBox>
-        <StyledBox
+        {/* <StyledBox
           sx={{
             px: 2,
             pb: 2,
@@ -112,7 +120,7 @@ const Puller = styled(Box)(({ theme }) => ({
             overflow: 'auto',
           }}
         >
-        </StyledBox>
+        </StyledBox> */}
       </SwipeableDrawer>
     </Root>
   );

@@ -1,6 +1,7 @@
 'use client'
 
 
+// 매칭 대기중 상태
 export default function Before() {
   return (
     <>

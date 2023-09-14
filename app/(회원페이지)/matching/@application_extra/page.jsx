@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 
-// 매칭 신청서(타겟상대)를 완성하지 못한 상태
+// 매칭신청서 (본인부가정보)가 제출되지 않은 상태
 export default function ApplicationTarget() {
   const [userCount, setUserCount] = useState([]);
 

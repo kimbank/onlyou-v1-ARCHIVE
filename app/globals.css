@@ -72,6 +72,14 @@ body {
   font-size: 16px;
 }
 
+.basic-gray {
+  font-family: Pretendard-Regular;
+  color: #666563;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 16px;
+}
+
 .input {
   font-family: Pretendard-Regular;
   font-size: 14px;

@@ -77,3 +77,19 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
 
 
     return JSONResponse(status_code=200, content=dict(msg=msg))
+
+
+@router.get('/competitor_count')
+async def get_competitor_count(request: Request):
+    # Todo: 토큰 적합성 검사 미들웨어 리펙터링 필요함.
+    user_info = await token_control(request)
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+
+    if user_info.gender is 0:
+        user = UsersFemaleDataTarget().filter(fill_status=1)
+    else:
+        user = UsersMaleDataTarget().filter(fill_status=1)
+    print(user.count())
+
+    return JSONResponse(status_code=200, content=user.count())

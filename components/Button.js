@@ -254,7 +254,7 @@ export function ListButton({onClick, buttonName}) {
 
 // Figma: Sub mini Button
 // 원래 셀렉티드에 사용할 수 있는 button group으로 만들려고 했는데, 그룹에 버튼이 몇개씩 들어갈지 몰라서 우선 그룹 속 버튼 요소만 만들어두었습니다.
-export function SubMiniButton({onClick, buttonName, disabled = false}) {
+export function SubMiniButton({ onClick, buttonName, shadow = false, disabled = false }) {
     return (
         <div>
             <Button
@@ -265,11 +265,45 @@ export function SubMiniButton({onClick, buttonName, disabled = false}) {
                     borderRadius: '8px',
                     height: '33px',
                     padding: '8px 12px',
+                    boxShadow: !shadow && 'none',
                 }}
                 disabled={disabled}
             >
                 <Typography
                     variant='subtitle1'
+                    sx={{
+                        fontFamily: 'Pretendard-Semibold',
+                        fontSize: '14px',
+                        letterSpacing: '1.25px',
+                    }}
+                >
+                    {buttonName}
+                </Typography>
+            </Button>
+        </div>
+    )
+}
+
+export function SubMiniFullButton({ onClick, buttonName, shadow = false, disabled = false }) {
+    return (
+        <div>
+            <Button
+                onClick={onClick}
+                color="secondary"
+                variant='contained'
+                sx={{
+                    borderRadius: '8px',
+                    height: '33px',
+                    padding: '8px 12px',
+                    boxShadow: !shadow && 'none',
+                    width: '100%',
+                    justifyContent: 'flex-start' // 왼쪽으로 정렬
+                }}
+                disabled={disabled}
+            >
+                <Typography
+                    variant='subtitle1'
+                    align='left'
                     sx={{
                         fontFamily: 'Pretendard-Semibold',
                         fontSize: '14px',

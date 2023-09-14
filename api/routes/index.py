@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from starlette.responses import Response, JSONResponse
 from starlette.requests import Request
 from inspect import currentframe as frame
@@ -11,6 +11,9 @@ import sqlalchemy.exc
 from jwt.exceptions import ExpiredSignatureError, DecodeError
 from api.errors import exceptions as ex
 from api.errors.exceptions import APIException, SqlFailureEx
+
+from api.common.consts import JWT_SECRET, JWT_ALGORITHM
+
 
 router = APIRouter()
 
@@ -59,6 +62,26 @@ async def ic(request: Request):
         response = JSONResponse(status_code=error.status_code, content=error_dict)
 
     return response
+
+
+@router.get("/api/tk")
+async def tk(u_id: str, gender: int, mobile_number: str):
+    # 디버깅용 토큰 생성
+    print(u_id, gender, mobile_number)
+
+    token = f"{create_access_token(data=dict(id=u_id,gender=gender,mobile=mobile_number))}"
+
+    return JSONResponse(status_code=200, content=token)
+
+
+def create_access_token(*, data: dict = None, expires_delta: int = (7 * 24)):
+    to_encode = data.copy()
+    if expires_delta:
+        to_encode.update({"exp": datetime.utcnow() + timedelta(hours=expires_delta)})
+    encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+    return encoded_jwt
+
 
 async def token_decode(access_token):
     """

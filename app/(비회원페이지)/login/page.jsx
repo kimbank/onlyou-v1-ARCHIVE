@@ -176,7 +176,7 @@ export default function Home() {
           
           
           <Container disableGutters sx={{
-            marginTop: '128px',
+            marginTop: '80px',
             display: 'flex',
             flexDirection: 'column',
             gap: '64px'
@@ -212,7 +212,7 @@ export default function Home() {
               // 버튼이 맨 아래 있도록 하기 위해 display는 absolute로 합니다.
             }}>
               <MainButton buttonName='로그인하기' onClick={() => handleLogin()} />
-              <SubButton buttonName='가입하기' />
+              {/* <SubButton buttonName='가입하기' /> */}
             </Container>
             {/* <Error title="앗, 가입되지 않은 전화번호에요." content="온리유에 가입하거나, 다른 번호로 로그인해주세요!" isError={isError} /> */}
           </Container>

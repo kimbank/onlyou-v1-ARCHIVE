@@ -149,7 +149,7 @@ async def register_user(user_account_info: UserCreate = Body(...), session: Sess
     return JSONResponse(status_code=200, content=dict(msg="USER_CREATED"))
 
 
-def create_access_token(*, data: dict = None, expires_delta: int = (7 * 24)):
+def create_access_token(*, data: dict = None, expires_delta: int = (3 * 7 * 24)):
     to_encode = data.copy()
     if expires_delta:
         to_encode.update({"exp": datetime.utcnow() + timedelta(hours=expires_delta)})

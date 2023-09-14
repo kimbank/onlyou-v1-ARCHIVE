@@ -36,6 +36,9 @@ export function SuccessNotification({ alertMessage, visible, setVisible /* visib
                     left: '24px',
                     right: '24px',
                     transition: 'top 0.5s ease-in-out',
+                    maxWidth: '444px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
                 }}>
                     {alertMessage}
                 </Alert>
@@ -71,6 +74,9 @@ export function DangerNotification({ alertMessage, visible, setVisible /* visibl
                     left: '24px',
                     right: '24px',
                     transition: 'top 0.5s ease-in-out',
+                    maxWidth: '444px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
                 }}>
                     {alertMessage}
                 </Alert>

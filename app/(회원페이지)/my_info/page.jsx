@@ -13,7 +13,7 @@ import House from "@/public/house.svg";
 import People from "@/public/people.svg";
 import Typography from '@mui/material/Typography';
 
-import { Toggle } from '@/components/Toggle';
+import { DormantToggle } from '@/components/Toggle';
 
 
 const MyInfo = () => {
@@ -86,7 +86,7 @@ const MyInfo = () => {
         {/*매칭 활성화와 휴면 상태를 나타내는 버튼입니다.
         탈퇴페이지에서의 문제와 마찬가지로 옆으로 정렬이 되지않았습니다. */}  
 
-        <Toggle onText='매칭 활성화' offText='휴면' />
+        <DormantToggle onText='매칭 활성화' offText='휴면' />
 
         <Container disableGutters sx={{
           display: 'flex',

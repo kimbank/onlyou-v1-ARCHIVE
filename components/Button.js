@@ -22,7 +22,7 @@ const ButtonText = '버튼';
 
 // Figma: Main Button
 // CTA에 쓰이는 메인 버튼입니다.
-export function MainButton({ onClick, buttonName, shadow = true }) {
+export function MainButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -55,7 +55,7 @@ export function MainButton({ onClick, buttonName, shadow = true }) {
 
 
 // Figma: Main half Button
-export function MainHalfButton({onClick, buttonName, shadow = 'none' }) {
+export function MainHalfButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -66,7 +66,7 @@ export function MainHalfButton({onClick, buttonName, shadow = 'none' }) {
                     borderRadius: '12px',
                     height: '56px',
                     width: '50%',
-                    boxShadow: shadow,
+                    boxShadow: !shadow && 'none',
                 }}
             >
                 <Typography
@@ -89,7 +89,7 @@ export function MainHalfButton({onClick, buttonName, shadow = 'none' }) {
 
 // Figma: Sub Button
 // 회색 계열의 서브버튼입니다.
-export function SubButton({onClick, buttonName}) {
+export function SubButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -100,6 +100,7 @@ export function SubButton({onClick, buttonName}) {
                     borderRadius: '12px',
                     height: '56px',
                     width: '100%',
+                    boxShadow: !shadow && 'none',
                 }}
             >
                 <Typography
@@ -121,7 +122,7 @@ export function SubButton({onClick, buttonName}) {
 
 
 // Figma: Sub half Button
-export function SubHalfButton({onClick, buttonName, disabled = false}) {
+export function SubHalfButton({ onClick, buttonName, shadow = false, disabled = false }) {
     return (
         <div>
             <Button
@@ -132,6 +133,7 @@ export function SubHalfButton({onClick, buttonName, disabled = false}) {
                     borderRadius: '12px',
                     height: '56px',
                     width: '50%',
+                    boxShadow: !shadow && 'none',
                 }}
                 disabled={disabled}
             >
@@ -154,7 +156,7 @@ export function SubHalfButton({onClick, buttonName, disabled = false}) {
 
 
 // Figma: Edit Button
-export function EditButton({onClick, buttonName}) {
+export function EditButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -165,6 +167,7 @@ export function EditButton({onClick, buttonName}) {
                     borderRadius: '8px',
                     height: '33px',
                     padding: '8px 12px',
+                    boxShadow: !shadow && 'none',
                 }}
             >
                 <Typography
@@ -192,7 +195,7 @@ export function EditButton({onClick, buttonName}) {
 
 
 // Figma: Upload Button
-export function UploadButton({onClick, buttonName}) {
+export function UploadButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -203,6 +206,7 @@ export function UploadButton({onClick, buttonName}) {
                     borderRadius: '16px',
                     width: '120px',
                     height: '80px',
+                    boxShadow: !shadow && 'none',
                 }}
             >
                 <CloudUploadIcon sx={{
@@ -218,7 +222,7 @@ export function UploadButton({onClick, buttonName}) {
 
 
 // Figma: List Button
-export function ListButton({onClick, buttonName}) {
+export function ListButton({ onClick, buttonName, shadow = false }) {
     return (
         <div>
             <Button
@@ -230,7 +234,8 @@ export function ListButton({onClick, buttonName}) {
                     width: '100%',
                     height: '33px',
                     padding: '8px 12px',
-                    justifyContent: 'left'
+                    justifyContent: 'left',
+                    boxShadow: !shadow && 'none',
                 }}
             >
                 <Typography
@@ -317,7 +322,7 @@ export function SubMiniFullButton({ onClick, buttonName, shadow = false, disable
     )
 }
 
-export function MainMiniButton({onClick, buttonName, disabled = false}) {
+export function MainMiniButton({ onClick, buttonName, shadow = false, disabled = false }) {
     return (
         <div>
             <Button
@@ -328,6 +333,7 @@ export function MainMiniButton({onClick, buttonName, disabled = false}) {
                     borderRadius: '8px',
                     height: '33px',
                     padding: '8px 12px',
+                    boxShadow: !shadow && 'none',
                 }}
                 disabled={disabled}
             >

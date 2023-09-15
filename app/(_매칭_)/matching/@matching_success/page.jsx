@@ -81,18 +81,12 @@ function OtherItem({ people, setAcceptFinal }) {
       gap: "8px",
     }}>
       <Container disableGutters sx={{
-        display: 'inline-flex',
+        display: 'flex',
         flexDirection: 'row',
         gap: "8px",
       }}>
-        <Container disableGutters sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: "4px",
-        }}>
-          <img src='/kakao_mini_icon.svg' style={{ width: '32px', height: '32px', wordBreak:"break-all"  }} />
-          <div className='basic' style={{ marginTop: "auto", marginBottom: "auto" }}>{people["name"]}</div>
-        </Container>
+        <img src='/kakao_mini_icon.svg' style={{ width: '32px', height: '32px', wordBreak: "break-all" }} />
+        <div className='basic' style={{ marginTop: "auto", marginBottom: "auto" }}>{people["name"]}</div>
         <TimeInfo alertMessage="공개 마감 19:50" />
       </Container>
       <SubMiniFullButton buttonName='프로필 보기' onClick={() => { }} />
@@ -105,7 +99,7 @@ export default function Success() {
   const [acceptFinal, setAcceptFinal] = useState(false);
 
   const user = {
-    "name": "사용자",
+    "name": "사용자0123456789",
     "mobile_number": "01012345678",
     "gender": 0,
     "nickname": "온리유",

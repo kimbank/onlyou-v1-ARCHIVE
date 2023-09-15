@@ -109,8 +109,9 @@ const MyInfo = () => {
         }}>
           <div className='heading4'>기타</div>
           <SubMiniFullButton buttonName={'지인 차단'} />
-          <SubMiniFullButton buttonName={'인증 뱃지 추가하기'}/>
-          <SubMiniFullButton buttonName={'매너 점수 조회'}/>
+          <SubMiniFullButton buttonName={'경고 점수 조회'}/>
+          <div className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginBottom: '0px', marginLeft: '14px'}}>로그아웃</div>
+          <div className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</div>
         </Container>
       </Container>
     </Container>

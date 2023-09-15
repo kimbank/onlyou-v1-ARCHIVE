@@ -10,6 +10,7 @@
     "dev-window": "concurrently \"npm run next-dev\" \"npm run fastapi-dev-window\"",
     "build": "next build",
     "start": "next start -p 80",
+    "start-both": "concurrently \"npm run start\" \"npm run fastapi-dev\"",
     "lint": "next lint"
   },
   "dependencies": {

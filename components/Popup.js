@@ -64,7 +64,7 @@ const Puller = styled(Box)(({ theme }) => ({
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
             // height: `calc(50% - ${drawerBleeding}px)`,
-            height: 'auto',
+            // height: 'auto',
             overflow: 'visible',
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
@@ -92,7 +92,7 @@ const Puller = styled(Box)(({ theme }) => ({
             // top: -drawerBleeding,
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
-            visibility: 'visible',
+            visibility: open ? 'visible' : 'hidden',
             right: 0,
             left: 0,
             padding: '40px',

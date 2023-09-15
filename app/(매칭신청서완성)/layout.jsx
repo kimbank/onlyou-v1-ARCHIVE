@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
         {children}
       </Container>
       <Modal clicked={clicked} setClicked={setClicked}>
-        <Typography className="heading2" style={{marginRight: '72px'}}>매칭 신청서 작성을 중단하시겠어요?</Typography>
+        <Typography className="heading2" style={{marginRight: '56px'}}>매칭 신청서 작성을 중단하시겠어요?</Typography>
         <Typography className="basic">모든 진행 상황은 저장되며, 이어 작성하실 수 있습니다.</Typography>
         <Link href="/my_info">
           <MainButton buttonName='나중에 이어 작성하기' />

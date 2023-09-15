@@ -11,7 +11,7 @@ import { createTheme } from "@mui/material";
 import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
-import Modal from '@/components/modal'
+import Modal from '@/components/Modal';
 import { useState } from 'react';
 
 // export const metadata = {

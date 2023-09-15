@@ -14,18 +14,58 @@ import People from "@/public/people.svg";
 import Typography from '@mui/material/Typography';
 
 import { DormantToggle } from '@/components/Toggle';
+import Modal from '@/components/Modal';
+import { MainButton } from '@/components/Button';
 
 
 const MyInfo = () => {
   const [user, setUser] = useState([]);
+  const [isDormant, setIsDormant] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios.get('/api/my_info')
         .then(response => {
             setUser(response.data);
             console.log(response.data);
+            setIsDormant(response.data.dormant ? true : false);
         });
   }, []);
+
+  async function setDormanTrue() {
+    const res = await axios.get('/api/my_info/dormant/true');
+
+    if (res.data == 'success') {
+      setShowModal(false);
+      window.location.href = '/my_info';
+    } else {
+      alert('휴면상태 전환에 실패했습니다.');
+    }
+  }
+  async function setDormantFalse() {
+    const res = await axios.get('/api/my_info/dormant/false');
+
+    if (res.data == 'success') {
+      setShowModal(false);
+      window.location.href = '/my_info';
+    } else {
+      alert('휴면상태 해제에 실패했습니다.');
+    }
+  }
+
+  const handleDormant = (e, newValue) => {
+    if (newValue !== null) {
+      setShowModal(true);
+      if (newValue == 'true') {
+        // setIsDormant(true);
+        // setDormanTrue();
+      }
+      if (newValue == 'false') {
+        // setIsDormant(false);
+        // setDormantFalse();
+      }
+    }
+  }
 
   return (
     <Container disableGutters sx={{marginBottom: '80px'}}>
@@ -86,7 +126,21 @@ const MyInfo = () => {
         {/*매칭 활성화와 휴면 상태를 나타내는 버튼입니다.
         탈퇴페이지에서의 문제와 마찬가지로 옆으로 정렬이 되지않았습니다. */}  
 
-        <DormantToggle onText='매칭 활성화' offText='휴면' />
+        <DormantToggle isDormant={isDormant} handleDormant={handleDormant} />
+        <Modal clicked={showModal} setClicked={setShowModal}>
+          {
+            isDormant? 
+            <>
+              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를 해제하시겠습니까?</Typography>
+              <Typography className='basic'>{user.dormant}에 휴면상태로 전환되었습니다.</Typography>
+              <MainButton buttonName='휴면 해제하기' onClick={() => setDormantFalse()} />
+            </> :
+            <>
+              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태로 전환하시겠습니까?</Typography>
+              <MainButton buttonName='휴면 전환하기' onClick={() => setDormanTrue()}/>
+            </>
+          }
+        </Modal>
 
         <Container disableGutters sx={{
           display: 'flex',
@@ -110,8 +164,8 @@ const MyInfo = () => {
           <div className='heading4'>기타</div>
           <SubMiniFullButton buttonName={'지인 차단'} />
           <SubMiniFullButton buttonName={'경고 점수 조회'}/>
-          <div className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginBottom: '0px', marginLeft: '14px'}}>로그아웃</div>
-          <div className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</div>
+          <a href="/logout" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '16px', marginLeft: '14px'}}>로그아웃</a>
+          <a href="/leave" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</a>
         </Container>
       </Container>
     </Container>

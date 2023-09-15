@@ -9,8 +9,8 @@
     "fastapi-dev-window": "pip install -r requirements.txt && python -m uvicorn api.main:app --reload",
     "dev-window": "concurrently \"npm run next-dev\" \"npm run fastapi-dev-window\"",
     "build": "next build",
-    "start": "next start",
-    "start-both": "concurrently \"npm run start\" \"npm run fastapi-dev\"",
+    "next-start": "next start",
+    "start": "concurrently \"npm run start\" \"npm run fastapi-dev\"",
     "lint": "next lint"
   },
   "dependencies": {

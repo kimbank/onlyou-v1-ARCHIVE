@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "fastapi-dev-window": "pip install -r requirements.txt && python -m uvicorn api.main:app --reload",
     "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.main:app --reload",
+    "fastapi-start": "python3 -m uvicorn api.main:app --reload",
+
     "next-dev": "next dev",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
-    "fastapi-dev-window": "pip install -r requirements.txt && python -m uvicorn api.main:app --reload",
     "dev-window": "concurrently \"npm run next-dev\" \"npm run fastapi-dev-window\"",
+    
     "build": "next build",
+
     "next-start": "next start",
-    "start": "concurrently \"npm run start\" \"npm run fastapi-dev\"",
+    "start": "concurrently \"npm run next-start\" \"npm run fastapi-start\"",
+
     "lint": "next lint"
   },
   "dependencies": {

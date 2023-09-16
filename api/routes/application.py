@@ -72,9 +72,11 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         except Exception as e:
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
-
+    
+    # 점수 계산
     # try:
-    #     get_scores(user_data_target, target_users)
-    #     return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
+    get_scores(user_data_target, target_users)
+    return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
     # except Exception as e:
+    #     print(e)
     #     return JSONResponse(status_code=500, content=dict(msg='점수 계산 실패'))

@@ -18,33 +18,53 @@ import Modal from '@/components/Modal';
 import { MainButton } from '@/components/Button';
 
 
-const theme = createTheme({
-    palette: {
-      primary: {
-        light: '#FFA266',
-        main: '#FF7700',
-        dark: '#C45A00',
-        contrastText: '#fff',
-      },
-      secondary: {
-        light: '#FFFFFF',
-        main: '#F7F4F2',
-        dark: '#B2B0AE',
-        contrastText: '#3C3B3A',
-      },
-    },
-  });
   
   export default function RootLayout({ children }) {
     return (
-      <ThemeProvider theme={theme}>
-        <Header />
-            <Container>
-                {/*성사된 상대의 유무에 따라 나타나야 하는 */}
-                <div className='heading2'>아직 성사된 상대가 없어요.</div>
-            </Container>
-        <NavBar />
-      </ThemeProvider>
+      <>
+        <Container sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '64px'
+        }}>
+          {/*성사된 상대의 유무에 따라 나타나야 하는 부분인거 같습니다 
+          피그마 기준으로 글씨만 채워두었습니다. */}
+          <Container disableGutters sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }}>
+            <div className='heading2'>아직 성사된 상대가 없어요.</div>
+            <div className='basic' style={{color: 'rgba(102, 101, 99, 1)'}}>조금만 기다려 주세요!</div>
+          </Container>
+        <Container disableGutters sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          borderRadius: "24px",
+          border: 1,
+          padding: "24px",
+          gap: '32px',
+          borderColor: "#FFC999"
+        }}>
+          <Container disableGutters sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <div className='heading3'>내 인연은 누구?</div>
+            <div className='basic' style={{ color: '#666563' }}>
+              <img src='/bag.svg' style={{ width: '20px', height: '20px' }}/>
+            </div>
+            <div className='basic' style={{ color: '#666563' }}>
+              <img src='/house.svg' style={{ width: '20px', height: '20px' }} />
+            </div>
+            <div className='basic' style={{ color: '#666563' }}>
+              <img src='/people.svg' style={{ width: '20px', height: '20px' }} />
+            </div>
+          </Container>
+        </Container>
+        </Container>
+      </>
     )
   }
   

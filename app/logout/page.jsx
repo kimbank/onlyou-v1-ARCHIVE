@@ -46,10 +46,6 @@ export default function Logout() {
         flexDirection: 'column',
         gap: '64px'
       }}>
-        <div style={{textAlign: 'center', color: 'grey'}} className='heading2'>로그아웃 중입니다. . .</div>
-        <div style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'}}>
-          <SubButton buttonName={'메인으로 돌아가기'}/>
-        </div>
       </Container>
     </Container>
   </ThemeProvider>

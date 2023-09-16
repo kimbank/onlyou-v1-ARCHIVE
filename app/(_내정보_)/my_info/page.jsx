@@ -17,20 +17,17 @@ import { DormantToggle } from '@/components/Toggle';
 import Modal from '@/components/Modal';
 import { MainButton } from '@/components/Button';
 
+import { useQuery } from 'react-query';
+import { useGetMyInfo } from '@/app/api_/query/useGetMyInfo';
+
+
 
 const MyInfo = () => {
-  const [user, setUser] = useState([]);
   const [isDormant, setIsDormant] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    axios.get('/api/my_info')
-        .then(response => {
-            setUser(response.data);
-            console.log(response.data);
-            setIsDormant(response.data.dormant ? true : false);
-        });
-  }, []);
+  const { data } = useGetMyInfo();
+
 
   async function setDormanTrue() {
     const res = await axios.get('/api/my_info/dormant/true');
@@ -67,6 +64,8 @@ const MyInfo = () => {
     }
   }
 
+  if(!data) return <></>;
+
   return (
     <Container disableGutters sx={{marginBottom: '80px'}}>
 
@@ -95,31 +94,31 @@ const MyInfo = () => {
             gap: '0px',
             flexDirection: 'row-reverse'
           }}>
-            {user.job_type && <Certification alertMessage="학력 인증" />}
-            {user.education && <Certification alertMessage="직장 인증" />}
+            {data.job_type && <Certification alertMessage="학력 인증" />}
+            {data.education && <Certification alertMessage="직장 인증" />}
           </Container>
 
           {/* 닉네임 */}
           <Typography className='heading2' marginBottom={'16px'}> 
-            {user.nickname}
+            {data.nickname}
           </Typography>
 
           {/* 직장유형 */}
           <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
             <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
-            {user.job_type ? user.job_type : "직장정보 미입력"}
+            {data.job_type ? data.job_type : "직장정보 미입력"}
           </Typography>
 
           {/* 거주지 */}
           <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
             <Image src={House} width='20px' style={{marginRight: '10px'}}/>
-            {user.residence ? user.residence : "거주지 미입력"}
+            {data.residence ? data.residence : "거주지 미입력"}
           </Typography>
 
           {/* 생년월일 */}
           <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
             <Image src={People} width='20px' style={{marginRight: '10px'}}/>
-            {user.date_birth ? user.date_birth : "????"}년생
+            {data.date_birth ? data.date_birth : "????"}년생
           </Typography>
         </Container>
 
@@ -132,7 +131,7 @@ const MyInfo = () => {
             isDormant? 
             <>
               <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를<br/>해제하시겠습니까?</Typography>
-              <Typography className='basic'>{user.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>
+              <Typography className='basic'>{data.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>
               <MainButton buttonName='휴면 해제하기' onClick={() => setDormantFalse()} />
             </> :
             <>

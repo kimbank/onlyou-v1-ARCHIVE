@@ -7,7 +7,9 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from "@/public/ONLYou.svg";
+// import Logo from "@/public/ONLYou.svg";
+import Logo from '@/public/logo.png';
+
 import Cancel from '@/public/cancel.svg';
 
 const credit = 100
@@ -27,7 +29,8 @@ export function Header() {
             }}>
                 <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '6px', padding: '0 32px' }}>
                     <a href='/'>
-                        <Image src={Logo} alt="logo" width={84} height={30} priority={true} />
+                        {/* <Image src={Logo} alt="logo" width={84} height={30} priority={true} /> */}
+                        <Image src={Logo} alt="logo" width={19.5} height={32} priority={true} />
                     </a>
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>

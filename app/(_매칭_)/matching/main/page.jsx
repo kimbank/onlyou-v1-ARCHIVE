@@ -3,7 +3,7 @@
 import Container from '@mui/material/Container';
 import { Header } from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as CancelSelect } from '@/public/cancel_select.svg';
 
 import { EditButton, ListButton, MainButton, MainHalfButton, SubButton, SubHalfButton, SubMiniButton, UploadButton } from '@/components/Button';
@@ -78,7 +78,7 @@ function ProfileItem({ people }) {
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <img src='/bag.svg' style={{ width: '20px', height: '20px' }} /> 
+        <img src='/bag.svg' style={{ width: '20px', height: '20px' }} />
         <div className='basic' style={{ color: '#666563' }}>콩쥐/대표</div>
       </Container>
 
@@ -87,7 +87,7 @@ function ProfileItem({ people }) {
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <img src='/house.svg' style={{ width: '20px', height: '20px' }} /> 
+        <img src='/house.svg' style={{ width: '20px', height: '20px' }} />
         <div className='basic' style={{ color: '#666563' }}>서울특별시 성북구</div>
       </Container>
 
@@ -96,7 +96,7 @@ function ProfileItem({ people }) {
         flexDirection: 'row',
         gap: '16px'
       }}>
-        <img src='/people.svg' style={{ width: '20px', height: '20px' }} /> 
+        <img src='/people.svg' style={{ width: '20px', height: '20px' }} />
         <div className='basic' style={{ color: '#666563' }}>{people["date_birth"].split('-')[0]}년생</div>
       </Container>
 
@@ -110,24 +110,16 @@ function TimeItem() {
       flexDirection: 'row',
       flexDirection: 'row-reverse'
     }}>
-      <Certification alertMessage="선택 마감까지 19:50" />
+      <TimeInfo alertMessage="선택 마감까지 19:50" />
     </Container>);
 }
 
-function KakaoItem() {
-  return (
-    <Container disableGutters sx={{
-      flexDirection: 'row',
-      gap: "8px",
-      display: "flex"
-    }}>
-      <div className='basic'>icon자리</div>
-      <div className='basic'>taykim01</div>
-    </Container>);
-}
-
+// 매칭 수락과 거절을 선택하는 버튼 모음입니다.
+// 수락이나 거절을 했을 때, 한 번 더 확인하는 모달이 표시됩니다.
+// issue: 아직 디버깅을 하지 않아 제대로 작동하는지 확인이 불가능 합니다.
 function AcceptItem({ setAcceptFinal }) {
   const [showModal, setShowModal] = useState(false);
+  const [acceptTemporary, setAcceptTemporary] = useState(null); 
 
   return (
     <Container disableGutters sx={{
@@ -135,8 +127,9 @@ function AcceptItem({ setAcceptFinal }) {
       flexDirection: 'row',
       gap: "8px",
     }}>
-      <CheckedCheckbox onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
-      <DefaultCheckbox buttonName='거절하기' />
+      <CheckedCheckbox buttonName='taykim01님 수락하기' onClick={() => {setShowModal(true); setAcceptTemporary('accepted');}} />
+      <DefaultCheckbox buttonName='거절하기' onClick={() => {setShowModal(true); setAcceptTemporary('rejected');}} />
+
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <Container disableGutters sx={{
           display: 'flex',
@@ -152,9 +145,35 @@ function AcceptItem({ setAcceptFinal }) {
           <img src='/cancel_select.svg' style={{ width: '20px', height: '20px', marginLeft: "auto" }} onClick={() => { setShowModal(false) }} />
           <div className='heading3'>정말로 선택하시겠어요?</div>
           <div className='basic' style={{ color: '#666563' }}>한 번 선택하면 변경할 수 없습니다.</div>
-          <MainButton buttonName='선택하기' onClick={() => { setShowModal(false); setAcceptFinal(true) }} />
+          <MainButton buttonName='선택하기' onClick={() => { setShowModal(false); setAcceptFinal(acceptTemporary) }} />
         </Container>
       </Modal>
+    </Container>);
+}
+
+// 메칭에 성공했을 때 표시되는 버튼 모음입니다.
+// kakao id를 보여주고, 프로필 페이지로 넘어가는 버튼이 있습니다.
+// issue: 프로필 페이지로 넘어가도록 구현해야 합니다.
+// issue: kakao id를 받아와야 합니다.
+function SuccessItem({ people }) {
+
+  return (
+    <Container disableGutters sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: "8px",
+    }}>
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: "8px",
+      }}>
+        <img src='/kakao_mini_icon.svg' style={{ width: '32px', height: '32px', wordBreak: "break-all" }} />
+        <div className='basic' style={{ marginTop: "auto", marginBottom: "auto" }}>{people["name"]}</div>
+        <TimeInfo alertMessage="공개 마감 19:50" />
+      </Container>
+      {/* issue: 프로필 페이지로 넘어가도록 구현해야 합니다. */}
+      <SubMiniFullButton buttonName='프로필 보기' onClick={() => { }} />
     </Container>);
 }
 
@@ -171,30 +190,60 @@ function InfoItem() {
 }
 
 export default function Home() {
+  // alert를 보여주는 state입니다.
+  // true일 때 alert가 보여집니다.
   const [alertVisible, setAlertVisible] = useState(false);
-  const { ErrorModal, setShowErrorModal } = useErrorModal();
-  const [acceptFinal, setAcceptFinal] = useState(false);
+  // user 정보를 저장하는 state입니다.
+  // user 정보를 받아오지 못했을 때 null 값을 가집니다.
+  const [user, setUser] = useState(null);
+  // 자신의 최종 수락 여부를 저장하는 state입니다.
+  // accepted, rejected, null 세 가지 값을 가질 수 있습니다.
+  const [acceptFinal, setAcceptFinal] = useState(null);
+  // 상대의 수락 여부를 저장하는 state입니다.
+  // accepted, rejected, null 세 가지 값을 가질 수 있습니다.
+  // issue: 상대의 수락 여부를 나타낸 예시입니다. 실제 상대의 수락 여부는 서버에서 받아와야 합니다.
+  const [acceptFromOther, setAcceptFromOther] = useState(null);
 
-  function hadleLogin() {
-    setShowErrorModal(true);
-  }
-
-  const user = {
+  // user 정보를 받았다는 가정하에 작성한 코드입니다. 
+  // 실제로는 user 정보를 받아오는 코드를 작성해야 합니다.
+  const sample_user = {
     "name": "사용자",
     "mobile_number": "01012345678",
     "gender": 0,
     "nickname": "온리유",
     "date_birth": "2023-08-21",
   }
+  useEffect(() => {
+    setUser(sample_user);
+  }, []);
+
+  // 자신의 수락 여부와 상대의 수락 여부를 비교하여 최종 결정을 합니다.
+  // issue: 상대의 수락 여부를 나타낸 예시입니다. 실제 상대의 수락 여부는 서버에서 받아와야 합니다.
+  useEffect(() => {
+    if (acceptFinal === 'rejected') {
+      setUser(null);
+      // issue: 추가로 상대에게 거절을 알리는 통신을 보내야 합니다.
+    } else if (acceptFinal === 'accepted') {
+      if (acceptFromOther === 'rejected') {
+        setUser(null);
+      } else if (acceptFromOther === 'accepted') {
+        // 매칭이 성사되었을 때, 매칭 성사 페이지로 이동합니다.
+
+      } else {
+        setAlertVisible(true);
+      }
+    } else {
+      setAcceptFinal(null);
+    }
+  }, [acceptFinal, acceptFromOther]);
 
   return (
     <ThemeProvider theme={theme}>
       <Header />
       <ErrorModal />
       <Container sx={{ marginBottom: '80px', }}>
+        {/* 준비중을 알려주는 알람입니다. */}
         <DangerNotification alertMessage='준비중입니다.' visible={alertVisible} setVisible={setAlertVisible} />
-
-
         <Container disableGutters sx={{
           marginTop: '128px',
           display: 'flex',
@@ -218,7 +267,6 @@ export default function Home() {
             borderColor: "#FFC999"
           }}>
 
-            {/* 함수 호출 */}
             <AuthenticationItem />
             <ProfileItem people={user} />
             <TimeItem />
@@ -229,10 +277,10 @@ export default function Home() {
               gap: "8px",
             }}>
 
-              {/* 함수 호출 */}
-              <KakaoItem />
-              <AcceptItem setAcceptFinal={setAcceptFinal} />
-
+              {/* 상대방의 수락 여부에 따라 다른 버튼이 표시됩니다. */}
+              {(acceptFinal === 'accepted') && (acceptFromOther === 'accepted') && <SuccessItem people={user} />}
+              {/* '선택'창의 수락과 거절, 프로필 상세보기 버튼 모음입니다. */}
+              {(user !== null) && (acceptFinal === null) && <AcceptItem setAcceptFinal={setAcceptFinal} />}
             </Container>
           </Container>
           {/* 매칭 전과 미성사 일 때 표시되는 알람입니다. */}

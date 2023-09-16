@@ -131,12 +131,12 @@ const MyInfo = () => {
           {
             isDormant? 
             <>
-              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를 해제하시겠습니까?</Typography>
-              <Typography className='basic'>{user.dormant}에 휴면상태로 전환되었습니다.</Typography>
+              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를<br/>해제하시겠습니까?</Typography>
+              <Typography className='basic'>{user.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>
               <MainButton buttonName='휴면 해제하기' onClick={() => setDormantFalse()} />
             </> :
             <>
-              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태로 전환하시겠습니까?</Typography>
+              <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태로<br/>전환하시겠습니까?</Typography>
               <MainButton buttonName='휴면 전환하기' onClick={() => setDormanTrue()}/>
             </>
           }

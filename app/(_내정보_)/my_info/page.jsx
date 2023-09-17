@@ -125,10 +125,10 @@ const MyInfo = () => {
         {/*매칭 활성화와 휴면 상태를 나타내는 버튼입니다.
         탈퇴페이지에서의 문제와 마찬가지로 옆으로 정렬이 되지않았습니다. */}  
 
-        <DormantToggle isDormant={isDormant} handleDormant={handleDormant} />
+        <DormantToggle isDormant={Boolean(data.dormant)} handleDormant={handleDormant} />
         <Modal clicked={showModal} setClicked={setShowModal}>
           {
-            isDormant? 
+            data.dormant ? 
             <>
               <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를<br/>해제하시겠습니까?</Typography>
               <Typography className='basic'>{data.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>

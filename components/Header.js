@@ -64,7 +64,8 @@ export function GuestHeader() {
             }}>
                 <Toolbar sx={{ gap: 0.5, flexGrow: 1, marginTop: '6px', padding: '0 32px' }}>
                     <a href='/'>
-                        <Image src={Logo} alt="logo" width={84} height={30} priority={true} />
+                        <Image src={Logo} alt="logo" width={19.5} height={32} priority={true} />
+                        {/* <Image src={Logo} alt="logo" width={84} height={30} priority={true} /> */}
                     </a>
                     {/* <div className='logo-title' style={{ marginTop: '-12px' }}>온리유</div> */}
                 </Toolbar>

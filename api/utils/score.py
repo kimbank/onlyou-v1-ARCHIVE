@@ -1,5 +1,4 @@
 def get_score(data, target_data):
-    print(f'안녕하세요, {data.male_id}입니다.')
     target_standard = {}
     score = 0
     for key, value in data.__dict__.items():

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from api.database.conn import db
 
+
 class BaseMixin:
     # id = Column(Integer, primary_key=True, index=True)
     # created_at = Column(DateTime, nullable=False, default=func.utc_timestamp())
@@ -96,7 +97,6 @@ class BaseMixin:
         obj._q = query
         return obj
 
-
     @classmethod
     def cls_attr(cls, col_name=None):
         if col_name:
@@ -119,7 +119,7 @@ class BaseMixin:
 
     def update(self, auto_commit: bool = False, **kwargs):
         qs = self._q.update(kwargs)
-        get_id = self.id
+        get_id = self.id if hasattr(self, 'id') else self.female_id if hasattr(self, 'female_id') else self.male_id
         ret = None
 
         self._session.flush()

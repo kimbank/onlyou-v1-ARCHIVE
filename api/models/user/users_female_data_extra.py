@@ -34,7 +34,7 @@ class UserFemaleDataExtraSchema(BaseModel):
     tattoo: Optional[int] = Field(description="0 ~ 1")
     fashion_style: Optional[str] = Field(description="")
     preffered_dating: Optional[int] = Field(description="0 ~ 1")
-    preferred_contact_method: Optional[str] = Field(description="0 ~ 1")
+    preferred_contact_method: Optional[int] = Field(description="0 ~ 1")
     attractiveness_level: Optional[int] = Field(description="0 ~ 4")
     jealousy_level: Optional[int] = Field(description="0 ~ 4")
     love_initiative: Optional[int] = Field(description="0 ~ 3")

@@ -73,7 +73,7 @@ class UsersMaleDataExtra(Base, BaseMixin):
     preffered_dating = Column(
         TINYINT, comment='선호 데이트 0: 정적 1: 활동적', nullable=True)
     preferred_contact_method = Column(
-        String(5), comment='선호 연락 수단 0: 전화 1: 문자', nullable=True)
+        TINYINT, comment='선호 연락 수단 0: 전화 1: 문자', nullable=True)
     attractiveness_level = Column(
         TINYINT, comment='애교 레벨 0 ~ 4', nullable=True)
     jealousy_level = Column(TINYINT, comment='질투 레벨 0 ~ 4', nullable=True)

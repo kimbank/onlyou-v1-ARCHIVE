@@ -61,7 +61,7 @@ function Reason() {
 
 
   
-  export default function Report({ children }) {
+  export default function Report() {
     return (
         <Container disableGutters sx={{
           display: 'flex',

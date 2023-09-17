@@ -59,7 +59,7 @@ class UsersMaleDataExtra(Base, BaseMixin):
         TINYINT, comment='[미공개 정보] 소비 가치관 0: 절약형 1: 투자형', nullable=True)
     career_family_values = Column(
         TINYINT, comment='[미공개 정보] 커리어와 가정 가치관 0 ~ 1', nullable=True)
-    animal_image = Column(String(6), comment='[미공개 정보] 동물 이미지', nullable=True)
+    animal_image = Column(TINYINT, comment='[미공개 정보] 동물 이미지', nullable=True)
     double_eyelid = Column(
         TINYINT, comment='[미공개 정보] 쌍커풀 0 ~ 2', nullable=True)
     face_shape = Column(

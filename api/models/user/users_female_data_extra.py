@@ -26,7 +26,7 @@ class UserFemaleDataExtraSchema(BaseModel):
     political_values: Optional[int] = Field(description="0 ~ 3")
     consumption_values: Optional[int] = Field(description="0 ~ 1")
     career_family_values: Optional[int] = Field(description="0 ~ 1")
-    animal_image: Optional[str] = Field(description="")
+    animal_image: Optional[int] = Field(description="")
     double_eyelid: Optional[int] = Field(description="0 ~ 2")
     face_shape: Optional[int] = Field(description="0 ~ 1")
     body_type: Optional[int] = Field(description="0 ~ 4")

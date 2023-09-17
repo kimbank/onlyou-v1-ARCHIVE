@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from api.database.conn import db
 
+
 class BaseMixin:
     # id = Column(Integer, primary_key=True, index=True)
     # created_at = Column(DateTime, nullable=False, default=func.utc_timestamp())
@@ -72,12 +73,18 @@ class BaseMixin:
             if len(key) > 2:
                 raise Exception("No 2 more dunders")
             col = getattr(cls, key[0])
-            if len(key) == 1: cond.append((col == val))
-            elif len(key) == 2 and key[1] == 'gt': cond.append((col > val))
-            elif len(key) == 2 and key[1] == 'gte': cond.append((col >= val))
-            elif len(key) == 2 and key[1] == 'lt': cond.append((col < val))
-            elif len(key) == 2 and key[1] == 'lte': cond.append((col <= val))
-            elif len(key) == 2 and key[1] == 'in': cond.append((col.in_(val)))
+            if len(key) == 1:
+                cond.append((col == val))
+            elif len(key) == 2 and key[1] == 'gt':
+                cond.append((col > val))
+            elif len(key) == 2 and key[1] == 'gte':
+                cond.append((col >= val))
+            elif len(key) == 2 and key[1] == 'lt':
+                cond.append((col < val))
+            elif len(key) == 2 and key[1] == 'lte':
+                cond.append((col <= val))
+            elif len(key) == 2 and key[1] == 'in':
+                cond.append((col.in_(val)))
         obj = cls()
         if session:
             obj._session = session
@@ -112,11 +119,11 @@ class BaseMixin:
 
     def update(self, auto_commit: bool = False, **kwargs):
         qs = self._q.update(kwargs)
-        get_id = self.id
+        get_id = self.id if hasattr(self, 'id') else self.female_id if hasattr(self, 'female_id') else self.male_id
         ret = None
 
         self._session.flush()
-        if qs > 0 :
+        if qs > 0:
             ret = self._q.first()
         if auto_commit:
             self._session.commit()

@@ -26,7 +26,7 @@ class UserMaleDataExtraSchema(BaseModel):
     political_values: Optional[int] = Field(description="0 ~ 3")
     consumption_values: Optional[int] = Field(description="0 ~ 1")
     career_family_values: Optional[int] = Field(description="0 ~ 1")
-    animal_image: Optional[str] = Field(description="")
+    animal_image: Optional[int] = Field(description="")
     double_eyelid: Optional[int] = Field(description="0 ~ 2")
     face_shape: Optional[int] = Field(description="0 ~ 1")
     body_type: Optional[int] = Field(description="0 ~ 4")
@@ -34,7 +34,7 @@ class UserMaleDataExtraSchema(BaseModel):
     tattoo: Optional[int] = Field(description="0 ~ 1")
     fashion_style: Optional[str] = Field(description="")
     preffered_dating: Optional[int] = Field(description="0 ~ 1")
-    preferred_contact_method: Optional[str] = Field(description="0 ~ 1")
+    preferred_contact_method: Optional[int] = Field(description="0 ~ 1")
     attractiveness_level: Optional[int] = Field(description="0 ~ 4")
     jealousy_level: Optional[int] = Field(description="0 ~ 4")
     love_initiative: Optional[int] = Field(description="0 ~ 3")
@@ -70,7 +70,7 @@ class UserMaleDataExtraSchema(BaseModel):
                 "political_values": 2,
                 "consumption_values": 1,
                 "career_family_values": 1,
-                "animal_image": "강아지",
+                "animal_image": 2,
                 "double_eyelid": 1,
                 "face_shape": 0,
                 "body_type": 2,

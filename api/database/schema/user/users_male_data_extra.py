@@ -59,7 +59,7 @@ class UsersMaleDataExtra(Base, BaseMixin):
         TINYINT, comment='[미공개 정보] 소비 가치관 0: 절약형 1: 투자형', nullable=True)
     career_family_values = Column(
         TINYINT, comment='[미공개 정보] 커리어와 가정 가치관 0 ~ 1', nullable=True)
-    animal_image = Column(String(6), comment='[미공개 정보] 동물 이미지', nullable=True)
+    animal_image = Column(TINYINT, comment='[미공개 정보] 동물 이미지', nullable=True)
     double_eyelid = Column(
         TINYINT, comment='[미공개 정보] 쌍커풀 0 ~ 2', nullable=True)
     face_shape = Column(
@@ -73,7 +73,7 @@ class UsersMaleDataExtra(Base, BaseMixin):
     preffered_dating = Column(
         TINYINT, comment='선호 데이트 0: 정적 1: 활동적', nullable=True)
     preferred_contact_method = Column(
-        String(5), comment='선호 연락 수단 0: 전화 1: 문자', nullable=True)
+        TINYINT, comment='선호 연락 수단 0: 전화 1: 문자', nullable=True)
     attractiveness_level = Column(
         TINYINT, comment='애교 레벨 0 ~ 4', nullable=True)
     jealousy_level = Column(TINYINT, comment='질투 레벨 0 ~ 4', nullable=True)

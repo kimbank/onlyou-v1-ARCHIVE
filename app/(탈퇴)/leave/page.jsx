@@ -78,7 +78,7 @@ export default function Leave() {
             <Container>
               <div disableGutters sx={{
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'row wrap',
                 gap: '8px'
               }}> 
                 {backColor0 ? <MainMiniButton onClick={() => setbackColor0(!backColor0)} buttonName={'승급 실패'}/> : <SubMiniButton onClick={() => setbackColor0(!backColor0)} buttonName={'승급 실패'}/>}

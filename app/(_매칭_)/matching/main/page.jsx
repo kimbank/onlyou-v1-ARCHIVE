@@ -110,7 +110,7 @@ function TimeItem() {
       flexDirection: 'row',
       flexDirection: 'row-reverse'
     }}>
-      <TimeInfo alertMessage="선택 마감까지 19:50" />
+      {/* <TimeInfo alertMessage="선택 마감까지 19:50" /> */}
     </Container>);
 }
 
@@ -170,10 +170,10 @@ function SuccessItem({ people }) {
       }}>
         <img src='/kakao_mini_icon.svg' style={{ width: '32px', height: '32px', wordBreak: "break-all" }} />
         <div className='basic' style={{ marginTop: "auto", marginBottom: "auto" }}>{people["name"]}</div>
-        <TimeInfo alertMessage="공개 마감 19:50" />
+        {/* <TimeInfo alertMessage="공개 마감 19:50" /> */}
       </Container>
       {/* issue: 프로필 페이지로 넘어가도록 구현해야 합니다. */}
-      <SubMiniFullButton buttonName='프로필 보기' onClick={() => { }} />
+      {/* <SubMiniFullButton buttonName='프로필 보기' onClick={() => { }} /> */}
     </Container>);
 }
 

@@ -16,7 +16,7 @@ import NavBar from '@/components/NavBar'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from "@mui/material";
 
-import { useErrorModal } from './error-modal';
+// import { useErrorModal } from './error-modal';
 
 import Link from 'next/link'
 import { CheckedCheckbox, DefaultCheckbox } from '@/components/Checkbox';
@@ -240,7 +240,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <ErrorModal />
+      {/* <ErrorModal /> */}
       <Container sx={{ marginBottom: '80px', }}>
         {/* 준비중을 알려주는 알람입니다. */}
         <DangerNotification alertMessage='준비중입니다.' visible={alertVisible} setVisible={setAlertVisible} />

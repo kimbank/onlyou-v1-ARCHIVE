@@ -2,7 +2,6 @@ from datetime import date, datetime
 from pydantic import BaseModel, Field
 from pydantic.schema import Optional
 
-
 class UsersMaleDataTargetSchema(BaseModel):
     male_id: int
     fill_status: Optional[int] = Field()

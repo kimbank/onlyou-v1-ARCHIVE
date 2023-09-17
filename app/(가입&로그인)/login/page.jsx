@@ -19,7 +19,7 @@ import NavBar from '@/components/NavBar'
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from "@mui/material";
 
-import { useErrorModal } from './error-modal';
+import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
   palette: {
@@ -51,8 +51,6 @@ export default function Home() {
 
   const [sendMessage, setSendMessage] = useState('인증번호 전송');
   const [sendDisabled, setSendDisabled] = useState(false);
-
-  const { ErrorModal, setShowErrorModal } = useErrorModal();
   
 
   function authTimer(left_seconds) {
@@ -170,7 +168,6 @@ export default function Home() {
   return (
     <>
       <GuestHeader />
-      <ErrorModal />
         <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
         <SuccessNotification alertMessage={successMessage} visible={successVisible} setVisible={setSuccessVisible} />
           
@@ -187,8 +184,8 @@ export default function Home() {
               flexDirection: 'column',
               gap: '16px'
             }}>
-              <div className='heading2'>로그인하기</div>
-              <div className='basic' style={{ color: '#666563' }}>로그인을 위해 전화번호를 인증해주세요.</div>
+              <Typography className='heading2'>로그인하기</Typography>
+              <Typography className='basic-gray' style={{ color: '#666563' }}>로그인을 위해 전화번호를 인증해주세요.</Typography>
             </Container>
 
 

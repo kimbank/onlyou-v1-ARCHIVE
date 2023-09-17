@@ -18,7 +18,8 @@ from api.database.schema.user.user import User
 class UsersFemaleDataTarget(Base, BaseMixin):
     __tablename__ = 'users_female_data_target'
     female_id = Column(Integer, ForeignKey(
-        User.id, name='fk-users-users_female_data_target'), primary_key=True, default=func.max(User.id))  # 외래키 설정되어야 하지 않나?
+        User.id, name='fk-users-users_female_data_target'), primary_key=True,
+                       default=func.max(User.id))
     fill_status = Column(Integer, nullable=False, default=0)
     created_at = Column(DateTime, nullable=False,
                         default=func.utc_timestamp(), comment='생성 일자')

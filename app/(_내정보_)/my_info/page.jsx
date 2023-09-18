@@ -20,6 +20,8 @@ import { MainButton } from '@/components/Button';
 import { useQuery } from 'react-query';
 import { useGetMyInfo } from '@/app/api_/query/useGetMyInfo';
 
+import Error from "@/components/error";
+
 
 
 const MyInfo = () => {
@@ -64,7 +66,7 @@ const MyInfo = () => {
     }
   }
 
-  if(!data) return <></>;
+  if(!data) return <Error />;
 
   return (
     <Container disableGutters sx={{marginBottom: '80px'}}>
@@ -148,7 +150,7 @@ const MyInfo = () => {
           marginTop: '32px',
         }}>
           {/*다음 아래의 버튼들의 크기가 컨테이너 가로길이를 전부 채우도록만 수정 부탁드립니다.*/}
-          <div className='heading4' style={{marginBottom: '5px'}}>매칭 신청서 수정하기</div>
+          <Typography className='heading4' style={{marginBottom: '5px'}}>매칭 신청서 수정하기</Typography>
           <SubMiniFullButton buttonName={'내 정보 수정하기'}/>
           <SubMiniFullButton buttonName={'이상형 정보 수정하기'}/>
           <SubMiniFullButton buttonName={'인증 뱃지 수정하기'}/>
@@ -160,7 +162,7 @@ const MyInfo = () => {
           gap: '8px',
           marginTop: '32px',
         }}>
-          <div className='heading4'>기타</div>
+          <Typography className='heading4'>기타</Typography>
           <SubMiniFullButton buttonName={'지인 차단'} />
           <SubMiniFullButton buttonName={'경고 점수 조회'}/>
           <a href="/logout" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '16px', marginLeft: '14px'}}>로그아웃</a>

@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko-KR">
       <body style={{'backgroundColor': '#FFE4CC'}}>
-        <div style={{'maxWidth': '480px', 'minHeight': '100vh', 'marginLeft': 'auto', 'marginRight': 'auto', 'backgroundColor': '#fff'}}>
+        <div style={{'maxWidth': '480px', 'minHeight': '100vh', 'marginLeft': 'auto', 'marginRight': 'auto', 'backgroundColor': '#fff', boxShadow:'0px 0px 32px -12px grey'}}>
           <br />
           <CssBaseline>
             {children}

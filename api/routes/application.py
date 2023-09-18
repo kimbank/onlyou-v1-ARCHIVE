@@ -118,19 +118,15 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         u = aliased(User)
         ud = aliased(UsersMaleData)
         ue = aliased(UsersMaleDataExtra)
-        ut = aliased(UsersMaleDataTarget)
 
         user_data_target = UsersFemaleDataTarget.get(female_id=user_info.id)
         join_cond1 = u.id == ud.male_id
         join_cond2 = u.id == ue.male_id
-        join_cond3 = u.id == ut.male_id
         try:
-            target_users = (session.query(u, ud, ue, ut).filter(u.gender == 1)
+            # TODO: 같은 회사 필터링 해야함
+            target_users = (session.query(u, ud, ue).filter(u.gender == 1)
                             .outerjoin(ud, join_cond1)
-                            .outerjoin(ue, join_cond2)
-                            .outerjoin(ut, join_cond3)).all()
-            for u, ud, ue, ut in target_users:
-                print(ue.fill_status if ue else None)
+                            .outerjoin(ue, join_cond2)).all()
         except Exception as e:
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
@@ -138,24 +134,21 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         u = aliased(User)
         ud = aliased(UsersFemaleData)
         ue = aliased(UsersFemaleDataExtra)
-        ut = aliased(UsersFemaleDataTarget)
 
         user_data_target = UsersMaleDataTarget.get(male_id=user_info.id)
         join_cond1 = u.id == ud.female_id
         join_cond2 = u.id == ue.female_id
-        join_cond3 = u.id == ut.female_id
         try:
-            target_users = (session.query(u, ud, ue, ut).filter(u.gender == 0)
+            target_users = (session.query(u, ud, ue).filter(u.gender == 0)
                             .outerjoin(ud, join_cond1)
-                            .outerjoin(ue, join_cond2)
-                            .outerjoin(ut, join_cond3)).all()
+                            .outerjoin(ue, join_cond2)).all()
         except Exception as e:
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
 
     # 점수 계산
     # try:
-    get_scores(user_data_target, target_users)
+    get_scores(user_data_target.__dict__, target_users)
     return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
     # except Exception as e:
     #     print(e)

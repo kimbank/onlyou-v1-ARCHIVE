@@ -17,6 +17,8 @@ from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 
 from api.models.models import UserToken
 
+import math
+
 
 router = APIRouter(prefix="/matching")
 
@@ -90,6 +92,9 @@ async def get_competitor_count(request: Request):
         user = UsersFemaleDataTarget().filter(fill_status=1)
     else:
         user = UsersMaleDataTarget().filter(fill_status=1)
-    print(user.count())
 
-    return JSONResponse(status_code=200, content=user.count())
+    ret = user.count()
+    ret = math.ceil(ret/10)
+    ret = int(ret*10)
+
+    return JSONResponse(status_code=200, content=ret)

@@ -89,7 +89,7 @@ export function MainHalfButton({ onClick, buttonName, shadow = false }) {
 
 // Figma: Sub Button
 // 회색 계열의 서브버튼입니다.
-export function SubButton({ onClick, buttonName, shadow = false }) {
+export function SubButton({ onClick, buttonName, shadow = false, height = '56px', width = '100%' }) {
     return (
         <div>
             <Button
@@ -98,7 +98,7 @@ export function SubButton({ onClick, buttonName, shadow = false }) {
                 variant='contained'
                 sx={{
                     borderRadius: '12px',
-                    height: '56px',
+                    height: height,
                     width: '100%',
                     boxShadow: !shadow && 'none',
                 }}

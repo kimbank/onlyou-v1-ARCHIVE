@@ -121,25 +121,29 @@ export function InfoText({ title, alertMessage, shadow = true }) {
                     flexDirection: 'column',
                     gap: '4px'
                 }}>
-                    <Typography
-                        variant='subtitle1'
-                        className="caption"
-                        align="left"
-                        sx={{
-                            color: '#3C3B3A'
-                        }}
-                    >
-                        {title}
-                    </Typography>
-                    <Typography
-                        variant='subtitle1'
-                        className="caption"
-                        sx={{
-                            color: '#3C3B3A'
-                        }}
-                    >
-                        {alertMessage}
-                    </Typography>
+                    { title &&
+                        <Typography
+                            variant='subtitle1'
+                            className="caption"
+                            align="left"
+                            sx={{
+                                color: '#3C3B3A'
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                    }
+                    { alertMessage &&
+                        <Typography
+                            variant='subtitle1'
+                            className="caption"
+                            sx={{
+                                color: '#3C3B3A'
+                            }}
+                        >
+                            {alertMessage}
+                        </Typography>
+                    }
                 </Container>
             </Button>
         </div>

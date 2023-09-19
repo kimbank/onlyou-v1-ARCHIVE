@@ -37,7 +37,6 @@ const theme = createTheme({
 
   export default function last() {
 
-   
     return (
       <ThemeProvider theme={theme}>
         <Header/>  
@@ -58,7 +57,9 @@ const theme = createTheme({
               gap: '16px'
             }}>
               <div className='heading2' style={{textAlign: 'center'}}>로그아웃이 완료되었어요.</div>
-              <SubButton buttonName={'다른번호로 로그인하기.'}/>
+              <a href='/'>
+                <SubButton buttonName={'다른번호로 로그인하기.'}/>
+              </a>
             </Container>
             <Container>
               <Container>

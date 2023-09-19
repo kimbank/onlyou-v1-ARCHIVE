@@ -30,9 +30,13 @@ export default async function MatchingLayout({}) {
       .then(response => response.json())
       .then(response => {status = response.msg}
     )
-  } catch (e) { return <Error /> }
+  } catch (e) { 
+    // return <Error /> 
+  }
   // console.log(status)
 
+
+  status = "promotion_apply";
 
   switch (status) {
     // 매칭 휴면 상태
@@ -77,7 +81,7 @@ export default async function MatchingLayout({}) {
     case "matching_waiting":
       return <MatchingWaiting />;
 
-    // 매칭 성공 상태
+    // 매칭 성사 상태
     case "matching_success":
       return <MatchingSuccess />;
 

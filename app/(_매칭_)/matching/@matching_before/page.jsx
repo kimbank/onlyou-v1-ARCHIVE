@@ -50,7 +50,7 @@ export default function Before() {
         <Typography className='basic-gray'>매칭에 참여하고, 인연을 만나보세요!</Typography>
         <InfoText alertMessage="약 80명의 상대가 인연을 기다리고 있어요!" shadow={false} />
 
-        <Link href="" style={{marginTop:'48px'}}>
+        <Link href="/" style={{marginTop:'48px'}}>
           <MainButton buttonName='신청서 이어 완성하기' />
         </Link>
       </Container>

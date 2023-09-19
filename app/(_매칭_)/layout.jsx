@@ -7,6 +7,8 @@ import { Header } from '@/components/Header';
 import Container from '@mui/material/Container';
 import NavBar from '@/components/NavBar'
 
+import { QueryClient, QueryClientProvider } from "react-query";
+
 // export const metadata = {
 //   title: '온리유',
 //   description: '!!!온리유 회원 페이지 설명',
@@ -30,13 +32,17 @@ const theme = createTheme({
 });
 
 export default function RootLayout({ children }) {
+  const queryClient = new QueryClient();
+
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <Container disableGutters sx={{ marginTop: '80px', marginBottom: '32px', padding: '0 32px', }}>
-        {children}
-      </Container>
-      <NavBar />
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        <Container disableGutters sx={{ marginTop: '80px', marginBottom: '32px', padding: '0 32px', }}>
+          {children}
+        </Container>
+        <NavBar />
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }

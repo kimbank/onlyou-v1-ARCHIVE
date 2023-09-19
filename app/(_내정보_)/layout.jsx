@@ -6,6 +6,7 @@ import { createTheme } from "@mui/material";
 import { Header } from "@/components/Header";
 import Container from "@mui/material/Container";
 import NavBar from "@/components/NavBar";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // export const metadata = {
@@ -37,10 +38,7 @@ export default function RootLayout({ children }) {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Header />
-        <Container
-          disableGutters
-          sx={{ marginTop: "80px", marginBottom: "32px", padding: "0 32px" }}
-        >
+        <Container disableGutters sx={{ marginTop: "80px", marginBottom: "32px", padding: "0 32px" }}>
           {children}
         </Container>
         <NavBar />

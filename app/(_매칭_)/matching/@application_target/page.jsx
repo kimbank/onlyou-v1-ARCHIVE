@@ -1,8 +1,8 @@
 'use client'
 
+import { Container, Typography } from '@mui/material';
 import { InfoText } from "@/components/Notification";
 import { MainButton } from "@/components/Button";
-import Typography from '@mui/material/Typography';
 
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
@@ -21,13 +21,24 @@ export default function ApplicationTarget() {
   }, []);
 
   return (
-    <>
-      <Typography className="heading1">인연을 찾아드릴게요!</Typography>
-      <Typography className="basic-gray">매칭에 참여하고, 인연을 만나보세요!</Typography>
-      <br />
-      <InfoText title={`약 ${userCount}명의 상대가 인연을 기다리고 있어요!`} shadow={false} />
-      <br/><br/><br/>
-      <MainButton buttonName="이상형 정보 이어서 완성하기" shadow={false} />
-    </>
+    <Container disableGutters sx={{
+      marginTop: '80px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '64px',
+    }}>
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+      }}>
+        <Typography className="heading2">인연을 찾아드릴게요!</Typography>
+        <Typography className="basic-gray">매칭에 참여하고, 인연을 만나보세요!</Typography>
+        <InfoText title={`약 ${userCount}명의 상대가 인연을 기다리고 있어요!`} />
+      </Container>
+      <a href="/application/target">
+        <MainButton buttonName="이상형 정보 이어서 완성하기"/>
+      </a>
+    </Container>
   );
 }

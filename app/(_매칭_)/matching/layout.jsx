@@ -2,11 +2,14 @@
 import { cookies } from 'next/headers';
 
 import Dormancy from "./@dormancy/page";
+
 import PromotionApply from "./@promotion_apply/page";
 import PromotionRejected from "./@promotion_rejected/page";
 import PromotionWaiting from "./@promotion_waiting/page";
+
 import ApplicationExtra from "./@application_extra/page";
 import ApplicationTarget from "./@application_target/page";
+
 import MatchingBefore from "./@matching_before/page";
 import MatchingSelection from "./@matching_selection/page";
 import MatchingWaiting from "./@matching_waiting/page";
@@ -31,12 +34,10 @@ export default async function MatchingLayout({}) {
       .then(response => {status = response.msg}
     )
   } catch (e) { 
-    // return <Error /> 
+    return <Error /> 
   }
   // console.log(status)
-
-
-  status = "promotion_apply";
+  
 
   switch (status) {
     // 매칭 휴면 상태

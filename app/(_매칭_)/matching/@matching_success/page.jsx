@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useState } from 'react';
 import { Container, Typography } from "@mui/material";
 import { DangerNotification } from '@/components/Notification';
@@ -25,8 +26,12 @@ export default function Success() {
   const [showModal, setShowModal] = useState(false);
 
   const { data } = useGetTargetInfo();
+  console.log(data)
 
   if (!data) return <Error />;
+
+  if (data.msg == 'expired') window.location.href = '/';
+
 
   // const user = {
   //   "id": 69,
@@ -59,7 +64,7 @@ export default function Success() {
       <UserCard user={data} setShowModal={setShowModal} />
       <Modal clicked={showModal} setClicked={setShowModal}>
         <Typography className='heading2'>상대방의 <br />카카오톡 아이디입니다.</Typography>
-        <Typography align='center' borderRadius='12px' paddingY='4px' marginX='16px' bgcolor={'#F7F4F2'}>kakao_id</Typography>
+        <Typography align='center' borderRadius='12px' paddingY='4px' marginX='16px' bgcolor={'#F7F4F2'}>{data.kakao_id}</Typography>
         { !isCopied ? 
           <MainButton buttonName='복사하기' onClick={() => handleClipboard()} /> :
           <SubButton buttonName='복사완료!' onClick={() => handleClipboard()} />

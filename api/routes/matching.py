@@ -77,8 +77,39 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
         msg = "application_target"
     # [[[ 매칭 조건 충족 ]]]
     else:
-        msg = "matching_before"
+        try:
+            if user_info.gender is 0:
+                # 현 페이즈의 공개 매칭을 조회
+                candidate = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+                my_choice = candidate.f_choice
+                trgt_choice = candidate.m_choice
+            else:
+                # 현 페이즈의 공개 매칭을 조회
+                candidate = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+                my_choice = candidate.m_choice
+                trgt_choice = candidate.f_choice
+        except:
+            candidate = None
 
+        # [매칭: 매칭 전]
+        if candidate is None:
+            msg = "matching_before"
+
+        # [매칭: 매칭 선택]
+        elif my_choice is 0:
+            msg = "matching_selection"
+
+        # [매칭: 매칭(상대) 결과 대기]
+        elif trgt_choice is 0:
+            msg = "matching_waiting"
+
+        # [매칭: 매칭 성사]
+        elif my_choice is 1 and trgt_choice is 1:
+            msg = "matching_success"
+
+        # [매칭: 매칭 미성사]
+        else:
+            msg = "matching_failure"
 
     return JSONResponse(status_code=200, content=dict(msg=msg))
 
@@ -109,9 +140,27 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
     if not user_info:
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
-    d = dict(id=70, gender=0, nickname='상대방닉네임', job_type='상대직장', education='학력', residence='상대거주지', birth_year='2001년생', kakao_id='상대카카오톡아이디')
 
-    print(check_matching_public(70, 1, 1, session))
+    try:
+        if user_info.gender is 0:
+            target_id = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1).male_id
+        else:
+            target_id = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1).female_id
+
+        target = User.get(id=target_id)
+
+    # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
+    except:
+        return JSONResponse(status_code=200, content=dict(msg='exp'))
+
+    d = {
+        'id': target.id,
+        'gender': target.gender,
+        'nickname': target.nickname,
+        'job_type': target.residence,
+        'birth_year': f"{target.date_birth.year}년생",
+        'kakao_id': target.kakao_id,
+    }
 
     return JSONResponse(status_code=200, content=d)
 
@@ -144,7 +193,7 @@ def check_matching_public(user_id, gender, phase, session):
                         .filter(MatchigPublic.status == 1)
                     )
 
-    print(matching.count())
+    # print(matching.count())
 
 
     return None

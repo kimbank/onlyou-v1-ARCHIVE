@@ -36,10 +36,8 @@ export default async function MatchingLayout({}) {
   } catch (e) { 
     return <Error />;
   }
-  // console.log(status)
-  
 
-  status = "matching_waiting";
+
 
   switch (status) {
     // 매칭 휴면 상태

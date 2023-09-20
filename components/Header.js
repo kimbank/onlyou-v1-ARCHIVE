@@ -42,7 +42,7 @@ export function Header() {
                         <TollOutlinedIcon sx={{ color: '#FF7700' }} />
                     </Box> */}
 
-                    <a href='/' style={{display:'flex', alignItems:'center'}}>
+                    <a href='https://coconut-belt-9f8.notion.site/ONLYou-ff96da8cb35c49e2a46d96e63829660a' target='_blank' style={{display:'flex', alignItems:'center'}}>
                         <NotificationsNoneIcon sx={{ color: '#FF7700' }} />
                     </a>
                     <a href='/' style={{display:'flex', alignItems:'center'}}>

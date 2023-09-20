@@ -10,6 +10,7 @@ from starlette.middleware.cors import CORSMiddleware
 from api.common.consts import EXCEPT_PATH_LIST, EXCEPT_PATH_REGEX
 from api.database.conn import db
 from api.common.config import conf
+from api.middlewares.global_status import status_control
 # from app.middlewares.token_validator import access_control
 # from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from api.middlewares.sqltap import sql_tap
@@ -55,6 +56,7 @@ def create_app():
 
     # 미들웨어 정의
     # app.add_middleware(middleware_class=BaseHTTPMiddleware, dispatch=access_control)
+    app.add_middleware(middleware_class=BaseHTTPMiddleware, dispatch=status_control)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=conf().ALLOW_SITE,

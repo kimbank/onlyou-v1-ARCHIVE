@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from api.database.conn import db
 
+from sqlalchemy import asc, desc
+
 
 class BaseMixin:
     # id = Column(Integer, primary_key=True, index=True)
@@ -54,6 +56,21 @@ class BaseMixin:
 
         if query.count() > 1:
             raise Exception("Only one row is supposed to be returned, but got more than one.")
+        result = query.first()
+        if not session:
+            sess.close()
+        return result
+
+    @classmethod
+    def get_max(cls, session: Session = None, col: str = "id"):
+        sess = next(db.session()) if not session else session
+        query = sess.query(cls)
+
+        col = getattr(cls, col)
+        query = query.order_by(desc(col))
+
+        # if query.count() > 1:
+        #     raise Exception("Only one row is supposed to be returned, but got more than one.")
         result = query.first()
         if not session:
             sess.close()

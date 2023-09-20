@@ -6,6 +6,7 @@ const TARGET_INFO_PATH = "/api/matching/target_info";
 export const useGetTargetInfo = () => {
   const getTargetInfo = async () => {
     const response = await axios.get(TARGET_INFO_PATH)
+    if (response.data.msg == 'exp') {window.location.href = '/'}
     return response.data;
   };
 

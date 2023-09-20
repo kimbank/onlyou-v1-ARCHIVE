@@ -1,174 +1,139 @@
 'use client'
-import React, { useState } from 'react';
-import { Container } from "@mui/material";
-import { DangerNotification } from '@/components/Notification';
-import { MainButton, MainMiniButton, SubMiniButton, SubMiniFullButton } from '@/components/Button';
-import { CheckedCheckbox, DefaultCheckbox } from '@/components/Checkbox';
-import Modal from '@/components/shared/modal';
-import { Certification, TimeInfo } from '@/components/Notification';
+
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import Container from "@mui/material/Container";
+import { Certification } from '@/components/Notification';
+import { MainSelectButton, SubButton, SubSelectButton, MainButton } from '@/components/Button';
+import { TimeInfo } from '@/components/Notification';
+
+import Image from 'next/image';
+import Bag from "@/public/bag.svg";
+import House from "@/public/house.svg";
+import People from "@/public/people.svg";
+import Typography from '@mui/material/Typography';
+
+import Modal from '@/components/Modal';
+
+import Error from "@/components/error";
 
 
 
-function Title() {
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px'
-    }}>
-      <div className='heading2'>오늘의 인연이에요</div>
-      <div className='basic' style={{ color: '#666563' }}>마감 전까지 선택을 완료해주세요!</div>
-    </Container>);
-}
+const Selection = () => {
+  const [showAccept, setShowAccept] = useState(false);
+  const [showReject, setShowReject] = useState(false);
 
-function AuthenticationItem() {
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '8px',
-      flexDirection: 'row-reverse'
-    }}>
-      <Certification alertMessage="학력 인증" />
-      <Certification alertMessage="직장 인증" />
-    </Container>);
-}
+  const user = {nickname:'taykim', job_type:'직장인', education:null, residence:'서울', date_birth:'1995년 1월 1일', public_exp:'2023'}
 
-function ProfileItem({ people }) {
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px'
-    }}>
-      <div className='heading3'>{people["name"]}</div>
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '16px'
-      }}>
-        <img src='/bag.svg' style={{ width: '20px', height: '20px' }} />
-        <div className='basic' style={{ color: '#666563' }}>콩쥐/대표</div>
-      </Container>
-
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '16px'
-      }}>
-        <img src='/house.svg' style={{ width: '20px', height: '20px' }} />
-        <div className='basic' style={{ color: '#666563' }}>서울특별시 성북구</div>
-      </Container>
-
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '16px'
-      }}>
-        <img src='/people.svg' style={{ width: '20px', height: '20px' }} />
-        <div className='basic' style={{ color: '#666563' }}>{people["date_birth"].split('-')[0]}년생</div>
-      </Container>
-
-    </Container>);
-}
-
-function TimeItem() {
-  return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'row',
-      flexDirection: 'row-reverse'
-    }}>
-      <TimeInfo alertMessage="선택 마감까지 19:50" />
-    </Container>);
-}
-
-function AcceptItem({ setAcceptFinal }) {
-  const [showModal, setShowModal] = useState(false);
+  if (!user) return <Error />;
 
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: "8px",
+      gap: '64px',
     }}>
       <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: "8px",
-      }}>
-        <MainMiniButton onClick={() => setShowModal(true)} buttonName='taykim01님 수락하기' />
-        <SubMiniButton buttonName='거절하기' />
-      </Container>
-      <SubMiniFullButton buttonName='프로필 보기' onClick={() => { }} />
-      <Modal showModal={showModal} setShowModal={setShowModal}>
-        <Container disableGutters sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '28px',
-          alignItems: 'left',
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
-          padding: '48px',
-          borderRadius: '20px',
-        }}>
-          <img src='/cancel_select.svg' style={{ width: '20px', height: '20px', marginLeft: "auto" }} onClick={() => { setShowModal(false) }} />
-          <div className='heading3'>정말로 선택하시겠어요?</div>
-          <div className='basic' style={{ color: '#666563' }}>한 번 선택하면 변경할 수 없습니다.</div>
-          <MainButton buttonName='선택하기' onClick={() => { setShowModal(false); setAcceptFinal(true) }} />
-        </Container>
-      </Modal>
-    </Container>);
-}
-
-// 매칭 선택 상태
-export default function Selection() {
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [acceptFinal, setAcceptFinal] = useState(false);
-
-  const user = {
-    "name": "사용자",
-    "mobile_number": "01012345678",
-    "gender": 0,
-    "nickname": "온리유",
-    "date_birth": "2023-08-21",
-  }
-
-  return (
-    <Container sx={{ marginBottom: '80px', }}>
-      {/* 준비중을 알려주는 알람입니다. */}
-      <DangerNotification alertMessage='준비중입니다.' visible={alertVisible} setVisible={setAlertVisible} />
-      <Container disableGutters sx={{
-        marginTop: '128px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '64px'
+        gap: '16px',
+        // marginY: '64px',
       }}>
-
-        {/* 제목과 부제목 입니다. */}
-        <Title />
-
-        {/* 매칭되어 나온 상대방 정보 및 버튼 모임입니다. 
-              모두 주황 박스 안에 있습니다. */}
-        <Container disableGutters sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          borderRadius: "24px",
-          border: 1,
-          padding: "24px",
-          gap: '32px',
-          borderColor: "#FFC999"
-        }}>
-
-          {/* 함수 호출 */}
-          <AuthenticationItem />
-          <ProfileItem people={user} />
-          <TimeItem />
-          <AcceptItem setAcceptFinal={setAcceptFinal} />
-        </Container>
-
+        <Typography className='heading2'>오늘의 인연이에요</Typography>
+        <Typography className='basic-gray'>마감 전까지 선택을 완료해주세요!</Typography>
       </Container>
+      <UserCard user={user} acp={setShowAccept} rej={setShowReject} />
+      <Modal clicked={showAccept} setClicked={setShowAccept}>
+        <Typography className='heading2'>정말로 선택하시겠어요?</Typography>
+        <Typography className='basic-gray'>한 번 선택하면 변경할 수 없습니다</Typography>
+        <MainButton buttonName='선택하기' onClick={() => handleAccept()} />
+      </Modal>
+      <Modal clicked={showReject} setClicked={setShowReject}>
+        <Typography className='heading2'>정말로 거절하시겠어요?</Typography>
+        <Typography className='basic-gray'>한 번 선택하면 변경할 수 없습니다</Typography>
+        <MainButton buttonName='거절하기' onClick={() => handleReject()} />
+      </Modal>
     </Container>
-  );
+  )
 }
+
+
+function UserCard({ user, acp, rej }) {
+
+  return (
+    <Container disableGutters sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      borderRadius: "24px",
+      border: 1,
+      padding: "24px",
+      gap: '4px',
+      borderColor: "#FFC999"
+    }}>
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '8px',
+        flexDirection: 'row-reverse',
+        marginBottom: '28px',
+      }}>
+        {user.job_type && <Certification alertMessage="직장 인증" />}
+        {user.education && <Certification alertMessage="학력 인증" />}
+      </Container>
+
+      {/* 닉네임 */}
+      <Typography className='heading2'> 
+        {user.nickname}
+      </Typography>
+
+      {/* 직장유형 */}
+      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+        <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
+        {user.job_type ? user.job_type : "?"}
+      </Typography>
+
+      {/* 거주지 */}
+      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+        <Image src={House} width='20px' style={{marginRight: '10px'}}/>
+        {user.residence ? user.residence : "?"}
+      </Typography>
+
+      {/* 생년월일 */}
+      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+        <Image src={People} width='20px' style={{marginRight: '10px'}}/>
+        {user.date_birth ? user.date_birth : "?"}
+      </Typography>
+      
+      <Container disableGutters sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '28px',
+        marginBottom: '4px',
+      }}>
+        <div></div>
+        <TimeInfo alertMessage={'선택 마감까지 00:00'} /> 
+      </Container>
+      <Container disableGutters sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: '8px',
+        marginTop: '24px',
+      }}>
+        <MainSelectButton buttonName='수락하기' onClick={() => acp(true)} />
+        <SubSelectButton buttonName='거절하기' onClick={() => rej(true)} />
+      </Container>
+      <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+    </Container>
+  )
+}
+
+async function handleAccept() {
+  const res = await axios.get('/matching');
+}
+
+async function handleReject() {
+  const res = await axios.get('/matching');
+}
+
+
+export default Selection;

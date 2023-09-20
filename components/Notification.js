@@ -106,6 +106,7 @@ export function InfoText({ title, alertMessage, shadow = false }) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     boxShadow: !shadow && 'none', // initial, inherit, none, unset
+                    width: '100%',
                 }}
             >
                 <InfoIcon sx={{
@@ -119,7 +120,7 @@ export function InfoText({ title, alertMessage, shadow = false }) {
                 <Container disableGutters sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '4px'
+                    gap: '0px'
                 }}>
                     { title &&
                         <Typography
@@ -127,7 +128,7 @@ export function InfoText({ title, alertMessage, shadow = false }) {
                             className="caption"
                             align="left"
                             sx={{
-                                color: '#3C3B3A'
+                                color: '#666563'
                             }}
                         >
                             {title}
@@ -135,10 +136,11 @@ export function InfoText({ title, alertMessage, shadow = false }) {
                     }
                     { alertMessage &&
                         <Typography
-                            variant='subtitle1'
-                            className="caption"
+                            // variant='subtitle1'
+                            // className="caption"
+                            align="left"
                             sx={{
-                                color: '#3C3B3A'
+                                color: '#666563'
                             }}
                         >
                             {alertMessage}

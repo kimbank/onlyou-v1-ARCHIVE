@@ -22,15 +22,17 @@ import Kakao from "@/public/kakao_mini_icon.svg";
 
 // 매칭 선택 상태
 export default function Success() {
+  const [left, setLeft] = useState("??:??:??");
+  const [sec, setSec] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const { data } = useGetTargetInfo();
-  console.log(data)
+  // console.log(data)
 
   if (!data) return <Error />;
-
-  if (data.msg == 'expired') window.location.href = '/';
+  
+  setTimeout(() => {setLeft(Timer(data.time_left - (sec)));setSec(sec+1)}, 1000);
 
 
   // const user = {
@@ -61,7 +63,7 @@ export default function Success() {
         <Typography className='heading2'>축하드려요! 🎉</Typography>
         <Typography className='basic-gray'>서로가 서로를 선택하여 연락처가 공개되었어요. <br />카카오톡 아이디를 통해 인사를 건네보세요!</Typography>
       </Container>
-      <UserCard user={data} setShowModal={setShowModal} />
+      <UserCard user={data} setShowModal={setShowModal} left={left} />
       <Modal clicked={showModal} setClicked={setShowModal}>
         <Typography className='heading2'>상대방의 <br />카카오톡 아이디입니다.</Typography>
         <Typography align='center' borderRadius='12px' paddingY='4px' marginX='16px' bgcolor={'#F7F4F2'}>{data.kakao_id}</Typography>
@@ -74,7 +76,7 @@ export default function Success() {
   );
 }
 
-function UserCard({ user, setShowModal }) {
+function UserCard({ user, setShowModal, left }) {
 
   return (
     <Container disableGutters sx={{
@@ -133,11 +135,32 @@ function UserCard({ user, setShowModal }) {
             </span> :
             <div></div>
           }
-          <TimeInfo alertMessage={'공개마감 00:00'} />
+          <TimeInfo alertMessage={`공개마감 ${left}`} />
         </Container>
         <Link href={`/user/${user.id}/detail`}>
           <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
         </Link>
     </Container>
   )
+}
+
+function Timer(sec) {
+  if (sec == 0) window.location.reload();
+  
+  let hour = Math.floor(sec / 3600);
+  let min = Math.floor((sec % 3600) / 60);
+  let second = sec % 60;
+
+  if (hour < 10) hour = `0${hour}`;
+  if (min < 10) min = `0${min}`;
+  if (second < 10) second = `0${second}`;
+
+  if (hour > 0) {
+    return `${hour}:${min}:${second}`;
+  } else if (min > 0) {
+    return `${min}:${second}`;
+  } else if (second > 0) {
+    return `${second}`;
+  }
+  return ""
 }

@@ -23,6 +23,7 @@ import Error from "@/components/error";
 
 const Agreement = () => {
   const { data } = useGetTargetList();
+  console.log(data)
 
   if (!data) return <Error />;
 
@@ -30,9 +31,9 @@ const Agreement = () => {
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '0px',
+      gap: '16px',
     }}>
-      { data.length > 1 ?
+      { data.length > 0 ?
           <>
             <Typography className='heading2'>성사된 인연의 프로필이에요.</Typography>
             <Typography className='basic-gray'>카카오톡 아이디는 7일 동안만 공개되어요.</Typography>
@@ -48,13 +49,42 @@ const Agreement = () => {
         gap: '128px',
         marginY: '64px',
       }}>
-        { data.length > 1 ?
+        { data.length > 0 ?
           data.map((user, index) => {
             return <UserCard user={user} key={index} />
           }) :
-          <>
-            <UserCard user={{nickname:"내 연인은 누구?", job_type:null, education:null, residence:null, birth_year:null}} />
-          </>
+          <Container disableGutters sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: "24px",
+            border: 1,
+            padding: "24px",
+            gap: '4px',
+            borderColor: "#FFC999"
+          }}>
+            {/* 닉네임 */}
+            <Typography className='heading2'> 
+              내 연인은 누구?
+            </Typography>
+
+            {/* 직장유형 */}
+            <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+              <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
+              ?
+            </Typography>
+
+            {/* 거주지 */}
+            <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+              <Image src={House} width='20px' style={{marginRight: '10px'}}/>
+              ?
+            </Typography>
+
+            {/* 생년월일 */}
+            <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+              <Image src={People} width='20px' style={{marginRight: '10px'}}/>
+              ?
+            </Typography>
+          </Container>
         }
       </Container>
     </Container>
@@ -120,13 +150,13 @@ function UserCard({ user }) {
           { user.kakao_id ?
             <span style={{display:'flex', alignItems:'center'}}>
               <Image src={Kakao} style={{marginRight: '8px'}} />
-              <Typography className='basic'>{user.kakao_id}</Typography>
+              <Typography className='basic'>확인하기</Typography>
             </span> :
             <div></div>
           }
           { user.public_exp ? 
             <TimeInfo alertMessage={'공개마감 00:00'} /> :
-            <TimeInfo alertMessage='카카오톡 아이디 공개가 마감되었어요.' />
+            <TimeInfo alertMessage='카카오톡 공개가 마감되었어요.' />
           }
         </Container>
         <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>

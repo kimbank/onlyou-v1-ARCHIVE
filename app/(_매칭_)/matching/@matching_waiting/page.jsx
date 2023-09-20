@@ -11,19 +11,22 @@ import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
 import People from "@/public/people.svg";
 
+import { useQuery } from 'react-query';
+import { useGetTargetInfo } from '@/app/api_/query/useGetTargetInfo';
+import Error from "@/components/error";
+
 
 // 매칭 선택 상태
 export default function Waiting() {
+  const [left, setLeft] = useState("??:??:??");
+  const [sec, setSec] = useState(0);
 
-  const user = {
-    "name": "사용자",
-    "mobile_number": "01012345678",
-    "gender": 0,
-    "nickname": "온리유",
-    "date_birth": "2023-08-21",
-    "job_type": "직장인",
-    "education": "명문대",
-  }
+  const { data } = useGetTargetInfo();
+  // console.log(data)
+
+  if (!data) return <Error />;
+
+  setTimeout(() => {setLeft(Timer(data.time_left - (sec)));setSec(sec+1)}, 1000);
 
   return (
     <Container disableGutters sx={{
@@ -40,13 +43,13 @@ export default function Waiting() {
         <Typography className='heading2'>상대의 선택을 <br />기다리는 중이에요</Typography>
         <Typography className='basic-gray'>곧 메시지로 결과를 알려드릴게요.</Typography>
       </Container>
-      <UserCard user={user} />
+      <UserCard user={data} left={left} />
     </Container>
   );
 }
 
 
-function UserCard({ user }) {
+function UserCard({ user, left }) {
 
   return (
     <Container disableGutters sx={{
@@ -99,8 +102,29 @@ function UserCard({ user }) {
         marginBottom: '4px',
       }}>
         <div></div>
-        <TimeInfo alertMessage={'상대의 선택 마감까지 00:00'} /> 
+        <TimeInfo alertMessage={`상대의 선택 마감까지 ${left}`} /> 
       </Container>
     </Container>
   )
+}
+
+function Timer(sec) {
+  if (sec == 0) window.location.reload();
+  
+  let hour = Math.floor(sec / 3600);
+  let min = Math.floor((sec % 3600) / 60);
+  let second = sec % 60;
+
+  if (hour < 10) hour = `0${hour}`;
+  if (min < 10) min = `0${min}`;
+  if (second < 10) second = `0${second}`;
+
+  if (hour > 0) {
+    return `${hour}:${min}:${second}`;
+  } else if (min > 0) {
+    return `${min}:${second}`;
+  } else if (second > 0) {
+    return `${second}`;
+  }
+  return ""
 }

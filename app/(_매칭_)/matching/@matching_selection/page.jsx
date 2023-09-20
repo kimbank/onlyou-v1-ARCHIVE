@@ -27,7 +27,7 @@ const Selection = () => {
   const [showReject, setShowReject] = useState(false);
 
   const { data } = useGetTargetInfo();
-  console.log(data)
+  // console.log(data)
 
   if (!data) return <Error />;
 
@@ -155,11 +155,13 @@ function Timer(sec) {
 }
 
 async function handleAccept() {
-  const res = await axios.get('/matching');
+  const res = await axios.get('/api/matching/select/true');
+  window.location.reload();
 }
 
 async function handleReject() {
-  const res = await axios.get('/matching');
+  const res = await axios.get('/api/matching/select/false');
+  window.location.reload();
 }
 
 

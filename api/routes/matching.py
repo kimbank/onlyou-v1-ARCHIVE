@@ -15,7 +15,11 @@ from api.database.schema.user.users_male_data_extra import UsersMaleDataExtra
 from api.database.schema.user.users_female_data_target import UsersFemaleDataTarget
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 
+from api.database.schema.matching.matching_public import MatchigPublic
+
 from api.models.models import UserToken
+
+import math
 
 
 router = APIRouter(prefix="/matching")
@@ -90,6 +94,57 @@ async def get_competitor_count(request: Request):
         user = UsersFemaleDataTarget().filter(fill_status=1)
     else:
         user = UsersMaleDataTarget().filter(fill_status=1)
-    print(user.count())
 
-    return JSONResponse(status_code=200, content=user.count())
+    ret = user.count()
+    ret = math.ceil(ret/10)
+    ret = int(ret*10)
+
+    return JSONResponse(status_code=200, content=ret)
+
+
+@router.get('/target_info')
+async def get_target_info(request: Request, session: Session = Depends(db.session)):
+    # Todo: 토큰 적합성 검사 미들웨어 리펙터링 필요함.
+    user_info = await token_control(request)
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+
+    d = dict(id=70, gender=0, nickname='상대방닉네임', job_type='상대직장', education='학력', residence='상대거주지', birth_year='2001년생', kakao_id='상대카카오톡아이디')
+
+    print(check_matching_public(70, 1, 1, session))
+
+    return JSONResponse(status_code=200, content=d)
+
+@router.get('/select/{choice}')
+async def get_target_profile(request: Request, choice: bool):
+    # Todo: 토큰 적합성 검사 미들웨어 리펙터링 필요함.
+    user_info = await token_control(request)
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+
+    if choice:
+        print("Accept")
+    else:
+        print("Reject")
+
+    return ""
+
+
+def check_matching_public(user_id, gender, phase, session):
+
+    if gender is 0:
+        matching = (session.query(MatchigPublic)
+                        .filter(MatchigPublic.female_id == user_id)
+                        .filter(MatchigPublic.phase == phase)
+                    )
+    else:
+        matching = (session.query(MatchigPublic)
+                        .filter(MatchigPublic.male_id == user_id)
+                        .filter(MatchigPublic.phase == phase)
+                        .filter(MatchigPublic.status == 1)
+                    )
+
+    print(matching.count())
+
+
+    return None

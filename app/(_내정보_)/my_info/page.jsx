@@ -133,7 +133,7 @@ const MyInfo = () => {
             data.dormant ? 
             <>
               <Typography className='heading2' style={{marginRight: '56px'}}>휴면상태를<br/>해제하시겠습니까?</Typography>
-              <Typography className='basic'>{data.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>
+              <Typography className='basic-gray'>{data.dormant}에 휴면상태로<br/>전환되었습니다.</Typography>
               <MainButton buttonName='휴면 해제하기' onClick={() => setDormantFalse()} />
             </> :
             <>

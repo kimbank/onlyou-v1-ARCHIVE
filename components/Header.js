@@ -36,13 +36,18 @@ export function Header() {
                 </Toolbar>
 
                 <Box sx={{ display: 'flex', gap: 2, paddingRight: '24px' }}>
-                    <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                    {/* 베타테스트 크레딧 없음 */}
+                    {/* <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                         <Typography className='credit' sx={{ color: '#FF7700' }} >{ credit }</Typography>
                         <TollOutlinedIcon sx={{ color: '#FF7700' }} />
-                    </Box>
+                    </Box> */}
 
-                    <NotificationsNoneIcon sx={{ color: '#FF7700' }} />
-                    <HelpOutlineIcon sx={{ color: '#FF7700' }} />
+                    <a href='/' style={{display:'flex', alignItems:'center'}}>
+                        <NotificationsNoneIcon sx={{ color: '#FF7700' }} />
+                    </a>
+                    <a href='/' style={{display:'flex', alignItems:'center'}}>
+                        <HelpOutlineIcon sx={{ color: '#FF7700' }} />
+                    </a>
                 </Box>
 
             </Container>

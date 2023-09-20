@@ -90,7 +90,7 @@ export function DangerNotification({ alertMessage, visible, setVisible /* visibl
 
 // Figma: Info text
 // 이 버튼은 위 notification과 달리, 나왔다가 들어갔다 하는 컴포넌트가 아니라서 애니메이션이 없습니다.
-export function InfoText({ title, alertMessage, shadow = true }) {
+export function InfoText({ title, alertMessage, shadow = false }) {
     return (
         <div>
             {/* 이슈: 버튼이 figma와 다르게 양 옆으로 화면을 체우지 않습니다. */}
@@ -106,6 +106,7 @@ export function InfoText({ title, alertMessage, shadow = true }) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     boxShadow: !shadow && 'none', // initial, inherit, none, unset
+                    width: '100%',
                 }}
             >
                 <InfoIcon sx={{
@@ -119,27 +120,32 @@ export function InfoText({ title, alertMessage, shadow = true }) {
                 <Container disableGutters sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '4px'
+                    gap: '0px'
                 }}>
-                    <Typography
-                        variant='subtitle1'
-                        className="caption"
-                        align="left"
-                        sx={{
-                            color: '#3C3B3A'
-                        }}
-                    >
-                        {title}
-                    </Typography>
-                    <Typography
-                        variant='subtitle1'
-                        className="caption"
-                        sx={{
-                            color: '#3C3B3A'
-                        }}
-                    >
-                        {alertMessage}
-                    </Typography>
+                    { title &&
+                        <Typography
+                            variant='subtitle1'
+                            className="caption"
+                            align="left"
+                            sx={{
+                                color: '#666563'
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                    }
+                    { alertMessage &&
+                        <Typography
+                            // variant='subtitle1'
+                            // className="caption"
+                            align="left"
+                            sx={{
+                                color: '#666563'
+                            }}
+                        >
+                            {alertMessage}
+                        </Typography>
+                    }
                 </Container>
             </Button>
         </div>

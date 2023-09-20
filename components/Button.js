@@ -89,7 +89,7 @@ export function MainHalfButton({ onClick, buttonName, shadow = false }) {
 
 // Figma: Sub Button
 // 회색 계열의 서브버튼입니다.
-export function SubButton({ onClick, buttonName, shadow = false }) {
+export function SubButton({ onClick, buttonName, shadow = false, height = '56px', width = '100%' }) {
     return (
         <div>
             <Button
@@ -98,7 +98,7 @@ export function SubButton({ onClick, buttonName, shadow = false }) {
                 variant='contained'
                 sx={{
                     borderRadius: '12px',
-                    height: '56px',
+                    height: height,
                     width: '100%',
                     boxShadow: !shadow && 'none',
                 }}
@@ -291,34 +291,32 @@ export function SubMiniButton({ onClick, buttonName, shadow = false, disabled = 
 
 export function SubMiniFullButton({ onClick, buttonName, shadow = false, disabled = false }) {
     return (
-        <div>
-            <Button
-                onClick={onClick}
-                color="secondary"
-                variant='contained'
+        <Button
+            onClick={onClick}
+            color="secondary"
+            variant='contained'
+            sx={{
+                borderRadius: '8px',
+                height: '33px',
+                padding: '8px 12px',
+                width: '100%',
+                boxShadow: !shadow && 'none',
+                justifyContent: 'flex-start',
+            }}
+            disabled={disabled}
+        >
+            <Typography
+                variant='subtitle1'
+                align='left'
                 sx={{
-                    borderRadius: '8px',
-                    height: '33px',
-                    padding: '8px 12px',
-                    boxShadow: !shadow && 'none',
-                    width: '100%',
-                    justifyContent: 'flex-start' // 왼쪽으로 정렬
+                    fontFamily: 'Pretendard-Semibold',
+                    fontSize: '14px',
+                    letterSpacing: '1.25px',
                 }}
-                disabled={disabled}
             >
-                <Typography
-                    variant='subtitle1'
-                    align='left'
-                    sx={{
-                        fontFamily: 'Pretendard-Semibold',
-                        fontSize: '14px',
-                        letterSpacing: '1.25px',
-                    }}
-                >
-                    {buttonName}
-                </Typography>
-            </Button>
-        </div>
+                {buttonName}
+            </Typography>
+        </Button>
     )
 }
 
@@ -349,5 +347,66 @@ export function MainMiniButton({ onClick, buttonName, shadow = false, disabled =
                 </Typography>
             </Button>
         </div>
+    )
+}
+
+export function MainSelectButton({ onClick, buttonName, shadow = false, disabled = false }) {
+    return (
+        <Button
+            onClick={onClick}
+            color="primary"
+            variant='contained'
+            sx={{
+                borderRadius: '8px',
+                height: '33px',
+                padding: '8px 12px',
+                width: '100%',
+                boxShadow: !shadow && 'none',
+                flex: '1',
+            }}
+            disabled={disabled}
+        >
+            <Typography
+                variant='subtitle1'
+                sx={{
+                    fontFamily: 'Pretendard-Semibold',
+                    fontSize: '14px',
+                    letterSpacing: '1.25px',
+                }}
+            >
+                {buttonName}
+            </Typography>
+        </Button>
+    )
+}
+
+export function SubSelectButton({ onClick, buttonName, shadow = false, disabled = false }) {
+    return (
+        <Button
+            onClick={onClick}
+            color="secondary"
+            variant='contained'
+            sx={{
+                borderRadius: '8px',
+                height: '33px',
+                padding: '8px 12px',
+                width: '100%',
+                boxShadow: !shadow && 'none',
+                flex: '1',
+            }}
+            disabled={disabled}
+        >
+            <Typography
+                variant='subtitle1'
+                align='left'
+                sx={{
+                    fontFamily: 'Pretendard-Semibold',
+                    fontSize: '14px',
+                    letterSpacing: '1.25px',
+                }}
+            >
+                {buttonName}
+            </Typography>
+        </Button>
     )
 }

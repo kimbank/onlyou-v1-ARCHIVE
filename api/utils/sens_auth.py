@@ -23,12 +23,12 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
 
 
 def send_auth_code(mobile_number, auth_code):
-    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:271713119564:only_you_notification/messages"
+    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
 
-    service_id = "ncp:sms:kr:271713119564:only_you_notification"
+    service_id = "ncp:sms:kr:316329234095:only_you_sms"
 
-    access_key = "8WHCdtB9qhqZNQUNdAwT"
-    secret_key = bytes("1mj5SUIOt5PrWHdYPt9yTGPtKxAAoVAJktuzyIcx", 'UTF-8')
+    access_key = "Yx6kQbwM43TXNprGMeIP"
+    secret_key = bytes("WKW2OXoTa0ltZbSPaJIuRoVjKQbfM0td10hV56dL", 'UTF-8')
     method = "POST"
     uri = f"/sms/v2/services/{service_id}/messages"
     timestamp = str(int(time.time() * 1000))
@@ -37,7 +37,7 @@ def send_auth_code(mobile_number, auth_code):
         "type": "SMS",
         "contentType": "COMM",
         "countryCode": "82",
-        "from": "01059202289",
+        "from": "01052418394",
         "subject": "인증번호 발송 제목",
         "content": "인증번호 발송 컨텐츠",
         "messages": [

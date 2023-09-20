@@ -1,55 +1,74 @@
 'use client'
 import React, { useState } from 'react';
 import Container from '@mui/material/Container';
-import { InfoText, DangerNotification } from '@/components/Notification';
-import { MainButton } from '@/components/Button';
-import Link from 'next/link'
+import { Typography } from '@mui/material';
 
-function Title() {
+import Image from 'next/image';
+import Bag from "@/public/bag.svg";
+import House from "@/public/house.svg";
+import People from "@/public/people.svg";
+import { InfoText } from '@/components/Notification';
+
+
+// 매칭 대기중 상태
+export default function Before() {
+
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '16px'
+      gap: '64px',
     }}>
-      <div className='heading2'>인연을 찾아드릴게요!</div>
-      <div className='basic' style={{ color: '#666563' }}>매칭에 참여하고, 인연을 만나보세요!</div>
-      <InfoText alertMessage="약 80명의 상대가 인연을 기다리고 있어요!" shadow={false} />
-    </Container>
-  );
-}
-
-function ContinueButton() {
-  return (
-    <Container sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '16px',
-    }}>
-      {/* issue: 링크를 아직 안걸었습니다. */}
-      <Link href="">
-        <MainButton buttonName='신청서 이어 완성하기' />
-      </Link>
-    </Container>
-  );
-}
-
-// 매칭 대기중 상태
-export default function Before() {
-  const [alertVisible, setAlertVisible] = useState(false);
-
-  return (
-    <Container sx={{ marginBottom: '80px', }}>
-      {/* 준비중을 알려주는 알람입니다. */}
-      <DangerNotification alertMessage='준비중입니다.' visible={alertVisible} setVisible={setAlertVisible} />
       <Container disableGutters sx={{
-        marginTop: '128px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '64px'
+        gap: '16px',
+        // marginY: '64px',
       }}>
-        <Title />
-        <ContinueButton />
+        <Typography className='heading2'>인연을 찾는 중이에요</Typography>
+        <Typography className='basic-gray'>빠르게 인연을 찾아드릴게요!</Typography>
+      </Container>
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: "24px",
+        border: 1,
+        padding: "24px",
+        gap: '4px',
+        borderColor: "#FFC999"
+      }}>
+
+        {/* 닉네임 */}
+        <Typography className='heading2'> 
+          내 인연은 누구?
+        </Typography>
+
+        {/* 직장유형 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
+          ?
+        </Typography>
+
+        {/* 거주지 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={House} width='20px' style={{marginRight: '10px'}}/>
+          ?
+        </Typography>
+
+        {/* 생년월일 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={People} width='20px' style={{marginRight: '10px'}}/>
+          ?
+        </Typography>
+      </Container>
+
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+      }}>
+        <InfoText title="경쟁률 높음" alertMessage="내 이상형을 원하는 동성이 많아요" shadow={false} />
+        <InfoText title="매칭 난이도 중간" alertMessage="매칭까지는 2일이 예상되어요" shadow={false} />
       </Container>
     </Container>
   );

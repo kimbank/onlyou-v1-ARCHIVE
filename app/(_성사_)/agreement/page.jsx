@@ -4,45 +4,57 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Container from "@mui/material/Container";
 import { Certification } from '@/components/Notification';
-import { MainHalfButton, MainMiniButton, SubHalfButton, SubMiniButton, SubMiniFullButton } from '@/components/Button';
+import { MainHalfButton, MainMiniButton, SubHalfButton, SubButton, SubMiniButton, SubMiniFullButton } from '@/components/Button';
 import { DefaultCheckbox } from '@/components/Checkbox';
+import { TimeInfo } from '@/components/Notification';
 
 import Image from 'next/image';
 import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
 import People from "@/public/people.svg";
+import Report from "@/public/report.svg";
+import Kakao from "@/public/kakao_mini_icon.svg";
 import Typography from '@mui/material/Typography';
 
 
 
 
 const Agreement = () => {
-  const data = null;
+  // const data = null;
+  const data = [{nickname:'taykim', job_type:'직장인', education:'대학교', residence:'서울', date_birth:'1995년 1월 1일', date_matching:'2023년 8월 10일', kakao_id:'카카오1', public_exp:'2023'},
+  {nickname:'taykim', job_type:'직장인', education:'대학교', residence:'서울', date_birth:'1995년 1월 1일', date_matching:'2023년 8월 10일'}]
 
   return (
     <Container disableGutters sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '64px'
+      gap: '0px',
     }}>
-      {/*성사된 상대의 유무에 따라 나타나야 하는 부분인거 같습니다 
-      피그마 기준으로 글씨만 채워두었습니다. */}
+      { data ?
+          <>
+            <Typography className='heading2'>성사된 인연의 프로필이에요.</Typography>
+            <Typography className='basic-gray'>카카오톡 아이디는 7일 동안만 공개되어요.</Typography>
+          </> :
+          <>
+            <Typography className='heading2'>아직 성사된 상대가 없어요.</Typography>
+            <Typography className='basic-gray'>조금만 기다려 주세요!</Typography>
+          </>
+        }
       <Container disableGutters sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px'
+        gap: '128px',
+        marginY: '64px',
       }}>
-        <Typography className='heading2'>아직 성사된 상대가 없어요.</Typography>
-        <Typography className='basic-gray'>조금만 기다려 주세요!</Typography>
+        { data ?
+          data.map((user, index) => {
+            return <UserCard user={user} key={index} />
+          }) :
+          <>
+            <UserCard user={{nickname:"내 연인은 누구?", job_type:null, education:null, residence:null, date_birth:null}} />
+          </>
+        }
       </Container>
-      { data ?
-        data.map((user, index) => {
-          return <UserCard user={user} key={index} />
-        }) :
-        <>
-          <UserCard user={{nickname:"내 연인은 누구?", job_type:null, education:null, residence:null, date_birth:null}} />
-        </>
-      }
     </Container>
   )
 }
@@ -51,48 +63,74 @@ const Agreement = () => {
 function UserCard({ user }) {
 
   return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      borderRadius: "24px",
-      border: 1,
-      padding: "24px",
-      gap: '4px',
-      borderColor: "#FFC999"
-    }}>
+    <span>
+      <Typography className='heading5' marginBottom={'8px'} color={'#ff7700'}>{user.date_matching}</Typography>
       <Container disableGutters sx={{
         display: 'flex',
-        flexDirection: 'row',
-        gap: '0px',
-        flexDirection: 'row-reverse'
+        flexDirection: 'column',
+        borderRadius: "24px",
+        border: 1,
+        padding: "24px",
+        gap: '4px',
+        borderColor: "#FFC999"
       }}>
-        {user.job_type && <Certification alertMessage="직장 인증" />}
-        {user.education && <Certification alertMessage="학력 인증" />}
+        <Container disableGutters sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '8px',
+          flexDirection: 'row-reverse',
+          marginBottom: '28px',
+        }}>
+          {user.job_type && <Certification alertMessage="직장 인증" />}
+          {user.education && <Certification alertMessage="학력 인증" />}
+        </Container>
+
+        {/* 닉네임 */}
+        <Typography className='heading2'> 
+          {user.nickname}
+          <Image src={Report} width='18px' style={{marginLeft:'5.5px'}} />
+        </Typography>
+
+        {/* 직장유형 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
+          {user.job_type ? user.job_type : "?"}
+        </Typography>
+
+        {/* 거주지 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={House} width='20px' style={{marginRight: '10px'}}/>
+          {user.residence ? user.residence : "?"}
+        </Typography>
+
+        {/* 생년월일 */}
+        <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
+          <Image src={People} width='20px' style={{marginRight: '10px'}}/>
+          {user.date_birth ? user.date_birth : "?"}
+        </Typography>
+        
+        <Container disableGutters sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '28px',
+          marginBottom: '4px',
+        }}>
+          { user.kakao_id ?
+            <span style={{display:'flex', alignItems:'center'}}>
+              <Image src={Kakao} style={{marginRight: '8px'}} />
+              <Typography className='basic'>{user.kakao_id}</Typography>
+            </span> :
+            <div></div>
+          }
+          { user.public_exp ? 
+            <TimeInfo alertMessage={'공개마감 00:00'} /> :
+            <TimeInfo alertMessage='카카오톡 아이디 공개가 마감되었어요.' />
+          }
+        </Container>
+        <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+        {!user.public_exp && <p className='caption' style={{textDecoration: 'underline', color: '#FF8982', alignSelf:'end', margin:'0px'}}>삭제하기</p>}
       </Container>
-
-      {/* 닉네임 */}
-      <Typography className='heading2' marginBottom={'16px'}> 
-        {user.nickname}
-      </Typography>
-
-      {/* 직장유형 */}
-      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
-        <Image src={Bag} width='20px' style={{marginRight: '10px'}}/>
-        {user.job_type ? user.job_type : "?"}
-      </Typography>
-
-      {/* 거주지 */}
-      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
-        <Image src={House} width='20px' style={{marginRight: '10px'}}/>
-        {user.residence ? user.residence : "?"}
-      </Typography>
-
-      {/* 생년월일 */}
-      <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
-        <Image src={People} width='20px' style={{marginRight: '10px'}}/>
-        {user.date_birth ? user.date_birth : "?"}
-      </Typography>
-    </Container>
+    </span>
   )
 }
 

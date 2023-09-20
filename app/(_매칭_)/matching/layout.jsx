@@ -2,11 +2,14 @@
 import { cookies } from 'next/headers';
 
 import Dormancy from "./@dormancy/page";
+
 import PromotionApply from "./@promotion_apply/page";
 import PromotionRejected from "./@promotion_rejected/page";
 import PromotionWaiting from "./@promotion_waiting/page";
+
 import ApplicationExtra from "./@application_extra/page";
 import ApplicationTarget from "./@application_target/page";
+
 import MatchingBefore from "./@matching_before/page";
 import MatchingSelection from "./@matching_selection/page";
 import MatchingWaiting from "./@matching_waiting/page";
@@ -30,9 +33,13 @@ export default async function MatchingLayout({}) {
       .then(response => response.json())
       .then(response => {status = response.msg}
     )
-  } catch (e) { return <Error /> }
+  } catch (e) { 
+    return <Error />;
+  }
   // console.log(status)
+  
 
+  status = "matching_waiting";
 
   switch (status) {
     // 매칭 휴면 상태
@@ -77,7 +84,7 @@ export default async function MatchingLayout({}) {
     case "matching_waiting":
       return <MatchingWaiting />;
 
-    // 매칭 성공 상태
+    // 매칭 성사 상태
     case "matching_success":
       return <MatchingSuccess />;
 
@@ -88,6 +95,6 @@ export default async function MatchingLayout({}) {
 
 
     default:
-      return <Error />
+      return <Error />;
   }
 }

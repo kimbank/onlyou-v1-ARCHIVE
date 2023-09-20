@@ -3,6 +3,9 @@ from starlette.requests import Request
 from api.utils.token_validator import token_control
 from starlette.responses import JSONResponse
 
+import time
+from datetime import datetime
+from datetime import timedelta
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -81,13 +84,19 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
             if user_info.gender is 0:
                 # 현 페이즈의 공개 매칭을 조회
                 candidate = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+                due = candidate.deadline
                 my_choice = candidate.f_choice
                 trgt_choice = candidate.m_choice
             else:
                 # 현 페이즈의 공개 매칭을 조회
                 candidate = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+                due = candidate.deadline
                 my_choice = candidate.m_choice
                 trgt_choice = candidate.f_choice
+
+            if datetime.now() > due:
+                raise Exception
+
         except:
             candidate = None
 
@@ -143,11 +152,20 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
 
     try:
         if user_info.gender is 0:
-            target_id = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1).male_id
+            mp = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+            due = mp.deadline
+            target_id = mp.male_id
         else:
-            target_id = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1).female_id
+            mp = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+            due = mp.deadline
+            target_id = mp.female_id
+
+        diff = due - datetime.now()
+        if diff.days > 0 or datetime.now() > due:
+            raise Exception
 
         target = User.get(id=target_id)
+        time_left = diff.seconds
 
     # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
     except:
@@ -160,6 +178,7 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         'job_type': target.residence,
         'birth_year': f"{target.date_birth.year}년생",
         'kakao_id': target.kakao_id,
+        'time_left': time_left
     }
 
     return JSONResponse(status_code=200, content=d)

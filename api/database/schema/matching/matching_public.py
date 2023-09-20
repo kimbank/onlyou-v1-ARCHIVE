@@ -25,3 +25,5 @@ class MatchigPublic(Base, BaseMixin):
     m_choice = Column(Integer)
 
     status = Column(Integer)
+
+    deadline = Column(TIMESTAMP)

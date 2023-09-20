@@ -18,7 +18,7 @@ class GlobalStatus(Base, BaseMixin):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    phase = Column(Integer, )
+    phase = Column(Integer)
     status = Column(Integer)
 
     created_at = Column(TIMESTAMP)

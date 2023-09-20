@@ -16,13 +16,15 @@ import Report from "@/public/report.svg";
 import Kakao from "@/public/kakao_mini_icon.svg";
 import Typography from '@mui/material/Typography';
 
-
+import { useQuery } from 'react-query';
+import { useGetTargetList } from '@/app/api_/query/useGetTargetList';
+import Error from "@/components/error";
 
 
 const Agreement = () => {
-  // const data = null;
-  const data = [{nickname:'taykim', job_type:'직장인', education:'대학교', residence:'서울', date_birth:'1995년 1월 1일', date_matching:'2023년 8월 10일', kakao_id:'카카오1', public_exp:'2023'},
-  {nickname:'taykim', job_type:'직장인', education:'대학교', residence:'서울', date_birth:'1995년 1월 1일', date_matching:'2023년 8월 10일'}]
+  const { data } = useGetTargetList();
+
+  if (!data) return <Error />;
 
   return (
     <Container disableGutters sx={{
@@ -30,7 +32,7 @@ const Agreement = () => {
       flexDirection: 'column',
       gap: '0px',
     }}>
-      { data ?
+      { data.length > 1 ?
           <>
             <Typography className='heading2'>성사된 인연의 프로필이에요.</Typography>
             <Typography className='basic-gray'>카카오톡 아이디는 7일 동안만 공개되어요.</Typography>
@@ -46,12 +48,12 @@ const Agreement = () => {
         gap: '128px',
         marginY: '64px',
       }}>
-        { data ?
+        { data.length > 1 ?
           data.map((user, index) => {
             return <UserCard user={user} key={index} />
           }) :
           <>
-            <UserCard user={{nickname:"내 연인은 누구?", job_type:null, education:null, residence:null, date_birth:null}} />
+            <UserCard user={{nickname:"내 연인은 누구?", job_type:null, education:null, residence:null, birth_year:null}} />
           </>
         }
       </Container>
@@ -106,7 +108,7 @@ function UserCard({ user }) {
         {/* 생년월일 */}
         <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
           <Image src={People} width='20px' style={{marginRight: '10px'}}/>
-          {user.date_birth ? user.date_birth : "?"}
+          {user.birth_year ? user.birth_year : "?"}
         </Typography>
         
         <Container disableGutters sx={{
@@ -128,7 +130,7 @@ function UserCard({ user }) {
           }
         </Container>
         <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
-        {!user.public_exp && <p className='caption' style={{textDecoration: 'underline', color: '#FF8982', alignSelf:'end', margin:'0px'}}>삭제하기</p>}
+        {/* {!user.public_exp && <p className='caption' style={{textDecoration: 'underline', color: '#FF8982', alignSelf:'end', margin:'0px', marginTop:'8px'}}>삭제하기</p>} */}
       </Container>
     </span>
   )

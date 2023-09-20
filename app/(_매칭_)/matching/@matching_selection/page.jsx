@@ -15,17 +15,19 @@ import Typography from '@mui/material/Typography';
 
 import Modal from '@/components/Modal';
 
+import { useQuery } from 'react-query';
+import { useGetTargetInfo } from '@/app/api_/query/useGetTargetInfo';
 import Error from "@/components/error";
-
 
 
 const Selection = () => {
   const [showAccept, setShowAccept] = useState(false);
   const [showReject, setShowReject] = useState(false);
 
-  const user = {nickname:'taykim', job_type:'직장인', education:null, residence:'서울', date_birth:'1995년 1월 1일', public_exp:'2023'}
+  const { data } = useGetTargetInfo();
+  // console.log(data)
 
-  if (!user) return <Error />;
+  if (!data) return <Error />;
 
   return (
     <Container disableGutters sx={{
@@ -42,7 +44,7 @@ const Selection = () => {
         <Typography className='heading2'>오늘의 인연이에요</Typography>
         <Typography className='basic-gray'>마감 전까지 선택을 완료해주세요!</Typography>
       </Container>
-      <UserCard user={user} acp={setShowAccept} rej={setShowReject} />
+      <UserCard user={data} acp={setShowAccept} rej={setShowReject} />
       <Modal clicked={showAccept} setClicked={setShowAccept}>
         <Typography className='heading2'>정말로 선택하시겠어요?</Typography>
         <Typography className='basic-gray'>한 번 선택하면 변경할 수 없습니다</Typography>

@@ -21,6 +21,7 @@ from api.database.schema.user.users_female_data_target import UsersFemaleDataTar
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 from api.models.user.data.data_extra import UpdateValueSchema, UpdateLifeStyleSchema, UpdatePersonalitySchema, \
     UpdateDatingStyleSchema, UpdateAppearanceSchema
+from api.models.user.data.data_target import UpdateTargetSchema
 from api.utils.score import get_scores
 
 router = APIRouter(prefix="/application")
@@ -37,6 +38,28 @@ async def get_extra_schema(request: Request):
     else:
         ut = UsersMaleDataExtra.filter(male_id=user_info.id)
     return ut
+
+async def get_target_schema(request: Request):
+    user_info = await token_control(request)
+    ut = None
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+    if user_info.gender == 0:
+        ut = UsersFemaleDataTarget.filter(female_id=user_info.id)
+    else:
+        ut = UsersMaleDataTarget.filter(male_id=user_info.id)
+    return ut
+
+
+@router.patch("/target/all")
+async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...)):
+    try:
+        ut = await get_target_schema(request)
+        ut.update(auto_commit=True, **values.dict())
+        return JSONResponse(status_code=200, content=dict(msg='성공'))
+    except Exception as e:
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
 
 
 # 가치관 정보 페이지에서 '다음으로' 버튼 클릭 시

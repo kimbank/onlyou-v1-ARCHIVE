@@ -1,8 +1,10 @@
 'use client'
 
+import React, { useState, useEffect } from 'react';
 
-export default function Detial({ params }) {
+export default function Photo({ params }) {
+
   return (
-    <h1>{params.u_id} 사진 페이지입니다.</h1>
+    <>  </>
   );
 }

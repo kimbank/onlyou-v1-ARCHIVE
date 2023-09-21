@@ -17,14 +17,14 @@ def get_score(data, target_data):
                     target_standard[related_data] = data[related_data]
 
     important_standard = {key: value for key, value in target_standard.items() if key.endswith('_w') and value == 5}
-
-    # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략
+    # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략-
     # TODO: residence 해야함
     for key, value in target_data['u'].items():
         if value is None:
             continue
-        if key == 'date_birth':
+        if key == 'date_birth' and 'date_birth_w' in target_standard:
             if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+                print(key, value)
                 score += target_standard[key + '_w']
             elif key in important_standard:
                 score += PENALTY
@@ -35,7 +35,7 @@ def get_score(data, target_data):
         if value is None:
             continue
         # 꺼리는 정보
-        if key in PROMOTION_HATES:
+        if key in PROMOTION_HATES and key in target_standard:
             if str(value) in target_standard[key].split(','):
                 if key in important_standard:
                     score += PENALTY
@@ -43,14 +43,14 @@ def get_score(data, target_data):
             else:
                 score += target_standard[key + '_w']
 
-        elif key == 'height':
+        elif key == 'height' and 'height_w' in target_standard:
             if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
                 score += target_standard[key + '_w']
             elif key in important_standard:
                 score += PENALTY
             continue
 
-        elif key == 'divorce':
+        elif key == 'divorce' and key in target_standard:
             if target_standard[key] == value:
                 score += target_standard[key + '_w']
             elif key in important_standard:
@@ -58,12 +58,11 @@ def get_score(data, target_data):
             continue
 
     # 부가 정보
-    # TODO: interests, fashion_style은 문자열 -> 단일 선택 정보 취급해야할듯
     for key, value in target_data['ue'].items():
         if value is None:
             continue
         # 꺼리는 정보
-        if key in EXTRA_HATES:
+        if key in EXTRA_HATES and key in target_standard:
             if str(value) in target_standard[key].split(','):
                 if key in important_standard:
                     score += PENALTY
@@ -72,7 +71,7 @@ def get_score(data, target_data):
                 score += target_standard[key + '_w']
 
         # 단일 선택 정보
-        elif key in EXTRA_SINGLES:
+        elif key in EXTRA_SINGLES and key in target_standard:
             if target_standard[key] == value:
                 score += target_standard[key + '_w']
             elif key in important_standard:
@@ -80,7 +79,7 @@ def get_score(data, target_data):
             continue
 
         # interests는 extra, target 모두 중복 선택 가능 -> 하나라도 겹친다면 점수 부여
-        elif key == 'interests':
+        elif key == 'interests' and key in target_standard:
             mine, target = set(target_standard[key].split(',')), set(value.split(','))
             if len(mine & target) > 0:
                 score += target_standard[key + '_w']
@@ -90,7 +89,7 @@ def get_score(data, target_data):
 
         # 다중 선택 정보
         else:
-            if value in target_standard[key].split(','):
+            if key in target_standard and value in target_standard[key].split(','):
                 score += target_standard[key + '_w']
             elif key in important_standard:
                 score += PENALTY
@@ -104,13 +103,11 @@ def get_scores(gender, data, targets):
     # 이상형 정보 분류
     for u, ud, ue in targets:
         target = {}
-        target['u'] = u
-        target['ud'] = ud
-        target['ue'] = ue
+        del (u.__dict__['_sa_instance_state'])  # SQLAlchemy 추적 정보 삭제
+        del (ud.__dict__['_sa_instance_state'])
+        del (ue.__dict__['_sa_instance_state'])
+        target['u'] = u.__dict__
+        target['ud'] = ud.__dict__
+        target['ue'] = ue.__dict__
         score_dict[u.id] = get_score(data, target)
-        # TODO: 점수 스키마 회의 완료 후 진행
-        if gender == 0:
-            score_dict[u.id] += get_score(target, data)
-        else:
-            score_dict[u.id] += get_score(data, target)
     return score_dict

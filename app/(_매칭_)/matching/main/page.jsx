@@ -184,8 +184,8 @@ function InfoItem() {
       flexDirection: 'column',
       gap: '16px'
     }}>
-      <InfoText title="경쟁률 높음" alertMessage="내 이상형을 원하는 동성이 많아요." />
-      <InfoText title="매칭 난이도 높음" alertMessage="매칭까지는 약 7일 정도 예상되어요." />
+    <InfoText title="예상 경쟁률" alertMessage="매칭 정보가 쌓이면 계산되어요" shadow={false} />
+    <InfoText title="예상 매칭 난이도" alertMessage="매칭 정보가 쌓이면 계산되어요" shadow={false} />
     </Container>);
 }
 

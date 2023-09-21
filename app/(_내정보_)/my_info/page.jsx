@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Container from "@mui/material/Container";
-import { Certification } from '@/components/Notification';
+import { Certification, DangerNotification } from '@/components/Notification';
 import { MainHalfButton, MainMiniButton, SubHalfButton, SubMiniButton, SubMiniFullButton } from '@/components/Button';
 import { DefaultCheckbox } from '@/components/Checkbox';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
@@ -21,10 +22,13 @@ import { useQuery } from 'react-query';
 import { useGetMyInfo } from '@/app/api_/query/useGetMyInfo';
 
 import Error from "@/components/error";
+// import { Link } from 'react-router-dom';
 
 
 
 const MyInfo = () => {
+  const [alertMessage, setAlertMessage] = useState('');
+  const [visible, setVisible] = useState(false);
   const [isDormant, setIsDormant] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -70,7 +74,7 @@ const MyInfo = () => {
 
   return (
     <Container disableGutters sx={{marginBottom: '80px'}}>
-
+      <DangerNotification alertMessage={alertMessage} visible={visible} setVisible={setVisible} />
 
       <Container disableGutters sx={{
         marginTop: '80px',
@@ -151,10 +155,12 @@ const MyInfo = () => {
         }}>
           {/*다음 아래의 버튼들의 크기가 컨테이너 가로길이를 전부 채우도록만 수정 부탁드립니다.*/}
           <Typography className='heading4' style={{marginBottom: '5px'}}>매칭 신청서 수정하기</Typography>
-          <SubMiniFullButton buttonName={'내 정보 수정하기'}/>
-          <SubMiniFullButton buttonName={'이상형 정보 수정하기'}/>
-          <SubMiniFullButton buttonName={'인증 뱃지 수정하기'}/>
-          <SubMiniFullButton buttonName={'편지 수정하기'}/>
+          <SubMiniFullButton buttonName={'내 정보 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <Link href='/application/target'>
+            <SubMiniFullButton buttonName={'이상형 정보 수정하기'} />
+          </Link>
+          <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <SubMiniFullButton buttonName={'편지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
         </Container>
         <Container disableGutters sx={{
           display: 'flex',
@@ -163,8 +169,8 @@ const MyInfo = () => {
           marginTop: '32px',
         }}>
           <Typography className='heading4'>기타</Typography>
-          <SubMiniFullButton buttonName={'지인 차단'} />
-          <SubMiniFullButton buttonName={'경고 점수 조회'}/>
+          <SubMiniFullButton buttonName={'지인 차단'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <SubMiniFullButton buttonName={'경고 점수 조회'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
           <a href="/logout" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '16px', marginLeft: '14px'}}>로그아웃</a>
           <a href="/leave" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</a>
         </Container>

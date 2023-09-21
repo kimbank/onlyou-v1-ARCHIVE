@@ -21,6 +21,8 @@ import Error from "@/components/error";
 
 
 const Selection = () => {
+  const [left, setLeft] = useState("??:??:??");
+  const [sec, setSec] = useState(0);
   const [showAccept, setShowAccept] = useState(false);
   const [showReject, setShowReject] = useState(false);
 
@@ -28,6 +30,8 @@ const Selection = () => {
   // console.log(data)
 
   if (!data) return <Error />;
+
+  setTimeout(() => {setLeft(Timer(data.time_left - (sec)));setSec(sec+1)}, 1000);
 
   return (
     <Container disableGutters sx={{
@@ -44,7 +48,7 @@ const Selection = () => {
         <Typography className='heading2'>오늘의 인연이에요</Typography>
         <Typography className='basic-gray'>마감 전까지 선택을 완료해주세요!</Typography>
       </Container>
-      <UserCard user={data} acp={setShowAccept} rej={setShowReject} />
+      <UserCard user={data} acp={setShowAccept} rej={setShowReject} left={left} />
       <Modal clicked={showAccept} setClicked={setShowAccept}>
         <Typography className='heading2'>정말로 선택하시겠어요?</Typography>
         <Typography className='basic-gray'>한 번 선택하면 변경할 수 없습니다</Typography>
@@ -60,7 +64,7 @@ const Selection = () => {
 }
 
 
-function UserCard({ user, acp, rej }) {
+function UserCard({ user, acp, rej, left }) {
 
   return (
     <Container disableGutters sx={{
@@ -113,7 +117,7 @@ function UserCard({ user, acp, rej }) {
         marginBottom: '4px',
       }}>
         <div></div>
-        <TimeInfo alertMessage={'선택 마감까지 00:00'} /> 
+        <TimeInfo alertMessage={`선택 마감까지 ${left}`} /> 
       </Container>
       <Container disableGutters sx={{
         display: 'flex',
@@ -129,12 +133,35 @@ function UserCard({ user, acp, rej }) {
   )
 }
 
+function Timer(sec) {
+  if (sec == 0) window.location.reload();
+  
+  let hour = Math.floor(sec / 3600);
+  let min = Math.floor((sec % 3600) / 60);
+  let second = sec % 60;
+
+  if (hour < 10) hour = `0${hour}`;
+  if (min < 10) min = `0${min}`;
+  if (second < 10) second = `0${second}`;
+
+  if (hour > 0) {
+    return `${hour}:${min}:${second}`;
+  } else if (min > 0) {
+    return `${min}:${second}`;
+  } else if (second > 0) {
+    return `${second}`;
+  }
+  return ""
+}
+
 async function handleAccept() {
-  const res = await axios.get('/matching');
+  const res = await axios.get('/api/matching/select/true');
+  window.location.reload();
 }
 
 async function handleReject() {
-  const res = await axios.get('/matching');
+  const res = await axios.get('/api/matching/select/false');
+  window.location.reload();
 }
 
 

@@ -13,7 +13,7 @@ from sqlalchemy.orm import relationship
 from api.database.conn import Base
 from api.database.schema.mixin import BaseMixin
 
-class MatchigPublic(Base, BaseMixin):
+class MatchingPublic(Base, BaseMixin):
     __tablename__ = 'matching_public'
 
     female_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -25,3 +25,5 @@ class MatchigPublic(Base, BaseMixin):
     m_choice = Column(Integer)
 
     status = Column(Integer)
+
+    deadline = Column(TIMESTAMP)

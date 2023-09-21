@@ -3,6 +3,9 @@ from starlette.requests import Request
 from api.utils.token_validator import token_control
 from starlette.responses import JSONResponse
 
+import time
+from datetime import datetime
+from datetime import timedelta
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -15,9 +18,11 @@ from api.database.schema.user.users_male_data_extra import UsersMaleDataExtra
 from api.database.schema.user.users_female_data_target import UsersFemaleDataTarget
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 
-from api.database.schema.matching.matching_public import MatchigPublic
+from api.database.schema.matching.matching_public import MatchingPublic
+from api.database.schema.matching.matching_history import MatchingHistory
 
 from api.models.models import UserToken
+from api.utils.matching_slack import slack_chat_post
 
 import math
 
@@ -80,14 +85,20 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
         try:
             if user_info.gender is 0:
                 # 현 페이즈의 공개 매칭을 조회
-                candidate = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+                candidate = MatchingPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+                due = candidate.deadline
                 my_choice = candidate.f_choice
                 trgt_choice = candidate.m_choice
             else:
                 # 현 페이즈의 공개 매칭을 조회
-                candidate = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+                candidate = MatchingPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+                due = candidate.deadline
                 my_choice = candidate.m_choice
                 trgt_choice = candidate.f_choice
+
+            if datetime.now() > due:
+                raise Exception
+
         except:
             candidate = None
 
@@ -143,11 +154,20 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
 
     try:
         if user_info.gender is 0:
-            target_id = MatchigPublic.get(female_id=user_info.id, phase=request.state.phase, status=1).male_id
+            mp = MatchingPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+            due = mp.deadline
+            target_id = mp.male_id
         else:
-            target_id = MatchigPublic.get(male_id=user_info.id, phase=request.state.phase, status=1).female_id
+            mp = MatchingPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+            due = mp.deadline
+            target_id = mp.female_id
+
+        diff = due - datetime.now()
+        if diff.days > 0 or datetime.now() > due:
+            raise Exception
 
         target = User.get(id=target_id)
+        time_left = diff.seconds
 
     # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
     except:
@@ -160,6 +180,7 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         'job_type': target.residence,
         'birth_year': f"{target.date_birth.year}년생",
         'kakao_id': target.kakao_id,
+        'time_left': time_left
     }
 
     return JSONResponse(status_code=200, content=d)
@@ -171,10 +192,24 @@ async def get_target_profile(request: Request, choice: bool):
     if not user_info:
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
-    if choice:
-        print("Accept")
+    if user_info.gender is 0:
+        pm = MatchingPublic.filter(female_id=user_info.id, phase=request.state.phase, status=1)
+        if choice:
+            if pm.m_choice[0] is 1:
+                female = User.get(id=user_info.id); male = User.get(id=pm.first().male_id);
+                slack_chat_post(female=female, male=male)
+            pm.update(f_choice=1, auto_commit=True)
+        else:
+            pm.update(f_choice=-1, auto_commit=True)
     else:
-        print("Reject")
+        pm = MatchingPublic.filter(male_id=user_info.id, phase=request.state.phase, status=1)
+        if choice:
+            if pm.first().f_choice is 1:
+                female = User.get(id=pm.first().female_id); male = User.get(id=user_info.id);
+                slack_chat_post(female=female, male=male)
+            pm.update(m_choice=1, auto_commit=True)
+        else:
+            pm.update(m_choice=-1, auto_commit=True)
 
     return ""
 
@@ -182,15 +217,15 @@ async def get_target_profile(request: Request, choice: bool):
 def check_matching_public(user_id, gender, phase, session):
 
     if gender is 0:
-        matching = (session.query(MatchigPublic)
-                        .filter(MatchigPublic.female_id == user_id)
-                        .filter(MatchigPublic.phase == phase)
+        matching = (session.query(MatchingPublic)
+                        .filter(MatchingPublic.female_id == user_id)
+                        .filter(MatchingPublic.phase == phase)
                     )
     else:
-        matching = (session.query(MatchigPublic)
-                        .filter(MatchigPublic.male_id == user_id)
-                        .filter(MatchigPublic.phase == phase)
-                        .filter(MatchigPublic.status == 1)
+        matching = (session.query(MatchingPublic)
+                        .filter(MatchingPublic.male_id == user_id)
+                        .filter(MatchingPublic.phase == phase)
+                        .filter(MatchingPublic.status == 1)
                     )
 
     # print(matching.count())

@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 import { Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const ButtonText = '버튼';
 
@@ -344,6 +345,44 @@ export function MainMiniButton({ onClick, buttonName, shadow = false, disabled =
                     }}
                 >
                     {buttonName}
+                </Typography>
+            </Button>
+        </div>
+    )
+}
+
+export function MainMiniCancelButton({ onClick, buttonName, shadow = false, disabled = false }) {
+    return (
+        <div>
+            <Button
+                onClick={onClick}
+                color="primary"
+                variant='contained'
+                sx={{
+                    borderRadius: '8px',
+                    height: '33px',
+                    padding: '8px 12px',
+                    boxShadow: !shadow && 'none',
+                }}
+                disabled={disabled}
+            >
+                <Typography
+                    variant='subtitle1'
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontFamily: 'Pretendard-Semibold',
+                        fontSize: '14px',
+                        letterSpacing: '1.25px',
+                    }}
+                >
+                    {buttonName}
+                    <ClearIcon sx={{
+                        fontSize: 'large',
+                        color: '#fff',
+                        marginLeft: '8px',
+                        alignSelf: 'center',
+                    }} />
                 </Typography>
             </Button>
         </div>

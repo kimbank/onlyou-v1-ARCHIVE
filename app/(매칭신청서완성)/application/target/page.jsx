@@ -49,50 +49,52 @@ export default function Target() {
   }
 
   return (
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '64px',
-    }}>
+    <>
       <DangerNotification alertMessage={alertMessage} visible={visible} setVisible={setVisible} />
-      <Typography className='heading2'>매칭에 반영될 조건을 <br />모두 골라주세요.</Typography>
-
       <Container disableGutters sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px',
+        gap: '64px',
       }}>
-        <Typography className='heading5'>{options.length}개 선택되었어요.</Typography>
-        <Typography className='basic-gray'>최소 3개, 최대 12개 항목을 선택해주세요.</Typography>
+        <Typography className='heading2'>매칭에 반영될 조건을 <br />모두 골라주세요.</Typography>
+
         <Container disableGutters sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexFlow: 'wrap',
-            gap: '8px',
-            marginTop: '8px',
-          }}>
-            { options.map((option, index) => {
-              return <MainMiniCancelButton key={index} buttonName={options_eng[option]} onClick={() => popOptions(option)}/>;
-            })}
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+        }}>
+          <Typography className='heading5'>{options.length}개 선택되었어요.</Typography>
+          <Typography className='basic-gray'>최소 3개, 최대 12개 항목을 선택해주세요.</Typography>
+          <Container disableGutters sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexFlow: 'wrap',
+              gap: '8px',
+              marginTop: '8px',
+            }}>
+              { options.map((option, index) => {
+                return <MainMiniCancelButton key={index} buttonName={options_eng[option]} onClick={() => popOptions(option)}/>;
+              })}
+          </Container>
+        </Container>
+
+        <Container disableGutters sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexFlow: 'wrap',
+          gap: '8px',
+        }}>
+          { Object.keys(options_eng).map((option, index) => {
+            if (options.includes(option)) return <MainMiniButton buttonName={options_eng[option]} />;
+            return <SubMiniButton key={index} buttonName={options_eng[option]} onClick={() => pushOptions(option)} />;
+          })}
+        </Container>
+        <Container disableGutters sx={{
+        }}>
+          <MainButton buttonName='다음' onClick={() => {handleNext()}}/>
         </Container>
       </Container>
-
-      <Container disableGutters sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexFlow: 'wrap',
-        gap: '8px',
-      }}>
-        { Object.keys(options_eng).map((option, index) => {
-          if (options.includes(option)) return <MainMiniButton buttonName={options_eng[option]} />;
-          return <SubMiniButton key={index} buttonName={options_eng[option]} onClick={() => pushOptions(option)} />;
-        })}
-      </Container>
-      <Container disableGutters sx={{
-      }}>
-        <MainButton buttonName='다음' onClick={() => {handleNext()}}/>
-      </Container>
-    </Container>
+    </>
   );
 }
 

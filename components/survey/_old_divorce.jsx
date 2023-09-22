@@ -31,7 +31,6 @@ export default function HeightRange({ data, setData, sub, setSub }) {
       height_w: weight,
     });
     console.log('키 저장 완료');
-    console.log(value);
   }, [sub]);
 
 

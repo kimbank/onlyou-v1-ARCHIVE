@@ -102,7 +102,6 @@ export function SubButton({ onClick, buttonName, shadow = false, height = '56px'
                     height: height,
                     width: '100%',
                     boxShadow: !shadow && 'none',
-                    flex: 'auto',
                 }}
             >
                 <Typography

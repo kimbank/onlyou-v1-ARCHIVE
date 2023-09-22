@@ -211,3 +211,15 @@ async def get_target_height(request: Request):
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
     return JSONResponse(status_code=200, content=dict(height_s=ut.height_s, height_e=ut.height_e, height_w=ut.height_w))
+
+@router.get("/target/education")
+async def get_target_education(request: Request):
+    try:
+        ut = await get_target_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return JSONResponse(status_code=200, content=dict(education=ut.education, education_w=ut.education_w))

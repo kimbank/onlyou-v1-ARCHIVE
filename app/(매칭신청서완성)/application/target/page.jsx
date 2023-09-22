@@ -85,7 +85,7 @@ export default function Target() {
           gap: '8px',
         }}>
           { Object.keys(options_eng).map((option, index) => {
-            if (options.includes(option)) return <MainMiniButton buttonName={options_eng[option]} />;
+            if (options.includes(option)) return <MainMiniButton buttonName={options_eng[option]} onClick={() => popOptions(option)} />;
             return <SubMiniButton key={index} buttonName={options_eng[option]} onClick={() => pushOptions(option)} />;
           })}
         </Container>

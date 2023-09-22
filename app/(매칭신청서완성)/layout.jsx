@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <MyInfoHeader onClick={() => setClicked(true)} />
-      <Container disableGutters sx={{ marginTop: '56px', marginBottom: '32px', padding: '0 32px', }}>
+      <Container disableGutters sx={{ marginTop: '56px', marginBottom: '32px', padding: '0 32px' }}>
         {children}
       </Container>
       <Modal clicked={clicked} setClicked={setClicked}>

@@ -99,9 +99,9 @@ export default function Target() {
 }
 
 const options_eng = {
-  date_birth: '나이',
-  residence: '거주지',
-  job_type: '직장 유형',
+  // date_birth: '나이',
+  // residence: '거주지',
+  // job_type: '직장 유형',
   height: '키',
   education: '학력',
   divorce: '돌싱 여부',

@@ -1,17 +1,25 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 import { InfoText } from "@/components/Notification";
-import { Container, Typography, LinearProgress, Box, Slider, BottomNavigation } from "@mui/material";
+import { AppBar, Container, Typography, LinearProgress, Box, Slider, BottomNavigation } from "@mui/material";
 import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
 import Height from "@/components/survey/height";
+import Education from "@/components/survey/education";
+import Divorce from "@/components/survey/divorce";
+
+import Modal from '@/components/Modal';
 
 
 export default function Target({ params }) {
+  const [progress, setProgress] = useState(0);
   const [data, setData] = useState(data_target);
+  const [sub, setSub] = useState(false);
+  const [valid, setValid] = useState(false);
   const fields = params.fields.split('%2C')
 
   if (fields.length < 3 || fields.length > 12) {
@@ -23,98 +31,138 @@ export default function Target({ params }) {
     }
   }
 
-  return(
-    <Container disableGutters sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '64px',
-      marginBottom: '80px',
-    }}>
-      <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
-      {fields.map((field, index) => (
-        <>
-          <div key={index}>{options_eng[field]}</div>
-        </>
-      ))}
-      {/* <HeightRange buttonName={'asdasdsa'} />
-      <DrinkRange buttonName={'asdasdsa'} />
-      <RadioButtons left='내향적' right='외향적' /> */}
-      <br/><br/><br/><br/><br/><br/>
-      { fields.includes('height') && <Height data={data} setData={setData} /> }
-      { fields.includes('education') && <></>}
-      { fields.includes('divorce') && <></>}
-      { fields.includes('smoking_history') && <></>}
-      { fields.includes('drinking_life') && <></>}
-      { fields.includes('owned_car') && <></>}
-      { fields.includes('interests') && <></>}
-      { fields.includes('number_relationships') && <></>}
-      { fields.includes('athletic_life') && <></>}
-      { fields.includes('pet_animal') && <></>}
-      { fields.includes('religion') && <></>}
+  useEffect(() => {
+    let cnt = 0;
+    for (let i = 0; i < fields.length; i++) {
+      if (data[fields[i]+"_w"] !== null) {
+        cnt++;
+      }
+    }
+    console.log('progress count:', cnt);
 
-      { fields.includes('extrovert_or_introvert') && <></>}
-      { fields.includes('intutive_or_realistic') && <></>}
-      { fields.includes('emotional_or_rational') && <></>}
-      { fields.includes('impromptu_or_planned') && <></>}
-      { fields.includes('selfconfidence_or_careful') && <></>}
+    setProgress(cnt / fields.length * 100);
+    if (cnt == fields.length) {
+      setValid(true)
+    } else {
+      setValid(false)
+    }
+  }, [sub])
 
-      { fields.includes('marriage_values') && <></>}
-      { fields.includes('religious_values') && <></>}
-      { fields.includes('opposite_friends_values') && <></>}
-      { fields.includes('political_values') && <></>}
-      { fields.includes('consumption_values') && <></>}
-      { fields.includes('career_family_values') && <></>}
+  const handleValid = () => {
+    setSub(false);
+    setValid(true);
+  }
 
-      { fields.includes('animal_image') && <></>}
-      { fields.includes('double_eyelid') && <></>}
-      { fields.includes('face_shape') && <></>}
-      { fields.includes('body_type') && <></>}
-      { fields.includes('skin_tone') && <></>}
-      { fields.includes('tattoo') && <></>}
-      { fields.includes('fashion_style') && <></>}
+  return (
+    <>
+      <AppBar sx={{ position: 'fixed', width: '100%', maxWidth:'480px', top:'60px', left: '50%', transform: 'translate(-50%, 0)', boxShadow: 'none' }}>
+          <LinearProgress variant="determinate"
+              value={progress}
+              sx={{
+                  transition: 'ease-out',
+              }} />
+      </AppBar>
 
-      { fields.includes('preffered_dating') && <></>}
-      { fields.includes('preferred_contact_method') && <></>}
-      { fields.includes('attractiveness_level') && <></>}
-      { fields.includes('jealousy_level') && <></>}
-      { fields.includes('love_initiative') && <></>}
-      { fields.includes('dating_frequency') && <></>}
-      { fields.includes('contact_style') && <></>}
-      { fields.includes('skinship') && <></>}
-      { fields.includes('sns') && <></>}
-      { fields.includes('conflict_resolution_method') && <></>}
-
-      <br />
-      <BottomNavigation sx={{
-        width: '100%', height: 'auto', borderRadius: '24px 24px 0 0', borderTop: '2px solid #fff', boxShadow: '1px -2px 12px -4px rgba(0, 0, 0, 0.25)', position: 'fixed',
-        bottom: 0, left: 0, right: 0, maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)'
+      <Container disableGutters sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '64px',
+        marginBottom: '80px',
       }}>
-        <Container disableGutters sx={{
-          display: 'flex', flexDirection: 'column', gap: '8px', padding: '16px 32px', height: 'auto'
+        <button onClick={() => console.log(data)}>정보 보기</button>
+        <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
+        <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
+        {fields.map((field, index) => (
+          <>
+            <div key={index}>{options_eng[field]}</div>
+          </>
+        ))}
+        </Container>
+        { fields.includes('height') && <Height data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('education') && <Education data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('divorce') && <Divorce data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('smoking_history') && <></> }
+        { fields.includes('drinking_life') && <></> }
+        { fields.includes('owned_car') && <></> }
+        { fields.includes('interests') && <></> }
+        { fields.includes('number_relationships') && <></> }
+        { fields.includes('athletic_life') && <></> }
+        { fields.includes('pet_animal') && <></> }
+        { fields.includes('religion') && <></> }
+
+        { fields.includes('extrovert_or_introvert') && <></> }
+        { fields.includes('intutive_or_realistic') && <></> }
+        { fields.includes('emotional_or_rational') && <></> }
+        { fields.includes('impromptu_or_planned') && <></> }
+        { fields.includes('selfconfidence_or_careful') && <></> }
+
+        { fields.includes('marriage_values') && <></> }
+        { fields.includes('religious_values') && <></> }
+        { fields.includes('opposite_friends_values') && <></> }
+        { fields.includes('political_values') && <></> }
+        { fields.includes('consumption_values') && <></> }
+        { fields.includes('career_family_values') && <></> }
+
+        { fields.includes('animal_image') && <></> }
+        { fields.includes('double_eyelid') && <></> }
+        { fields.includes('face_shape') && <></> }
+        { fields.includes('body_type') && <></> }
+        { fields.includes('skin_tone') && <></> }
+        { fields.includes('tattoo') && <></> }
+        { fields.includes('fashion_style') && <></> }
+
+        { fields.includes('preffered_dating') && <></> }
+        { fields.includes('preferred_contact_method') && <></> }
+        { fields.includes('attractiveness_level') && <></> }
+        { fields.includes('jealousy_level') && <></> }
+        { fields.includes('love_initiative') && <></> }
+        { fields.includes('dating_frequency') && <></> }
+        { fields.includes('contact_style') && <></> }
+        { fields.includes('skinship') && <></> }
+        { fields.includes('sns') && <></> }
+        { fields.includes('conflict_resolution_method') && <></> }
+
+        <br />
+        <BottomNavigation sx={{
+          width: '100%', height: 'auto', borderRadius: '24px 24px 0 0', borderTop: '2px solid #fff', boxShadow: '1px -2px 12px -4px rgba(0, 0, 0, 0.25)', position: 'fixed',
+          bottom: 0, left: 0, right: 0, maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)'
         }}>
           <Container disableGutters sx={{
-            display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
+            display: 'flex', flexDirection: 'column', gap: '8px', padding: '16px 32px', height: 'auto',
+            flexShrink: '0', flexGrow: '1'
           }}>
-            <InfoText title={'매칭 예상 주기 7일'} />
-            <InfoText title={'경쟁률 높음'} />
-          </Container>
+            <Container disableGutters sx={{
+              display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
+            }}>
+              <InfoText title={'매칭 예상 주기 7일'} />
+              <InfoText title={'경쟁률 높음'} />
+            </Container>
 
-          <Container disableGutters sx={{
-            display: 'flex', flexShrink: '0', flexGrow: '1', gap: '16px',
-          }}>
-            <SubButton buttonName='이전 단계' />
-            <MainButton buttonName='이상형 정보 입력 완료' />
+            <Container disableGutters sx={{
+              display: 'flex', flexShrink: '0', flexGrow: '1', gap: '16px',
+            }}>
+              <Link href='/application/target'>
+                <SubButton buttonName='이전 단계' />
+              </Link>
+              { !valid ?
+                <MainButton buttonName='설정 검토' onClick={() => handleValid()} /> :
+                <MainButton buttonName='다음 단계로' onClick={() => setSub(true)} />
+              }
+            </Container>
           </Container>
-        </Container>
-      </BottomNavigation>
-    </Container>
+        </BottomNavigation>
+        <Modal clicked={valid} setClicked={setValid}>
+          <Typography className='heading2'>선택한 정보를 저장하고 다음으로 넘어갑니다.</Typography>
+        </Modal>
+      </Container>
+    </>
   )
 }
 
 const options_eng = {
-  date_birth: '나이',
-  residence: '거주지',
-  job_type: '직장 유형',
+  // date_birth: '나이',
+  // residence: '거주지',
+  // job_type: '직장 유형',
   height: '키',
   education: '학력',
   divorce: '돌싱 여부',

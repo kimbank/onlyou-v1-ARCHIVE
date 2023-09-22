@@ -50,6 +50,12 @@ body {
   font-size: 20px;
 }
 
+.heading4-gray {
+  font-family: Pretendard-Bold;
+  font-size: 20px;
+  color: #666563;
+}
+
 .heading5 {
   font-family: Pretendard-Bold;
   font-size: 17px;

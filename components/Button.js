@@ -25,7 +25,7 @@ const ButtonText = '버튼';
 // CTA에 쓰이는 메인 버튼입니다.
 export function MainButton({ onClick, buttonName, shadow = false }) {
     return (
-        <div>
+        <div style={{flex:'auto'}}>
             <Button
                 onClick={onClick}
                 color="primary"
@@ -102,6 +102,7 @@ export function SubButton({ onClick, buttonName, shadow = false, height = '56px'
                     height: height,
                     width: '100%',
                     boxShadow: !shadow && 'none',
+                    flex: 'auto',
                 }}
             >
                 <Typography

@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Container, Typography, LinearProgress, Box, Slider } from "@mui/material";
-import { MainButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
+import { InfoText } from "@/components/Notification";
+import { Container, Typography, LinearProgress, Box, Slider, BottomNavigation } from "@mui/material";
+import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
 import Height from "@/components/survey/height";
@@ -27,6 +28,7 @@ export default function Target({ params }) {
       display: 'flex',
       flexDirection: 'column',
       gap: '64px',
+      marginBottom: '80px',
     }}>
       <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
       {fields.map((field, index) => (
@@ -37,6 +39,7 @@ export default function Target({ params }) {
       {/* <HeightRange buttonName={'asdasdsa'} />
       <DrinkRange buttonName={'asdasdsa'} />
       <RadioButtons left='내향적' right='외향적' /> */}
+      <br/><br/><br/><br/><br/><br/>
       { fields.includes('height') && <Height data={data} setData={setData} /> }
       { fields.includes('education') && <></>}
       { fields.includes('divorce') && <></>}
@@ -48,9 +51,62 @@ export default function Target({ params }) {
       { fields.includes('athletic_life') && <></>}
       { fields.includes('pet_animal') && <></>}
       { fields.includes('religion') && <></>}
+
       { fields.includes('extrovert_or_introvert') && <></>}
       { fields.includes('intutive_or_realistic') && <></>}
       { fields.includes('emotional_or_rational') && <></>}
+      { fields.includes('impromptu_or_planned') && <></>}
+      { fields.includes('selfconfidence_or_careful') && <></>}
+
+      { fields.includes('marriage_values') && <></>}
+      { fields.includes('religious_values') && <></>}
+      { fields.includes('opposite_friends_values') && <></>}
+      { fields.includes('political_values') && <></>}
+      { fields.includes('consumption_values') && <></>}
+      { fields.includes('career_family_values') && <></>}
+
+      { fields.includes('animal_image') && <></>}
+      { fields.includes('double_eyelid') && <></>}
+      { fields.includes('face_shape') && <></>}
+      { fields.includes('body_type') && <></>}
+      { fields.includes('skin_tone') && <></>}
+      { fields.includes('tattoo') && <></>}
+      { fields.includes('fashion_style') && <></>}
+
+      { fields.includes('preffered_dating') && <></>}
+      { fields.includes('preferred_contact_method') && <></>}
+      { fields.includes('attractiveness_level') && <></>}
+      { fields.includes('jealousy_level') && <></>}
+      { fields.includes('love_initiative') && <></>}
+      { fields.includes('dating_frequency') && <></>}
+      { fields.includes('contact_style') && <></>}
+      { fields.includes('skinship') && <></>}
+      { fields.includes('sns') && <></>}
+      { fields.includes('conflict_resolution_method') && <></>}
+
+      <br />
+      <BottomNavigation sx={{
+        width: '100%', height: 'auto', borderRadius: '24px 24px 0 0', borderTop: '2px solid #fff', boxShadow: '1px -2px 12px -4px rgba(0, 0, 0, 0.25)', position: 'fixed',
+        bottom: 0, left: 0, right: 0, maxWidth: '480px', left: '50%', transform: 'translate(-50%, 0)'
+      }}>
+        <Container disableGutters sx={{
+          display: 'flex', flexDirection: 'column', gap: '8px', padding: '16px 32px', height: 'auto'
+        }}>
+          <Container disableGutters sx={{
+            display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
+          }}>
+            <InfoText title={'매칭 예상 주기 7일'} />
+            <InfoText title={'경쟁률 높음'} />
+          </Container>
+
+          <Container disableGutters sx={{
+            display: 'flex', flexShrink: '0', flexGrow: '1', gap: '16px',
+          }}>
+            <SubButton buttonName='이전 단계' />
+            <MainButton buttonName='이상형 정보 입력 완료' />
+          </Container>
+        </Container>
+      </BottomNavigation>
     </Container>
   )
 }

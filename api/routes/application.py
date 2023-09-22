@@ -63,7 +63,7 @@ async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...
 
 
 # 가치관 정보 페이지에서 '다음으로' 버튼 클릭 시
-@router.patch("/values")
+@router.patch("/my/values")
 async def update_values(request: Request, values: UpdateValueSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
@@ -76,7 +76,7 @@ async def update_values(request: Request, values: UpdateValueSchema = Body(...))
 
 
 # 생활 정보 페이지
-@router.patch("/lifestyle")
+@router.patch("/my/lifestyle")
 async def update_lifestyle(request: Request, lifestyles: UpdateLifeStyleSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
@@ -89,7 +89,7 @@ async def update_lifestyle(request: Request, lifestyles: UpdateLifeStyleSchema =
 
 
 # 성격 정보 페이지
-@router.patch("/personality")
+@router.patch("/my/personality")
 async def update_personality(request: Request, personalities: UpdatePersonalitySchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
@@ -102,7 +102,7 @@ async def update_personality(request: Request, personalities: UpdatePersonalityS
 
 
 # 연애 스타일 페이지
-@router.patch("/dating_style")
+@router.patch("/my/dating_style")
 async def update_dating_style(request: Request, dating_styles: UpdateDatingStyleSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
@@ -115,7 +115,7 @@ async def update_dating_style(request: Request, dating_styles: UpdateDatingStyle
 
 
 # 외모 정보 페이지
-@router.patch("/appearance")
+@router.patch("/my/appearance")
 async def update_appearance(request: Request, appearances: UpdateAppearanceSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
@@ -129,7 +129,7 @@ async def update_appearance(request: Request, appearances: UpdateAppearanceSchem
 
 # 이상형 정보 입력 완료 버튼 클릭 시 점수 계산
 # user_data_target: 나의 이상형 정보, target_users: 전체 이성 정보
-@router.patch("/calculate")
+@router.patch("/my/calculate")
 async def calculate_matching_score(request: Request, session: Session = Depends(db.session)):
     user_info = await token_control(request)
     if not user_info:
@@ -176,3 +176,16 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
     # except Exception as e:
     #     print(e)
     #     return JSONResponse(status_code=500, content=dict(msg='점수 계산 실패'))
+
+
+@router.get("/target/height")
+async def get_target_height(request: Request):
+    try:
+        ut = await get_target_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return JSONResponse(status_code=200, content=dict(height_s=ut.height_s, height_e=ut.height_e, height_w=ut.height_w))

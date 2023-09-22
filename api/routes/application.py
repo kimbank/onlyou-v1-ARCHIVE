@@ -19,9 +19,13 @@ from api.database.schema.user.users_female_data_extra import UsersFemaleDataExtr
 from api.database.schema.user.users_male_data_extra import UsersMaleDataExtra
 from api.database.schema.user.users_female_data_target import UsersFemaleDataTarget
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
+from api.database.schema.matching.matching_score_f2m import ScoreFToM
+from api.database.schema.matching.matching_score_m2f import ScoreMToF
 from api.models.user.data.data_extra import UpdateValueSchema, UpdateLifeStyleSchema, UpdatePersonalitySchema, \
     UpdateDatingStyleSchema, UpdateAppearanceSchema
 from api.models.user.data.data_target import UpdateTargetSchema
+from api.models.matching.matching_score_f2m import ScoreFToMSchema
+from api.models.matching.matching_score_m2f import ScoreMToFSchema
 from api.utils.score import get_scores
 
 router = APIRouter(prefix="/application")
@@ -38,6 +42,7 @@ async def get_extra_schema(request: Request):
     else:
         ut = UsersMaleDataExtra.filter(male_id=user_info.id)
     return ut
+
 
 async def get_target_schema(request: Request):
     user_info = await token_control(request)
@@ -168,10 +173,27 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         except Exception as e:
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
-
-    # 점수 계산
-    # try:
-    get_scores(u.gender, user_data_target.__dict__, target_users)
+    
+    if user.gender == 0:
+        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+            score = score.dict()
+            print(score)
+            # TODO: 여기서부터 확인
+            record = session.query(ScoreFToM).filter(ScoreFToM.female_id == score['female_id'],
+                                                     ScoreFToM.male_id == score['male_id']).first()
+            if record:
+                ScoreFToM.update(auto_commit=True, **score)
+            else:
+                ScoreFToM.create(session, auto_commit=True, **score)
+    else:
+        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+            score = score.dict()
+            record = session.query(ScoreMToF).filter(ScoreMToF.female_id == score['female_id'],
+                                                     ScoreMToF.male_id == score['male_id']).first()
+            if record:
+                ScoreMToF.update(auto_commit=True, **score)
+            else:
+                ScoreMToF.create(session, auto_commit=True, **score)
     return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
     # except Exception as e:
     #     print(e)

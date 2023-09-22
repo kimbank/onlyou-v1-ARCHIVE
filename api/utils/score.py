@@ -16,82 +16,88 @@ def get_score(data, target_data):
                 if related_data.startswith(base_key):
                     target_standard[related_data] = data[related_data]
 
+    print(f'target_standard: {target_standard.items()}')
     important_standard = {key: value for key, value in target_standard.items() if key.endswith('_w') and value == 5}
+    print(f'important_standard: {important_standard.items()}')
     # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략-
-    # TODO: residence 해야함
     for key, value in target_data['u'].items():
-        if value is None:
-            continue
         if key == 'date_birth' and 'date_birth_w' in target_standard:
-            if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+            if value is not None and target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
                 print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
     # 심사 정보
     for key, value in target_data['ud'].items():
-        if value is None:
-            continue
         # 꺼리는 정보
         if key in PROMOTION_HATES and key in target_standard:
-            if str(value) in target_standard[key].split(','):
-                if key in important_standard:
+            if value is None or str(value) in target_standard[key].split(','):
+                if key + '_w' in important_standard:
                     score += PENALTY
                 continue
             else:
+                print(key, value)
                 score += target_standard[key + '_w']
 
         elif key == 'height' and 'height_w' in target_standard:
-            if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+            if value is not None and target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+                print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
         elif key == 'divorce' and key in target_standard:
-            if target_standard[key] == value:
+            if value is not None and target_standard[key] == value:
+                print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
     # 부가 정보
     for key, value in target_data['ue'].items():
-        if value is None:
-            continue
         # 꺼리는 정보
         if key in EXTRA_HATES and key in target_standard:
-            if str(value) in target_standard[key].split(','):
-                if key in important_standard:
+            if value is not None and str(value) in target_standard[key].split(','):
+                if key + '_w' in important_standard:
                     score += PENALTY
                 continue
             else:
+                print(key, value)
                 score += target_standard[key + '_w']
 
         # 단일 선택 정보
         elif key in EXTRA_SINGLES and key in target_standard:
-            if target_standard[key] == value:
+            if value is not None and target_standard[key] == value:
+                print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
         # interests는 extra, target 모두 중복 선택 가능 -> 하나라도 겹친다면 점수 부여
         elif key == 'interests' and key in target_standard:
+            if value is None:
+                if key + '_w' in important_standard:
+                    score += PENALTY
+                continue
             mine, target = set(target_standard[key].split(',')), set(value.split(','))
             if len(mine & target) > 0:
+                print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
         # 다중 선택 정보
         else:
-            if key in target_standard and value in target_standard[key].split(','):
+            if key in target_standard and value is not None and value in target_standard[key].split(','):
+                print(key, value)
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+            elif key + '_w' in important_standard:
                 score += PENALTY
             continue
 
@@ -109,5 +115,7 @@ def get_scores(gender, data, targets):
         target['u'] = u.__dict__
         target['ud'] = ud.__dict__
         target['ue'] = ue.__dict__
+        print(target['u'].items())
         score_dict[u.id] = get_score(data, target)
+    print(score_dict.items())
     return score_dict

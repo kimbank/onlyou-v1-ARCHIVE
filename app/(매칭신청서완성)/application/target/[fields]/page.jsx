@@ -13,6 +13,7 @@ import Education from "@/components/survey/education";
 import Divorce from "@/components/survey/divorce";
 
 import Modal from '@/components/Modal';
+import axios from 'axios';
 
 
 export default function Target({ params }) {
@@ -20,6 +21,8 @@ export default function Target({ params }) {
   const [data, setData] = useState(data_target);
   const [sub, setSub] = useState(false);
   const [valid, setValid] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const fields = params.fields.split('%2C')
 
   if (fields.length < 3 || fields.length > 12) {
@@ -32,13 +35,19 @@ export default function Target({ params }) {
   }
 
   useEffect(() => {
-    let cnt = 0;
+    let cnt = fields.length;
+    const d = Object.keys(data);
     for (let i = 0; i < fields.length; i++) {
-      if (data[fields[i]+"_w"] !== null) {
-        cnt++;
+      for (let j = 0; j < d.length; j++) {
+        if (d[j].startsWith(fields[i])) {
+          if (data[d[j]] == null) {
+            cnt--;
+            break;
+          }
+        }
       }
     }
-    console.log('progress count:', cnt);
+    // console.log('progress count:', cnt);
 
     setProgress(cnt / fields.length * 100);
     if (cnt == fields.length) {
@@ -48,9 +57,14 @@ export default function Target({ params }) {
     }
   }, [sub])
 
-  const handleValid = () => {
-    setSub(false);
-    setValid(true);
+  const handleSubmit = async () => {
+    const res = await axios.patch('/api/application/target/all', data);
+    if (res.status == 200) {
+      // window.location.href = '/application/letter';
+      alert('이상형 정보 입력이 완료되었습니다.');
+    } else {
+      alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+    }
   }
 
   return (
@@ -145,14 +159,16 @@ export default function Target({ params }) {
                 <SubButton buttonName='이전 단계' />
               </Link>
               { !valid ?
-                <MainButton buttonName='설정 검토' onClick={() => handleValid()} /> :
-                <MainButton buttonName='다음 단계로' onClick={() => setSub(true)} />
+                <MainButton buttonName='입력을 완료해야 합니다' onClick={() => {}} /> :
+                <MainButton buttonName='이상형 정보 입력 완료' onClick={() => setClicked(true)} />
               }
             </Container>
           </Container>
         </BottomNavigation>
-        <Modal clicked={valid} setClicked={setValid}>
-          <Typography className='heading2'>선택한 정보를 저장하고 다음으로 넘어갑니다.</Typography>
+        <Modal clicked={clicked} setClicked={setClicked}>
+          <Typography className='heading2'>이상형을 꼭 찾아드릴게요!</Typography>
+          <Typography className='basic'>이제 정말 마지막 단계입니다 <br />조금만 힘내요! 💪</Typography>
+          <MainButton buttonName='편지 작성하기' onClick={() => handleSubmit()} />
         </Modal>
       </Container>
     </>

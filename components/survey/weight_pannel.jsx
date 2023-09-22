@@ -1,14 +1,16 @@
 'use client'
 
-import { Typography, Container, Button } from "@mui/material";
+import { Typography, Container, Button, Divider } from "@mui/material";
 
 export default function WeightPannel({ weight, handleWeight }) {
 
   return (
-    <>
-      <Typography className="heading4-gray" marginTop="24px">
+    <span style={{marginTop:'24px'}}>
+      {/* <Divider marginTop="24px"> */}
+        <Typography className="heading4-gray">
           중요도
         </Typography>
+      {/* </Divider> */}
       <Container
         disableGutters
         sx={{
@@ -96,6 +98,6 @@ export default function WeightPannel({ weight, handleWeight }) {
           반드시 반영
         </Button>
       </Container>
-    </>
+    </span>
   );
 }

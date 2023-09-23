@@ -15,8 +15,8 @@ from api.database.schema.user.users_male_data import UsersMaleData
 
 class ScoreFToM(Base, BaseMixin):
     __tablename__ = 'matching_score_f2m'
-    female_id = Column(BIGINT, primary_key=True, default=func.max(UsersFemaleData.female_id))
-    male_id = Column(BIGINT, primary_key=True, default=func.max(UsersMaleData.male_id))
+    female_id = Column(BIGINT, primary_key=True, unique=True)
+    male_id = Column(BIGINT, primary_key=True, unique=True)
     created_at = Column(TIMESTAMP, nullable=False,
                         default=func.utc_timestamp(), comment='생성 일자')
     modified_at = Column(TIMESTAMP, nullable=False, default=func.utc_timestamp(

@@ -173,27 +173,27 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         except Exception as e:
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
-    
+
     if user.gender == 0:
         for score in get_scores(user.gender, user_data_target.__dict__, target_users):
             score = score.dict()
-            print(score)
-            # TODO: 여기서부터 확인
-            record = session.query(ScoreFToM).filter(ScoreFToM.female_id == score['female_id'],
-                                                     ScoreFToM.male_id == score['male_id']).first()
-            if record:
-                ScoreFToM.update(auto_commit=True, **score)
+            record = ScoreFToM.filter(female_id=score['female_id'], male_id=score['male_id'])
+            print(f'record: {record}')
+            if record.first():
+                record.update(auto_commit=True, **score)
             else:
-                ScoreFToM.create(session, auto_commit=True, **score)
+                session.add(ScoreFToM(**score))
+                session.commit()
+                # ScoreFToM.create(session, auto_commit=True, **score)
     else:
         for score in get_scores(user.gender, user_data_target.__dict__, target_users):
             score = score.dict()
-            record = session.query(ScoreMToF).filter(ScoreMToF.female_id == score['female_id'],
-                                                     ScoreMToF.male_id == score['male_id']).first()
-            if record:
-                ScoreMToF.update(auto_commit=True, **score)
+            record = ScoreMToF.filter(female_id=score['female_id'], male_id=score['male_id'])
+            if record.first():
+                record.update(auto_commit=True, **score)
             else:
-                ScoreMToF.create(session, auto_commit=True, **score)
+                session.add(ScoreMToF(**score))
+                session.commit()
     return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
     # except Exception as e:
     #     print(e)
@@ -211,6 +211,7 @@ async def get_target_height(request: Request):
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
     return JSONResponse(status_code=200, content=dict(height_s=ut.height_s, height_e=ut.height_e, height_w=ut.height_w))
+
 
 @router.get("/target/education")
 async def get_target_education(request: Request):

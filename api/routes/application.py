@@ -57,7 +57,7 @@ async def get_target_schema(request: Request):
 
 
 @router.patch("/target/all")
-async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...)):
+async def patch_target_all(request: Request, values: UpdateTargetSchema = Body(...)):
     try:
         ut = await get_target_schema(request)
         ut.update(auto_commit=True, **values.dict())
@@ -65,6 +65,20 @@ async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...
     except Exception as e:
         ut.close()
         return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+
+@router.get("/my/values")
+async def get_values(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    # print(ut.cls_attr('fill_status'))
+    return UpdateValueSchema(**ut.__dict__)
 
 
 # 가치관 정보 페이지에서 '다음으로' 버튼 클릭 시
@@ -77,7 +91,21 @@ async def update_values(request: Request, values: UpdateValueSchema = Body(...))
         return JSONResponse(status_code=200, content=dict(msg='가치관 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='가치관 정보 업데이트 실패'))
+
+
+@router.get("/my/lifestyle")
+async def get_lifestyle(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateLifeStyleSchema(**ut.__dict__)
 
 
 # 생활 정보 페이지
@@ -90,7 +118,21 @@ async def update_lifestyle(request: Request, lifestyles: UpdateLifeStyleSchema =
         return JSONResponse(status_code=200, content=dict(msg='생활 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='생활 정보 업데이트 실패'))
+
+
+@router.get("/my/personality")
+async def get_personality(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdatePersonalitySchema(**ut.__dict__)
 
 
 # 성격 정보 페이지
@@ -103,7 +145,21 @@ async def update_personality(request: Request, personalities: UpdatePersonalityS
         return JSONResponse(status_code=200, content=dict(msg='성격 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='성격 정보 업데이트 실패'))
+
+
+@router.get("/my/dating_style")
+async def get_dating_style(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateDatingStyleSchema(**ut.__dict__)
 
 
 # 연애 스타일 페이지
@@ -116,7 +172,21 @@ async def update_dating_style(request: Request, dating_styles: UpdateDatingStyle
         return JSONResponse(status_code=200, content=dict(msg='연애 스타일 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='연애 스타일 정보 업데이트 실패'))
+
+
+@router.get("/my/appearance")
+async def get_appearance(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateAppearanceSchema(**ut.__dict__)
 
 
 # 외모 정보 페이지
@@ -129,6 +199,7 @@ async def update_appearance(request: Request, appearances: UpdateAppearanceSchem
         return JSONResponse(status_code=200, content=dict(msg='외모 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='외모 정보 업데이트 실패'))
 
 

@@ -12,8 +12,8 @@ export default function NumerRelationships({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, number_relationships: null }); }
-    else { setData({ ...data, number_relationships: value }); }
+    if (value == "") { setData({ ...data, number_relationships: null }); setSub(!sub); }
+    else { setData({ ...data, number_relationships: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {

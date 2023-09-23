@@ -12,8 +12,8 @@ export default function PetAnimal({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, pet_animal: null }); }
-    else { setData({ ...data, pet_animal: value }); }
+    if (value == "") { setData({ ...data, pet_animal: null }); setSub(!sub); }
+    else { setData({ ...data, pet_animal: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {
@@ -56,10 +56,10 @@ export default function PetAnimal({ data, setData, sub, setSub }) {
         gap: "8px",
       }}
     >
-      <Typography className="heading2">관심사</Typography>
+      <Typography className="heading2">반려동물</Typography>
       <Divider />
       <Typography className="basic-gray">
-        원하는 상대방의 관심사를 최대 3개 선택해주세요.
+        원하는 상대방의 반려동물 조건 선택해주세요.
       </Typography>
 
 

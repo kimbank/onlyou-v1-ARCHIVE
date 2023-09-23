@@ -115,7 +115,7 @@ const options_eng = {
   pet_animal: '반려동물',
   religion: '종교',
 
-  extrovert_or_realistic: '외향/내향',
+  extrovert_or_introvert: '외향/내향',
   intutive_or_realistic: '직관/현실',
   emotional_or_rational: '감성/이성',
   impromptu_or_planned: '즉흥/계획',

@@ -12,8 +12,8 @@ export default function SmokingHistory({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, smoking_history: null }); }
-    else { setData({ ...data, smoking_history: value }); }
+    if (value == "") { setData({ ...data, smoking_history: null }); setSub(!sub); }
+    else { setData({ ...data, smoking_history: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {
@@ -60,7 +60,7 @@ export default function SmokingHistory({ data, setData, sub, setSub }) {
     <Typography className="heading2">흡연 경력</Typography>
     <Divider />
     <Typography className="basic-gray">
-      원하는 상대방의 흡연 경력을 모두 선택해주세요.
+      꺼리는 상대방의 흡연 경력을 모두 선택해주세요.
     </Typography>
 
 

@@ -12,8 +12,8 @@ export default function Interests({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, interests: null }); }
-    else { setData({ ...data, interests: value }); }
+    if (value == "") { setData({ ...data, interests: null }); setSub(!sub);}
+    else { setData({ ...data, interests: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {
@@ -59,7 +59,8 @@ export default function Interests({ data, setData, sub, setSub }) {
       <Typography className="heading2">관심사</Typography>
       <Divider />
       <Typography className="basic-gray">
-        원하는 상대방의 관심사를 최대 3개 선택해주세요.
+        원하는 상대방의 관심사를 모두 선택해주세요.<br />
+        모든 관심사가 반영되지는 않습니다.
       </Typography>
 
 

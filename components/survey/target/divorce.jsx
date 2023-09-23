@@ -13,6 +13,7 @@ export default function Divorce({ data, setData, sub, setSub }) {
 
   useEffect(() => {
     setData({ ...data, divorce: value });
+    setSub(!sub);
   }, [value]);
 
   const handleChange = (newValue) => {

@@ -11,10 +11,12 @@ import { MainButton, SubMiniButton, SubButton } from "@/components/Button";
 import SmokingHistory from "@/components/survey/my/smoking_history";
 import Drinking from "@/components/survey/my/drinking";
 import OwnedCar from "@/components/survey/my/owned_car";
+// import Interests from "@/components/survey/my/interests";
+import NumberRelationships from "@/components/survey/my/number_relationships";
 
 const Value = () => {
   const [data, setData] = React.useState(LifeData);
-
+  console.log(LifeData);
   return (
     <Container
       disableGutters
@@ -32,7 +34,7 @@ const Value = () => {
       <Drinking data={data} setData={setData} />
       <OwnedCar data={data} setData={setData} />
       {/* <Interests data={data} setData={setData} /> */}
-      {/* <NumberRelationships data={data} setData={setData} /> */}
+      <NumberRelationships data={data} setData={setData} />
       {/* <AthleticLife data={data} setData={setData} /> */}
       {/* <PetAnimal data={data} setData={setData} /> */}
       {/* <Religion data={data} setData={setData} /> */}

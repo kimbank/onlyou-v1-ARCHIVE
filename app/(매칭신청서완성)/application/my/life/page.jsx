@@ -5,7 +5,6 @@ import Link from "next/link";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
-import { DropdownInput } from "@/components/Input";
 import { MainButton, SubMiniButton, SubButton } from "@/components/Button";
 
 import SmokingHistory from "@/components/survey/my/smoking_history";
@@ -17,9 +16,9 @@ import AthleticLife from "@/components/survey/my/athletic_life";
 import PetAnimal from "@/components/survey/my/pet_animal";
 import Religion from "@/components/survey/my/religion";
 
-const Value = () => {
+const Life = () => {
   const [data, setData] = React.useState(LifeData);
-  console.log(LifeData);
+
   return (
     <Container
       disableGutters

@@ -23,8 +23,8 @@ const Value = () => {
                 flexDirection: 'column',
                 gap: '32px',
             }}>
-                {dropdownInputNameGroup.map((buttonName) => (
-                    <DropdownInput buttonName={buttonName} />
+                {dropdownInputNameGroup.map((buttonName, index) => (
+                    <DropdownInput buttonName={buttonName} key={index} />
                 ))}
             </Container>
             <Link href={`application/my/life`}>

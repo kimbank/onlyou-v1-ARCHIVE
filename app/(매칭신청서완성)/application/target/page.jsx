@@ -28,7 +28,7 @@ export default function Target() {
     if (options.length >= 12) {
       setAlertMessage('최대 12개의 항목을 선택할 수 있습니다.');
       setVisible(true);
-      return;
+      // return;
     }
     if (!options.includes(option)) {
       setOptions([...options, option]);
@@ -46,6 +46,7 @@ export default function Target() {
       // console.log(options.join(','));
       window.location.href = `/application/target/${options.join(',')}`;
     }
+    window.location.href = `/application/target/${options.join(',')}`;
   }
 
   return (

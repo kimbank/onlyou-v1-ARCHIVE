@@ -26,11 +26,32 @@ import IntutiveOrRealistic from "@/components/survey/target/intutive_or_realisti
 import EmotionalOrRational from "@/components/survey/target/emotional_or_rational";
 import ImpromptuOrPlanned from "@/components/survey/target/impromptu_or_planned";
 import SelfconfidenceOrCareful from "@/components/survey/target/selfconfidence_or_careful";
+
 import MarriageValues from '@/components/survey/target/marriage_values';
 import ReligiousValues from '@/components/survey/target/religious_values';
 import OppositeFriendsValues from '@/components/survey/target/opposite_friends_values';
 import PoliticalValues from '@/components/survey/target/political_values';
 import ConsumptionValues from '@/components/survey/target/consumption_values';
+import CareerFamilyValues from '@/components/survey/target/career_family_values';
+
+import AnimalImage from '@/components/survey/target/animal_image';
+import DoubleEyelid from '@/components/survey/target/double_eyelid';
+import FaceShape from '@/components/survey/target/face_shape';
+import BodyType from '@/components/survey/target/body_type';
+import SkinTone from '@/components/survey/target/skin_tone';
+import Tattoo from '@/components/survey/target/tattoo';
+import FashionStyle from '@/components/survey/target/fashion_style';
+
+import PrefferedDating from '@/components/survey/target/preffered_dating';
+import PreferredContactMethod from '@/components/survey/target/preferred_contact_method';
+import AttractivenessLevel from '@/components/survey/target/attractiveness_level';
+import JealousyLevel from '@/components/survey/target/jealousy_level';
+import LoveInitiative from '@/components/survey/target/love_initiative';
+import DatingFrequency from '@/components/survey/target/dating_frequency';
+import ContactStyle from '@/components/survey/target/contact_style';
+import Skinship from '@/components/survey/target/skinship';
+import Sns from '@/components/survey/target/sns';
+import ConflictResolutionMethod from '@/components/survey/target/conflict_resolution_method';
 
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -45,14 +66,14 @@ export default function Target({ params }) {
 
   const fields = params.fields.split('%2C')
 
-  if (fields.length < 3 || fields.length > 12) {
-    window.location.href = '/application/target';
-  }
-  for (let i = 0; i < fields.length; i++) {
-    if (!Object.keys(options_eng).includes(fields[i])) {
-      window.location.href = '/application/target';
-    }
-  }
+  // if (fields.length < 3 || fields.length > 12) {
+  //   window.location.href = '/application/target';
+  // }
+  // for (let i = 0; i < fields.length; i++) {
+  //   if (!Object.keys(options_eng).includes(fields[i])) {
+  //     window.location.href = '/application/target';
+  //   }
+  // }
 
   useEffect(() => {
     let cnt = fields.length;
@@ -135,26 +156,26 @@ export default function Target({ params }) {
         { fields.includes('opposite_friends_values') && <OppositeFriendsValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('political_values') && <PoliticalValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('consumption_values') && <ConsumptionValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
-        { fields.includes('career_family_values') && <></> }
+        { fields.includes('career_family_values') && <CareerFamilyValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('animal_image') && <></> }
-        { fields.includes('double_eyelid') && <></> }
-        { fields.includes('face_shape') && <></> }
-        { fields.includes('body_type') && <></> }
-        { fields.includes('skin_tone') && <></> }
-        { fields.includes('tattoo') && <></> }
-        { fields.includes('fashion_style') && <></> }
+        { fields.includes('animal_image') && <AnimalImage data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('double_eyelid') && <DoubleEyelid data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('face_shape') && <FaceShape data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('body_type') && <BodyType data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('skin_tone') && <SkinTone data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('tattoo') && <Tattoo data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('fashion_style') && <FashionStyle data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('preffered_dating') && <></> }
-        { fields.includes('preferred_contact_method') && <></> }
-        { fields.includes('attractiveness_level') && <></> }
-        { fields.includes('jealousy_level') && <></> }
-        { fields.includes('love_initiative') && <></> }
-        { fields.includes('dating_frequency') && <></> }
-        { fields.includes('contact_style') && <></> }
-        { fields.includes('skinship') && <></> }
-        { fields.includes('sns') && <></> }
-        { fields.includes('conflict_resolution_method') && <></> }
+        { fields.includes('preffered_dating') && <PrefferedDating data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('preferred_contact_method') && <PreferredContactMethod data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('attractiveness_level') && <AttractivenessLevel data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('jealousy_level') && <JealousyLevel data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('love_initiative') && <LoveInitiative data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('dating_frequency') && <DatingFrequency data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('contact_style') && <ContactStyle data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('skinship') && <Skinship data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('sns') && <Sns data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('conflict_resolution_method') && <ConflictResolutionMethod data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
         <br />
         <BottomNavigation sx={{

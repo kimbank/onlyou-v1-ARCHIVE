@@ -6,11 +6,24 @@ import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 import { MainButton } from '@/components/Button';
+import { DangerNotification } from '@/components/Notification';
 
 import { DropDownInput } from '@/components/survey/my/drop_down_input';
 
+function canProceedToNextPage(data) {
+    for (const key in data) {
+        if (data[key] === null) {
+            return false; // 하나라도 null 값이 있으면 다음 페이지로 못감
+        }
+    }
+    return true; // 모든 값이 null이 아니면 다음 페이지로 갈 수 있음
+}
+
 const Value = () => {
     const [data, setData] = React.useState(ValueData);
+    const [dangerMessage, setDangerMessage] = React.useState('');
+    const [dangerVisible, setDangerVisible] = React.useState(false);
+    const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
 
     return (
         <Container
@@ -21,6 +34,8 @@ const Value = () => {
                 gap: "64px",
             }}
         >
+            <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
+
             <button onClick={() => console.log(data)}>정보 보기</button>
 
             <Typography className="heading2"> 가치관 정보 입력하기 </Typography>
@@ -37,9 +52,13 @@ const Value = () => {
                 <DropDownInput data={data} setData={setData} data_name={"consumption_values"} title={"소비 가치관"} options={["조금 부족하더라도 편안한 미래를 위해 절약하고 싶어요", "지금 아니면 못하는 것들에 충분히 투자하고 싶어요"]} />
                 <DropDownInput data={data} setData={setData} data_name={"career_family_values"} title={"커리어와 가정 가치관"} options={["두 사람 모두 가정이 커리어보다 우선이었으면 해요", "두 사람 중 한 명은 커리어보다 가정에 신경을 썼으면 해요"]} />
             </Container>
-            <Link href={`application/my/life`}>
-                <MainButton buttonName="다음 단계" />
-            </Link>
+
+            {canProceed ?
+                <Link href={`application/my/life`}>
+                    <MainButton buttonName="다음 단계" />
+                </Link> :
+                <MainButton buttonName="다음 단계" onClick={() => {setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true)}} />
+            }
         </Container>
     );
 }

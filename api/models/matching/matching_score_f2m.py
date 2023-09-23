@@ -6,6 +6,7 @@ class ScoreFToMSchema(BaseModel):
     female_id: int
     male_id: int
     score_sum: Optional[int]
+    score_max: Optional[int]
     date_birth: Optional[int]
     residence: Optional[int]
     job_type: Optional[int]

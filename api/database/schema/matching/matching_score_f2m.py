@@ -22,6 +22,7 @@ class ScoreFToM(Base, BaseMixin):
     modified_at = Column(TIMESTAMP, nullable=False, default=func.utc_timestamp(
     ), onupdate=func.utc_timestamp(), comment='변경 일자')
     score_sum = Column(SMALLINT)
+    score_max = Column(SMALLINT)
     date_birth = Column(TINYINT)
     residence = Column(TINYINT)
     job_type = Column(TINYINT)

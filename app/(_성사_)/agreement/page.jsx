@@ -120,7 +120,9 @@ function UserCard({ user }) {
         {/* 닉네임 */}
         <Typography className='heading2'> 
           {user.nickname}
-          <Image src={Report} width='18px' style={{marginLeft:'5.5px'}} />
+          <a href='https://g8h7y7g082m.typeform.com/to/pSQrGO9q' target='_blank'>
+            <Image src={Report} width='18px' style={{marginLeft:'5.5px'}} />
+          </a>
         </Typography>
 
         {/* 직장유형 */}

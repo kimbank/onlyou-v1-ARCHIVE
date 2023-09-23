@@ -8,9 +8,9 @@ import { AppBar, Container, Typography, LinearProgress, Box, Slider, BottomNavig
 import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
-import Height from "@/components/survey/height";
-import Education from "@/components/survey/education";
-import Divorce from "@/components/survey/divorce";
+import Height from "@/components/survey/target/height";
+import Education from "@/components/survey/target/education";
+import Divorce from "@/components/survey/target/divorce";
 
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -344,4 +344,3 @@ const data_target = {
   conflict_resolution_method: null,
   conflict_resolution_method_w: null
 }
-

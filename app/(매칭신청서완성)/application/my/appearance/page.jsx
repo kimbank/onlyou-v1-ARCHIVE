@@ -57,11 +57,11 @@ const Appearance = () => {
 export default Appearance;
 
 const AppearanceData = {
-    animal_image: '동물 이미지',
-    double_eyelid: '쌍꺼풀',
-    face_shape: '얼굴상',
-    body_type: '체형',
-    skin_tone: '피부톤',
-    tattoo: '문신 유무',
-    fashion_style: '패션 스타일',
+    animal_image: null,
+    double_eyelid: null,
+    face_shape: null,
+    body_type: null,
+    skin_tone: null,
+    tattoo: null,
+    fashion_style: null,
 }

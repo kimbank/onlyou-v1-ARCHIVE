@@ -7,14 +7,14 @@ import { Typography } from "@mui/material";
 
 import { MainButton, SubMiniButton, SubButton } from "@/components/Button";
 
-import SmokingHistory from "@/components/survey/my/smoking_history";
-import Drinking from "@/components/survey/my/drinking";
-import OwnedCar from "@/components/survey/my/owned_car";
-// import Interests from "@/components/survey/my/interests";
-import NumberRelationships from "@/components/survey/my/number_relationships";
-import AthleticLife from "@/components/survey/my/athletic_life";
-import PetAnimal from "@/components/survey/my/pet_animal";
-import Religion from "@/components/survey/my/religion";
+import SmokingHistory from "@/components/survey/my/life/smoking_history";
+import Drinking from "@/components/survey/my/life/drinking";
+import OwnedCar from "@/components/survey/my/life/owned_car";
+// import Interests from "@/components/survey/my/life/interests";
+import NumberRelationships from "@/components/survey/my/life/number_relationships";
+import AthleticLife from "@/components/survey/my/life/athletic_life";
+import PetAnimal from "@/components/survey/my/life/pet_animal";
+import Religion from "@/components/survey/my/life/religion";
 
 const Life = () => {
   const [data, setData] = React.useState(LifeData);

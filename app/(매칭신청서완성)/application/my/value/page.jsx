@@ -7,12 +7,12 @@ import { Typography } from "@mui/material";
 
 import { MainButton } from '@/components/Button';
 
-import MarriageValues from '@/components/survey/my/marriage_values';
-import ReligiousValues from '@/components/survey/my/religious_values';
-import OppositeFriendsValues from '@/components/survey/my/opposite_friends_values';
-import PoliticalValues from '@/components/survey/my/political_values';
-import ConsumptionValues from '@/components/survey/my/consumption_values';
-import CareerFamilyValues from '@/components/survey/my/career_family_values';
+import MarriageValues from '@/components/survey/my/value/marriage_values';
+import ReligiousValues from '@/components/survey/my/value/religious_values';
+import OppositeFriendsValues from '@/components/survey/my/value/opposite_friends_values';
+import PoliticalValues from '@/components/survey/my/value/political_values';
+import ConsumptionValues from '@/components/survey/my/value/consumption_values';
+import CareerFamilyValues from '@/components/survey/my/value/career_family_values';
 
 const Value = () => {
     const [data, setData] = React.useState(ValueData);

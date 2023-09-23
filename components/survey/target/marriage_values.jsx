@@ -7,13 +7,13 @@ import { Typography, Container, Button, Divider } from "@mui/material";
 
 import WeightPannel from "./weight_pannel";
 
-export default function Religion({ data, setData, sub, setSub }) {
+export default function MarriageValues({ data, setData, sub, setSub }) {
   const [value, setValue] = React.useState("");
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, religion: null }); setSub(!sub); }
-    else { setData({ ...data, religion: value }); setSub(!sub); }
+    if (value == "") { setData({ ...data, marriage_values: null }); setSub(!sub); }
+    else { setData({ ...data, marriage_values: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {
@@ -42,7 +42,7 @@ export default function Religion({ data, setData, sub, setSub }) {
     }
     else {
       setWeight(newWeight);
-      setData({ ...data, religion_w: newWeight });
+      setData({ ...data, marriage_values_w: newWeight });
     }
     setSub(!sub);
   };
@@ -57,10 +57,10 @@ export default function Religion({ data, setData, sub, setSub }) {
         gap: "8px",
       }}
     >
-    <Typography className="heading2">종교</Typography>
+    <Typography className="heading2">결혼 가치관</Typography>
     <Divider />
     <Typography className="basic-gray">
-      꺼리는 종교를 선택해주세요.
+      원하는 상대의 결혼 가치관을 선택해주세요.
     </Typography>
 
 
@@ -73,12 +73,9 @@ export default function Religion({ data, setData, sub, setSub }) {
         gap: "8px",
       }}
     >
-      <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>무교</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>기독교</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('2')} color={value.split(',').includes('2') ? "primary" : "secondary"}>천주교</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('3')} color={value.split(',').includes('3') ? "primary" : "secondary"}>불교</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('4')} color={value.split(',').includes('4') ? "primary" : "secondary"}>원불교</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('5')} color={value.split(',').includes('5') ? "primary" : "secondary"}>기타</Button>
+      <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>비혼주의에요</Button>
+      <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>아직 결혼은 이르다고 생각해요</Button>
+      <Button variant="contained" sx={sx} onClick={() => handleChange('2')} color={value.split(',').includes('2') ? "primary" : "secondary"}>사랑한다면 3년 내로 결혼도 생각할 것 같아요</Button>
     </Container>
 
 

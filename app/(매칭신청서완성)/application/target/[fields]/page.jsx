@@ -25,6 +25,12 @@ import ExtrovertOrIntrovert from "@/components/survey/target/extrovert_or_introv
 import IntutiveOrRealistic from "@/components/survey/target/intutive_or_realistic";
 import EmotionalOrRational from "@/components/survey/target/emotional_or_rational";
 import ImpromptuOrPlanned from "@/components/survey/target/impromptu_or_planned";
+import SelfconfidenceOrCareful from "@/components/survey/target/selfconfidence_or_careful";
+import MarriageValues from '@/components/survey/target/marriage_values';
+import ReligiousValues from '@/components/survey/target/religious_values';
+import OppositeFriendsValues from '@/components/survey/target/opposite_friends_values';
+import PoliticalValues from '@/components/survey/target/political_values';
+import ConsumptionValues from '@/components/survey/target/consumption_values';
 
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -122,13 +128,13 @@ export default function Target({ params }) {
         { fields.includes('intutive_or_realistic') && <IntutiveOrRealistic data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('emotional_or_rational') && <EmotionalOrRational data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('impromptu_or_planned') && <ImpromptuOrPlanned data={data} setData={setData} sub={sub} setSub={setSub} /> }
-        { fields.includes('selfconfidence_or_careful') && <></> }
+        { fields.includes('selfconfidence_or_careful') && <SelfconfidenceOrCareful data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('marriage_values') && <></> }
-        { fields.includes('religious_values') && <></> }
-        { fields.includes('opposite_friends_values') && <></> }
-        { fields.includes('political_values') && <></> }
-        { fields.includes('consumption_values') && <></> }
+        { fields.includes('marriage_values') && <MarriageValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('religious_values') && <ReligiousValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('opposite_friends_values') && <OppositeFriendsValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('political_values') && <PoliticalValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('consumption_values') && <ConsumptionValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('career_family_values') && <></> }
 
         { fields.includes('animal_image') && <></> }

@@ -13,6 +13,7 @@
     "next-start": "next start",
     "next-deploy": "next start -p 80",
     "start": "concurrently \"npm run next-start\" \"npm run fastapi-start\"",
+    "deploy": "concurrently \"npm run next-deploy\" \"npm run fastapi-start\"",
     "lint": "next lint"
   },
   "dependencies": {

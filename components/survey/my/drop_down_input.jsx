@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 
 
-export default function EmotionalOrRational({ data, setData }) {
+export function DropDownInput({ data, setData, data_name, title = "!미정", options = [], start_index = 0}) {
     const [value, setValue] = React.useState(null);
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        setData({ ...data, emotional_or_rational: event.target.value });
+        setData({ ...data, [data_name] : event.target.value });
     };
-
+    
     return (
         <Container
             disableGutters
@@ -26,7 +26,7 @@ export default function EmotionalOrRational({ data, setData }) {
                 gap: 1,
             }}
         >
-            <Typography className="input-title">외향/내향</Typography>
+            <Typography className="input-title">{title}</Typography>
             <FormControl>
                 <Select
                     labelId="select-label"
@@ -44,13 +44,14 @@ export default function EmotionalOrRational({ data, setData }) {
                         <Typography className="basic">선택해주세요.</Typography>
                     </MenuItem>
 
-
-                    <MenuItem value={0}>
-                        중요성엔 공감하지만, 규칙적으로 하고 있진 않다
-                    </MenuItem>
-                    <MenuItem value={1}>
-                        운동을 규칙적으로 꾸준히 한다.
-                    </MenuItem>
+                    {options.map((option, index) => {
+                        return (
+                            <MenuItem value={index + start_index} key={(index + start_index).toString()}>
+                                {option}
+                            </MenuItem>
+                        )
+                    })}
+                
                 </Select>
             </FormControl>
         </Container>

@@ -7,13 +7,10 @@ import { Typography } from "@mui/material";
 
 import { MainButton, SubButton } from '@/components/Button';
 
-import ExtrovertOrRealistic from '@/components/survey/my/character/extrovert_or_realistic';
-import IntutiveOrRealistic from '@/components/survey/my/character/intutive_or_realistic';
-import EmotionalOrRational from '@/components/survey/my/character/emotional_or_rational';
-import ImpromptuOrPlanned from '@/components/survey/my/character/impromptu_or_planned';
-import SelfconfidenceOrCareful from '@/components/survey/my/character/selfconfidence_or_careful';
+import { DropDownInput } from '@/components/survey/my/drop_down_input';
 
 const Character = () => {
+    const [data, setData] = React.useState(CharacterData);
 
     return (
         <Container
@@ -33,11 +30,11 @@ const Character = () => {
                 flexDirection: 'column',
                 gap: '32px',
             }}>
-                {/* <ExtrovertOrRealistic data={data} setData={setData} /> */}
-                {/* <IntutiveOrRealistic data={data} setData={setData} /> */}
-                {/* <EmotionalOrRational data={data} setData={setData} /> */}
-                {/* <ImpromptuOrPlanned data={data} setData={setData} /> */}
-                {/* <SelfconfidenceOrCareful data={data} setData={setData} /> */}
+                <DropDownInput data={data} setData={setData} data_name={"extrovert_or_realistic"} title={"외향/내향"} options={["매우 외향", "외향", "중립", "내향", "매우 내향"]} start_index={-2} />
+                <DropDownInput data={data} setData={setData} data_name={"intutive_or_realistic"} title={"직관/현실"} options={["매우 직관적", "직관적", "중립", "현실적", "매우 현실적"]} start_index={-2} />
+                <DropDownInput data={data} setData={setData} data_name={"emotional_or_rational"} title={"감성/이성"} options={["매우 감성적", "감성적", "중립", "이성적", "매우 이성적"]} start_index={-2} />
+                <DropDownInput data={data} setData={setData} data_name={"impromptu_or_planned"} title={"즉흥/계획"} options={["매우 즉흥적", "즉흥적", "중립", "계획적", "매우 계획적"]} start_index={-2} />
+                <DropDownInput data={data} setData={setData} data_name={"selfconfidence_or_careful"} title={"자기확신/신중"} options={["매우 자기확신", "자기확신", "중립", "신중", "매우 신중"]} start_index={-2} />
             </Container>
             <Container disableGutters sx={{
                 display: 'flex',

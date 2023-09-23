@@ -199,8 +199,10 @@ async def get_target_profile(request: Request, choice: bool):
                 female = User.get(id=user_info.id); male = User.get(id=pm.first().male_id);
                 slack_chat_post(female=female, male=male)
             pm.update(f_choice=1, auto_commit=True)
+            pm.close()
         else:
             pm.update(f_choice=-1, auto_commit=True)
+            pm.close()
     else:
         pm = MatchingPublic.filter(male_id=user_info.id, phase=request.state.phase, status=1)
         if choice:
@@ -208,8 +210,10 @@ async def get_target_profile(request: Request, choice: bool):
                 female = User.get(id=pm.first().female_id); male = User.get(id=user_info.id);
                 slack_chat_post(female=female, male=male)
             pm.update(m_choice=1, auto_commit=True)
+            pm.close()
         else:
             pm.update(m_choice=-1, auto_commit=True)
+            pm.close()
 
     return ""
 

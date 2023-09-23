@@ -13,6 +13,7 @@ import Drinking from "@/components/survey/my/drinking";
 import OwnedCar from "@/components/survey/my/owned_car";
 // import Interests from "@/components/survey/my/interests";
 import NumberRelationships from "@/components/survey/my/number_relationships";
+import AthleticLife from "@/components/survey/my/athletic_life";
 
 const Value = () => {
   const [data, setData] = React.useState(LifeData);
@@ -35,7 +36,7 @@ const Value = () => {
       <OwnedCar data={data} setData={setData} />
       {/* <Interests data={data} setData={setData} /> */}
       <NumberRelationships data={data} setData={setData} />
-      {/* <AthleticLife data={data} setData={setData} /> */}
+      <AthleticLife data={data} setData={setData} />
       {/* <PetAnimal data={data} setData={setData} /> */}
       {/* <Religion data={data} setData={setData} /> */}
 

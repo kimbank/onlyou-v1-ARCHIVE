@@ -1,5 +1,6 @@
 import './globals.css';
 import CssBaseline from '@mui/material/CssBaseline';
+import Hotjar from '@/utils/hostjar';
 
 export const metadata = {
   title: '아무나 만나지 마세요, 연애정보회사 ONLYou',
@@ -7,6 +8,7 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  
   return (
     <html lang="ko-KR">
       <body style={{'backgroundColor': '#FFE4CC'}}>
@@ -17,6 +19,7 @@ export default function RootLayout({ children }) {
           </CssBaseline>
           <br /><br />
         </div>
+        { process.env.NODE_ENV !== 'development' && <Hotjar />}
       </body>
     </html>
   )

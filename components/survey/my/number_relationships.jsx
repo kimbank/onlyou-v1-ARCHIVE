@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 
 
-export default function SmokingHistory({ data, setData }) {
+export default function NumberRelationships({ data, setData }) {
   const [value, setValue] = React.useState(null);
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    setData({ ...data, smoking_history: event.target.value });
+    setData({ ...data, number_relationships: event.target.value });
   };
 
   return (
@@ -26,7 +26,7 @@ export default function SmokingHistory({ data, setData }) {
         gap: 1,
       }}
     >
-      <Typography className="input-title">흡연 경력</Typography>
+      <Typography className="input-title">연애 횟수</Typography>
       <FormControl>
         <Select
           labelId="select-label"
@@ -46,13 +46,19 @@ export default function SmokingHistory({ data, setData }) {
 
 
           <MenuItem value={0}>
-            비흡연
+            0회
           </MenuItem>
           <MenuItem value={1}>
-            금연
+            1~2회
           </MenuItem>
           <MenuItem value={2}>
-            흡연
+            3~4회
+          </MenuItem>
+          <MenuItem value={3}>
+            5~6회
+          </MenuItem>
+          <MenuItem value={4}>
+            7회 이상
           </MenuItem>
         </Select>
       </FormControl>

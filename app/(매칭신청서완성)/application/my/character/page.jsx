@@ -55,9 +55,9 @@ const Character = () => {
 export default Character;
 
 const CharacterData = {
-    extrovert_or_realistic: '외향/내향',
-    intutive_or_realistic: '직관/현실',
-    emotional_or_rational: '감성/이성',
-    impromptu_or_planned: '즉흥/계획',
-    selfconfidence_or_careful: '자기확신/신중',
+    extrovert_or_realistic: null,
+    intutive_or_realistic: null,
+    emotional_or_rational: null,
+    impromptu_or_planned: null,
+    selfconfidence_or_careful: null,
 }

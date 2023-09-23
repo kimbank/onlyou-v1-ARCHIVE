@@ -7,7 +7,7 @@ import { Typography, Container, Button, Divider } from "@mui/material";
 
 import WeightPannel from "./weight_pannel";
 
-export default function religious_values({ data, setData, sub, setSub }) {
+export default function ReligiousValues({ data, setData, sub, setSub }) {
   const [value, setValue] = React.useState("");
   const [weight, setWeight] = useState(null);
 

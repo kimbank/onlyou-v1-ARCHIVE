@@ -14,7 +14,7 @@ import { TextInput } from '@/components/survey/my/text_input';
 
 function canProceedToNextPage(data) {
     for (const key in data) {
-        if (data[key] === null) {
+        if (data[key] === null || data[key] === '') {
             return false; // 하나라도 null 값이 있으면 다음 페이지로 못감
         }
     }

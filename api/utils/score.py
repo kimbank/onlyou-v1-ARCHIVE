@@ -11,11 +11,13 @@ def get_score(data, target_data, score_record):
     EXTRA_HATES = ['smoking_history', 'religion']  # Extra에서 꺼리는 선지 정보
     target_standard = {}
     score = 0
+    score_record['score_max'] = 0
 
     # 사용자의 이상형 기준 추출
     for key, value in data.items():
         base_key = key[:-2]
         if key.endswith('_w') and value is not None:  # 가중치가 존재하면
+            score_record['score_max'] += value
             for related_data in data.keys():  # 관련 정보 모두 저장(_s, _e 등등)
                 if related_data.startswith(base_key):
                     target_standard[related_data] = data[related_data]

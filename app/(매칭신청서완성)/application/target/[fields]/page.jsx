@@ -11,6 +11,14 @@ import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
 import Height from "@/components/survey/target/height";
 import Education from "@/components/survey/target/education";
 import Divorce from "@/components/survey/target/divorce";
+import SmokingHistory from "@/components/survey/target/smoking_history";
+import DrinkingLife from "@/components/survey/target/drinking_life";
+import OwnedCar from "@/components/survey/target/owned_car";
+import Interests from "@/components/survey/target/interests";
+import NumberRelationships from "@/components/survey/target/number_relationships";
+import AthleticLife from "@/components/survey/target/athletic_life";
+import PetAnimal from "@/components/survey/target/pet_animal";
+import Religion from "@/components/survey/target/religion";
 
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -95,14 +103,14 @@ export default function Target({ params }) {
         { fields.includes('height') && <Height data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('education') && <Education data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('divorce') && <Divorce data={data} setData={setData} sub={sub} setSub={setSub} /> }
-        { fields.includes('smoking_history') && <></> }
-        { fields.includes('drinking_life') && <></> }
-        { fields.includes('owned_car') && <></> }
-        { fields.includes('interests') && <></> }
-        { fields.includes('number_relationships') && <></> }
-        { fields.includes('athletic_life') && <></> }
-        { fields.includes('pet_animal') && <></> }
-        { fields.includes('religion') && <></> }
+        { fields.includes('smoking_history') && <SmokingHistory data={data} setData={setData} sub={sub} setSub={setSub}  /> }
+        { fields.includes('drinking_life') && <DrinkingLife data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('owned_car') && <OwnedCar data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('interests') && <Interests data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('number_relationships') && <NumberRelationships data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('athletic_life') && <AthleticLife data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('pet_animal') && <PetAnimal data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('religion') && <Religion data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
         { fields.includes('extrovert_or_introvert') && <></> }
         { fields.includes('intutive_or_realistic') && <></> }
@@ -149,7 +157,7 @@ export default function Target({ params }) {
               display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
             }}>
               <InfoText title={'매칭 예상 주기 7일'} />
-              <InfoText title={'경쟁률 높음'} />
+              {/* <InfoText title={'경쟁률 높음'} /> */}
             </Container>
 
             <Container disableGutters sx={{
@@ -186,7 +194,7 @@ const options_eng = {
   smoking_history: '흡연 여부',
   drinking_life: '음주 여부',
   owned_car: '자차 유무',
-  interest: '관심사',
+  interests: '관심사',
   number_relationships: '연애 횟수',
   athletic_life: '운동 생활',
   pet_animal: '반려동물',

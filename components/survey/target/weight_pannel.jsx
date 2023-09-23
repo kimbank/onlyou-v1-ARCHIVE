@@ -90,8 +90,8 @@ export default function WeightPannel({ weight, handleWeight }) {
           variant="contained"
           sx={{
             borderRadius: "8px",
-            height: "35px",
-            minWidth: "100px",
+            minHeight: "35px",
+            minWidth: "104px",
             boxShadow: "none",
           }}
         >

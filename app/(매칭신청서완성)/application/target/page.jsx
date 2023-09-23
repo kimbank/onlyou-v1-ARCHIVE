@@ -109,7 +109,7 @@ const options_eng = {
   smoking_history: '흡연 여부',
   drinking_life: '음주 여부',
   owned_car: '자차 유무',
-  interest: '관심사',
+  interests: '관심사',
   number_relationships: '연애 횟수',
   athletic_life: '운동 생활',
   pet_animal: '반려동물',

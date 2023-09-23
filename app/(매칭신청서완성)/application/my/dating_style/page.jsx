@@ -36,7 +36,7 @@ const DatingStyle = () => {
         >
             <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
 
-            <button onClick={() => console.log(data)}>정보 보기</button>
+            {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
             <Typography className="heading2"> 연애 스타일 입력하기 </Typography>
 

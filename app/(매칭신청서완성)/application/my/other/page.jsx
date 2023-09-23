@@ -29,15 +29,17 @@ const Other = () => {
     const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
 
     return (
-        <Container disableGutters sx={{
-            marginTop: '80px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '64px',
-        }}>
+        <Container
+            disableGutters
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "64px",
+            }}
+        >
             <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
 
-            <button onClick={() => console.log(data)}>정보 보기</button>
+            {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
             <Typography className='heading2'>기타 정보 입력하기</Typography>
             <Container disableGutters sx={{
@@ -45,8 +47,8 @@ const Other = () => {
                 flexDirection: 'column',
                 gap: '32px',
             }}>
-                <DropDownInput data={data} setData={setData} data_name={"information_before_meeting"} title={"만나기 전 정보"} options={["!미정"]}/>
-                <TextInput data={data} setData={setData} data_name={"kakao_id"} title={"카카오톡 아이디"}/>
+                <DropDownInput data={data} setData={setData} data_name={"information_before_meeting"} title={"만나기 전 정보"} options={["!미정"]} />
+                <TextInput data={data} setData={setData} data_name={"kakao_id"} title={"카카오톡 아이디"} />
             </Container>
             <Container disableGutters sx={{
                 display: 'flex',

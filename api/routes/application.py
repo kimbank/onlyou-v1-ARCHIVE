@@ -19,9 +19,13 @@ from api.database.schema.user.users_female_data_extra import UsersFemaleDataExtr
 from api.database.schema.user.users_male_data_extra import UsersMaleDataExtra
 from api.database.schema.user.users_female_data_target import UsersFemaleDataTarget
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
+from api.database.schema.matching.matching_score_f2m import ScoreFToM
+from api.database.schema.matching.matching_score_m2f import ScoreMToF
 from api.models.user.data.data_extra import UpdateValueSchema, UpdateLifeStyleSchema, UpdatePersonalitySchema, \
     UpdateDatingStyleSchema, UpdateAppearanceSchema
 from api.models.user.data.data_target import UpdateTargetSchema
+from api.models.matching.matching_score_f2m import ScoreFToMSchema
+from api.models.matching.matching_score_m2f import ScoreMToFSchema
 from api.utils.score import get_scores
 
 router = APIRouter(prefix="/application")
@@ -38,6 +42,7 @@ async def get_extra_schema(request: Request):
     else:
         ut = UsersMaleDataExtra.filter(male_id=user_info.id)
     return ut
+
 
 async def get_target_schema(request: Request):
     user_info = await token_control(request)
@@ -136,6 +141,7 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
     user = User.get(id=user_info.id)
+    # 조인
     if user.gender == 0:
         # 이성 정보 스키마 별칭 -> 이름이 같은 컬럼 구분
         u = aliased(User)
@@ -169,9 +175,35 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
             print(e)
             return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
 
-    # 점수 계산
-    # try:
-    get_scores(u.gender, user_data_target.__dict__, target_users)
+    # 점수 계산 및 DB 저장
+    if user.gender == 0:
+        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+            score = score.dict()
+            record = ScoreFToM.filter(female_id=score['female_id'], male_id=score['male_id'])
+            # (f_id, m_id) 존재시 update, 없으면 insert
+            try:
+                if record.first():
+                    record.update(auto_commit=True, **score)
+                else:
+                    session.add(ScoreFToM(**score))
+                    session.commit()
+                    # ScoreFToM.create(session, auto_commit=True, **score)
+            except Exception as e:
+                print(e)
+                return JSONResponse(status_code=500, content=dict(msg='점수 반영 실패'))
+    else:
+        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+            score = score.dict()
+            record = ScoreMToF.filter(female_id=score['female_id'], male_id=score['male_id'])
+            try:
+                if record.first():
+                    record.update(auto_commit=True, **score)
+                else:
+                    session.add(ScoreMToF(**score))
+                    session.commit()
+            except Exception as e:
+                print(e)
+                return JSONResponse(status_code=500, content=dict(msg='점수 반영 실패'))
     return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
     # except Exception as e:
     #     print(e)
@@ -190,6 +222,7 @@ async def get_target_height(request: Request):
 
     return JSONResponse(status_code=200, content=dict(height_s=ut.height_s, height_e=ut.height_e, height_w=ut.height_w))
 
+
 @router.get("/target/education")
 async def get_target_education(request: Request):
     try:
@@ -201,3 +234,8 @@ async def get_target_education(request: Request):
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
     return JSONResponse(status_code=200, content=dict(education=ut.education, education_w=ut.education_w))
+
+
+@router.post("/admin/calculate-all")
+async def calculate_all_scores(request: Request, session: Session = Depends(db.session)):
+    pass

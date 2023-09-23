@@ -1,6 +1,10 @@
-def get_score(data, target_data):
+from api.models.matching.matching_score_f2m import ScoreFToMSchema
+from api.models.matching.matching_score_m2f import ScoreMToFSchema
+
+
+def get_score(data, target_data, score_record):
     PENALTY = -60
-    PROMOTION_HATES = ['job_type', 'education']
+    PROMOTION_HATES = ['education']  # TODO: job_type 추후에 추가
     EXTRA_SINGLES = ['athletic_life', 'pet_animal', 'consumption_values', 'preffered_dating',
                      'preferred_contact_method', 'contact_style', 'skinship', 'sns',
                      'conflict_resolution_method']  # Extra에서 단일 선택 정보
@@ -17,100 +21,121 @@ def get_score(data, target_data):
                     target_standard[related_data] = data[related_data]
 
     important_standard = {key: value for key, value in target_standard.items() if key.endswith('_w') and value == 5}
-
-    # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략
-    # TODO: residence 해야함
+    # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략-
     for key, value in target_data['u'].items():
-        if value is None:
-            continue
-        if key == 'date_birth':
-            if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+        if key == 'date_birth' and 'date_birth_w' in target_standard:
+            if value is not None and target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
                 score += PENALTY
+                score_record[key] = PENALTY
             continue
 
     # 심사 정보
     for key, value in target_data['ud'].items():
-        if value is None:
-            continue
         # 꺼리는 정보
-        if key in PROMOTION_HATES:
-            if str(value) in target_standard[key].split(','):
-                if key in important_standard:
+        if key in PROMOTION_HATES and key in target_standard:
+            if value is None or str(value) in target_standard[key].split(','):
+                if key + '_w' in important_standard:
                     score += PENALTY
-                continue
+                    score_record[key] = PENALTY
             else:
                 score += target_standard[key + '_w']
-
-        elif key == 'height':
-            if target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
-                score += target_standard[key + '_w']
-            elif key in important_standard:
-                score += PENALTY
+                score_record[key] = target_standard[key + '_w']
             continue
 
-        elif key == 'divorce':
-            if target_standard[key] == value:
+        elif key == 'height' and 'height_w' in target_standard:
+            if value is not None and (
+                    target_standard[key + '_s'] <= value <= target_standard[key + '_e'] or value >= 185):
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
                 score += PENALTY
+                score_record[key] = PENALTY
+            continue
+
+        elif key == 'divorce' and key in target_standard:
+            if value is not None and target_standard[key] == value:
+                score += target_standard[key + '_w']
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
+                score += PENALTY
+                score_record[key] = PENALTY
             continue
 
     # 부가 정보
-    # TODO: interests, fashion_style은 문자열 -> 단일 선택 정보 취급해야할듯
     for key, value in target_data['ue'].items():
-        if value is None:
-            continue
         # 꺼리는 정보
-        if key in EXTRA_HATES:
-            if str(value) in target_standard[key].split(','):
-                if key in important_standard:
+        if key in EXTRA_HATES and key in target_standard:
+            if value is not None and str(value) in target_standard[key].split(','):
+                if key + '_w' in important_standard:
                     score += PENALTY
+                    score_record[key] = PENALTY
                 continue
             else:
                 score += target_standard[key + '_w']
+                score_record[key] = target_standard[key + '_w']
 
         # 단일 선택 정보
-        elif key in EXTRA_SINGLES:
-            if target_standard[key] == value:
+        elif key in EXTRA_SINGLES and key in target_standard:
+            if value is not None and target_standard[key] == value:
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
                 score += PENALTY
+                score_record[key] = PENALTY
             continue
 
         # interests는 extra, target 모두 중복 선택 가능 -> 하나라도 겹친다면 점수 부여
-        elif key == 'interests':
+        elif key == 'interests' and key in target_standard:
+            if value is None:
+                if key + '_w' in important_standard:
+                    score += PENALTY
+                    score_record[key] = PENALTY
+                continue
             mine, target = set(target_standard[key].split(',')), set(value.split(','))
             if len(mine & target) > 0:
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
                 score += PENALTY
+                score_record[key] = PENALTY
             continue
 
         # 다중 선택 정보
         else:
-            if value in target_standard[key].split(','):
+            if key in target_standard and value is not None and value in target_standard[key].split(','):
                 score += target_standard[key + '_w']
-            elif key in important_standard:
+                score_record[key] = target_standard[key + '_w']
+            elif key + '_w' in important_standard:
                 score += PENALTY
+                score_record[key] = PENALTY
             continue
 
     return score
 
 
 def get_scores(gender, data, targets):
-    score_dict = {}
+    score_list, score_record = [], {}
     # 이상형 정보 분류
     for u, ud, ue in targets:
+        score_record = {}
         target = {}
-        target['u'] = u
-        target['ud'] = ud
-        target['ue'] = ue
-        score_dict[u.id] = get_score(data, target)
-        # TODO: 점수 스키마 회의 완료 후 진행
+        del (u.__dict__['_sa_instance_state'])  # SQLAlchemy 추적 정보 삭제
+        del (ud.__dict__['_sa_instance_state'])
+        del (ue.__dict__['_sa_instance_state'])
+        target['u'] = u.__dict__
+        target['ud'] = ud.__dict__
+        target['ue'] = ue.__dict__
+        score_sum = get_score(data, target, score_record)
+        score_record['score_sum'] = score_sum
         if gender == 0:
-            score_dict[u.id] += get_score(target, data)
+            score_record['female_id'] = data['female_id']
+            score_record['male_id'] = target['u']['id']
+            score_list.append(ScoreFToMSchema(**score_record))
         else:
-            score_dict[u.id] += get_score(data, target)
-    return score_dict
+            score_record['male_id'] = data['male_id']
+            score_record['female_id'] = target['u']['id']
+            score_list.append(ScoreMToFSchema(**score_record))
+    return score_list

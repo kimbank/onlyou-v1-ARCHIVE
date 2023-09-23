@@ -39,7 +39,7 @@ const Value = () => {
                 <ReligiousValues data={data} setData={setData} />
                 <OppositeFriendsValues data={data} setData={setData} />
                 <PoliticalValues data={data} setData={setData} />
-                {/* <ConsumptionValues data={data} setData={setData} /> */}
+                <ConsumptionValues data={data} setData={setData} />
                 {/* <CareerFamilyValues data={data} setData={setData} /> */}
             </Container>
             <Link href={`application/my/life`}>

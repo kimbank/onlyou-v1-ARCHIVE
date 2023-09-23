@@ -15,6 +15,7 @@ import OwnedCar from "@/components/survey/my/owned_car";
 import NumberRelationships from "@/components/survey/my/number_relationships";
 import AthleticLife from "@/components/survey/my/athletic_life";
 import PetAnimal from "@/components/survey/my/pet_animal";
+import Religion from "@/components/survey/my/religion";
 
 const Value = () => {
   const [data, setData] = React.useState(LifeData);
@@ -32,15 +33,20 @@ const Value = () => {
 
       <Typography className="heading2"> 생활 정보 입력하기 </Typography>
 
-      <SmokingHistory data={data} setData={setData} />
-      <Drinking data={data} setData={setData} />
-      <OwnedCar data={data} setData={setData} />
-      {/* <Interests data={data} setData={setData} /> */}
-      <NumberRelationships data={data} setData={setData} />
-      <AthleticLife data={data} setData={setData} />
-      <PetAnimal data={data} setData={setData} />
-      {/* <Religion data={data} setData={setData} /> */}
-
+      <Container disableGutters sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "32px"
+      }}>
+        <SmokingHistory data={data} setData={setData} />
+        <Drinking data={data} setData={setData} />
+        <OwnedCar data={data} setData={setData} />
+        {/* <Interests data={data} setData={setData} /> */}
+        <NumberRelationships data={data} setData={setData} />
+        <AthleticLife data={data} setData={setData} />
+        <PetAnimal data={data} setData={setData} />
+        <Religion data={data} setData={setData} />
+      </Container>
       <Container
         disableGutters
         sx={{

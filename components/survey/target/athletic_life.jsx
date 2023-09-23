@@ -13,6 +13,7 @@ export default function AthleticLife({ data, setData, sub, setSub }) {
 
   useEffect(() => {
     setData({ ...data, athletic_life: value });
+    setSub(!sub);
   }, [value]);
 
   const handleChange = (newValue) => {

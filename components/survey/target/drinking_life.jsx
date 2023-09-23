@@ -12,8 +12,8 @@ export default function DrinkingLife({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, drinking_life: null }); }
-    else { setData({ ...data, drinking_life: value }); }
+    if (value == "") { setData({ ...data, drinking_life: null }); setSub(!sub);}
+    else { setData({ ...data, drinking_life: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {

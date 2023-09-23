@@ -12,8 +12,8 @@ export default function Education({ data, setData, sub, setSub }) {
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    if (value == "") { setData({ ...data, education: null }); }
-    else { setData({ ...data, education: value }); }
+    if (value == "") { setData({ ...data, education: null }); setSub(!sub); }
+    else { setData({ ...data, education: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {

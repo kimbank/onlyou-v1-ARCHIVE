@@ -59,7 +59,7 @@ export default function HeightRange({ data, setData, sub, setSub }) {
           sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}
         >
           <Typography className="caption" variant="body2">{`${
-            value[0] > 160 ? value[0] : value[0] + "-"
+            value[0] > 150 ? value[0] : value[0] + "-"
           }`}</Typography>
           <Typography className="caption" variant="body2">{`${
             value[1] < 185 ? value[1] : value[1] + "+"

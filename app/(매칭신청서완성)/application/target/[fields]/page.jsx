@@ -8,6 +8,7 @@ import { AppBar, Container, Typography, LinearProgress, Box, Slider, BottomNavig
 import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
+
 import Height from "@/components/survey/target/height";
 import Education from "@/components/survey/target/education";
 import Divorce from "@/components/survey/target/divorce";
@@ -19,6 +20,11 @@ import NumberRelationships from "@/components/survey/target/number_relationships
 import AthleticLife from "@/components/survey/target/athletic_life";
 import PetAnimal from "@/components/survey/target/pet_animal";
 import Religion from "@/components/survey/target/religion";
+
+import ExtrovertOrIntrovert from "@/components/survey/target/extrovert_or_introvert";
+import IntutiveOrRealistic from "@/components/survey/target/intutive_or_realistic";
+import EmotionalOrRational from "@/components/survey/target/emotional_or_rational";
+import ImpromptuOrPlanned from "@/components/survey/target/impromptu_or_planned";
 
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -112,10 +118,10 @@ export default function Target({ params }) {
         { fields.includes('pet_animal') && <PetAnimal data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('religion') && <Religion data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('extrovert_or_introvert') && <></> }
-        { fields.includes('intutive_or_realistic') && <></> }
-        { fields.includes('emotional_or_rational') && <></> }
-        { fields.includes('impromptu_or_planned') && <></> }
+        { fields.includes('extrovert_or_introvert') && <ExtrovertOrIntrovert data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('intutive_or_realistic') && <IntutiveOrRealistic data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('emotional_or_rational') && <EmotionalOrRational data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('impromptu_or_planned') && <ImpromptuOrPlanned data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('selfconfidence_or_careful') && <></> }
 
         { fields.includes('marriage_values') && <></> }
@@ -200,7 +206,7 @@ const options_eng = {
   pet_animal: '반려동물',
   religion: '종교',
 
-  extrovert_or_realistic: '외향/내향',
+  extrovert_or_introvert: '외향/내향',
   intutive_or_realistic: '직관/현실',
   emotional_or_rational: '감성/이성',
   impromptu_or_planned: '즉흥/계획',

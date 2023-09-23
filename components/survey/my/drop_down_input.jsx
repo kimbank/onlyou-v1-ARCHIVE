@@ -15,8 +15,16 @@ export function DropDownInput({ data, setData, data_name, title = "!미정", opt
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        setData({ ...data, [data_name] : event.target.value });
+        // setData({ ...data, [data_name] : event.target.value });
     };
+
+    React.useEffect(() => {
+        setData({ ...data, [data_name] : value });
+    }, [value]);
+
+    React.useEffect(() => {
+        setValue(data[data_name]);
+    }, [data]);
     
     return (
         <Container

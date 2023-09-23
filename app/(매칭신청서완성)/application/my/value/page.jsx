@@ -10,6 +10,8 @@ import { DangerNotification } from '@/components/Notification';
 
 import { DropDownInput } from '@/components/survey/my/drop_down_input';
 
+import axios from 'axios';
+
 function canProceedToNextPage(data) {
     for (const key in data) {
         if (data[key] === null || data[key] === '') {
@@ -24,6 +26,13 @@ const Value = () => {
     const [dangerMessage, setDangerMessage] = React.useState('');
     const [dangerVisible, setDangerVisible] = React.useState(false);
     const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
+
+    React.useEffect(() => {
+        axios.get('/api/application/my/values')
+            .then((res) => {
+                setData(res.data);
+            })
+    }, []);
 
     return (
         <Container

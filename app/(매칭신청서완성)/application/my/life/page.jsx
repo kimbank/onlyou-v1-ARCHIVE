@@ -65,7 +65,7 @@ const Life = () => {
   );
 };
 
-export default Value;
+export default Life;
 
 const LifeData = {
   smoking_history: null,

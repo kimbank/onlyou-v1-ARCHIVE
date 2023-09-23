@@ -10,6 +10,7 @@ import { MainButton, SubMiniButton, SubButton } from "@/components/Button";
 
 import SmokingHistory from "@/components/survey/my/smoking_history";
 import Drinking from "@/components/survey/my/drinking";
+import OwnedCar from "@/components/survey/my/owned_car";
 
 const Value = () => {
   const [data, setData] = React.useState(LifeData);
@@ -29,7 +30,7 @@ const Value = () => {
 
       <SmokingHistory data={data} setData={setData} />
       <Drinking data={data} setData={setData} />
-      {/* <OwnedCar data={data} setData={setData} /> */}
+      <OwnedCar data={data} setData={setData} />
       {/* <Interests data={data} setData={setData} /> */}
       {/* <NumberRelationships data={data} setData={setData} /> */}
       {/* <AthleticLife data={data} setData={setData} /> */}

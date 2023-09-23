@@ -47,7 +47,7 @@ const Life = () => {
         flexDirection: "column",
         gap: "32px"
       }}>
-        <DropDownInput data={data} setData={setData} data_name={"smoking_history"} title={"흡`연 경력"} options={["비흡연", "금연", "흡연"]} />
+        <DropDownInput data={data} setData={setData} data_name={"smoking_history"} title={"흡연 경력"} options={["비흡연", "금연", "흡연"]} />
         <DropDownInput data={data} setData={setData} data_name={"drinking_life"} title={"음주 생활"} options={["전혀 마시지 않음", "거의 마시지 않음", "이따금 마심(한 달 1회 이상)", "종종 마심(주 1회 이상)", "자주 마심(주 2회 이상)"]} />
         <DropDownInput data={data} setData={setData} data_name={"owned_car"} title={"자차 유무"} options={["미소유", "소유"]} />
         <Interests data={data} setData={setData} />

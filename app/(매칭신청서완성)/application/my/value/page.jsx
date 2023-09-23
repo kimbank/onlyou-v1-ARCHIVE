@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Container from "@mui/material/Container";
-import { Typography } from "@mui/material";
+import { Typography, Backdrop, CircularProgress } from "@mui/material";
 
 import { MainButton } from '@/components/Button';
 import { DangerNotification } from '@/components/Notification';
@@ -25,12 +25,14 @@ const Value = () => {
     const [data, setData] = React.useState(ValueData);
     const [dangerMessage, setDangerMessage] = React.useState('');
     const [dangerVisible, setDangerVisible] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
 
     React.useEffect(() => {
         axios.get('/api/application/my/values')
             .then((res) => {
                 setData(res.data);
+                setOpen(false);
             })
     }, []);
 
@@ -43,6 +45,12 @@ const Value = () => {
                 gap: "64px",
             }}
         >
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
 
             {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
@@ -66,7 +74,7 @@ const Value = () => {
                 <Link href={`application/my/life`}>
                     <MainButton buttonName="다음 단계" />
                 </Link> :
-                <MainButton buttonName="다음 단계" onClick={() => {setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true)}} />
+                <MainButton buttonName="다음 단계" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
             }
         </Container>
     );

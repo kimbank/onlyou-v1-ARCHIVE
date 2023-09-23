@@ -3,12 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Container from "@mui/material/Container";
-import { Typography } from "@mui/material";
+import { Typography, Backdrop, CircularProgress } from "@mui/material";
 
 import { MainButton, SubButton } from '@/components/Button';
 import { DangerNotification } from '@/components/Notification';
 
 import { DropDownInput } from '@/components/survey/my/drop_down_input';
+
+import axios from 'axios';
 
 function canProceedToNextPage(data) {
     for (const key in data) {
@@ -23,7 +25,16 @@ const DatingStyle = () => {
     const [data, setData] = React.useState(DatingStyleData);
     const [dangerMessage, setDangerMessage] = React.useState('');
     const [dangerVisible, setDangerVisible] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
+
+    React.useEffect(() => {
+        axios.get('/api/application/my/dating_style')
+            .then((res) => {
+                setData(res.data);
+                setOpen(false);
+            })
+    }, []);
 
     return (
         <Container
@@ -34,6 +45,12 @@ const DatingStyle = () => {
                 gap: "64px",
             }}
         >
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
 
             {/* <button onClick={() => console.log(data)}>정보 보기</button> */}

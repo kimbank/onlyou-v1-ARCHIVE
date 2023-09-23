@@ -6,7 +6,7 @@ import axios from "axios";
 import { Typography, Container, Button } from "@mui/material";
 
 
-export default function Interests({ data, setData }) {
+export default function Interests({ data, setData, title = "!미정" }) {
     const [value, setValue] = React.useState("");
 
     React.useEffect(() => {
@@ -41,7 +41,7 @@ export default function Interests({ data, setData }) {
                 gap: 1,
             }}
         >
-            <Typography className="heading2">관심사(모두 선택)</Typography>
+            <Typography className="input-title">{title}</Typography>
 
             <Container
                 disableGutters

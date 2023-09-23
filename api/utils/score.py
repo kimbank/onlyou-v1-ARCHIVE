@@ -24,9 +24,13 @@ def get_score(data, target_data, score_record):
 
     important_standard = {key: value for key, value in target_standard.items() if key.endswith('_w') and value == 5}
 
+    if len(target_standard) == 0:
+        print(f'기준이 없는 사용자: {data.items()}')
+
     # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략-
     for key, value in target_data['u'].items():
         if key == 'date_birth' and 'date_birth_w' in target_standard:
+            print(f"확인; {target_data['u']['date_birth'], target_standard[key + '_s'], target_standard[key + '_e']}")
             if value is not None and target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
@@ -142,9 +146,9 @@ def get_scores(gender, data, targets):
     for u, ud, ue in targets:
         score_record = {}
         target = {}
-        del (u.__dict__['_sa_instance_state'])  # SQLAlchemy 추적 정보 삭제
-        del (ud.__dict__['_sa_instance_state'])
-        del (ue.__dict__['_sa_instance_state'])
+        # del (u.__dict__['_sa_instance_state'])  # SQLAlchemy 추적 정보 삭제
+        # del (ud.__dict__['_sa_instance_state'])
+        # del (ue.__dict__['_sa_instance_state'])
         target['u'] = u.__dict__
         target['ud'] = ud.__dict__
         target['ue'] = ue.__dict__

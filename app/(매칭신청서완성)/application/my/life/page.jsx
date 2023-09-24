@@ -30,8 +30,10 @@ const Life = () => {
   const [open, setOpen] = React.useState(true);
   const canProceed = canProceedToNextPage(data); // 다음 페이지로 갈 수 있는지 여부
 
+  const DATA_PATH = '/api/application/my/lifestyle';
+  
   React.useEffect(() => {
-    axios.get('/api/application/my/lifestyle')
+    axios.get(DATA_PATH)
       .then((res) => {
         setData(res.data);
         setOpen(false);
@@ -40,7 +42,7 @@ const Life = () => {
 
   const handleNext = () => {
     if (canProceed) {
-      axios.patch('/api/application/my/lifestyle', data)
+      axios.patch(DATA_PATH, data)
         .then((res) => {
           if (res.status == 200) {
             window.location.href = '/application/my/character';
@@ -65,7 +67,7 @@ const Life = () => {
           gap: "64px",
         }}
       >
-        <button onClick={() => console.log(data)}>정보 보기</button>
+        {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
         <Typography className="heading2"> 생활 정보 입력하기 </Typography>
 
@@ -91,12 +93,6 @@ const Life = () => {
             gap: "8px",
           }}
         >
-          {/* {canProceed ?
-          <Link href={`application/my/character`}>
-            <MainButton buttonName="다음 단계" onClick={} />
-          </Link> :
-          <MainButton buttonName="다음 단계" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
-        } */}
           <MainButton buttonName="다음 단계" onClick={() => { handleNext() }} />
           <Link href={`application/my/value`}>
             <SubButton buttonName="이전 단계" />

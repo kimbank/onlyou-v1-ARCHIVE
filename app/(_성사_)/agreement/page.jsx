@@ -152,7 +152,7 @@ function UserCard({ user }) {
           { user.kakao_id ?
             <span style={{display:'flex', alignItems:'center'}}>
               <Image src={Kakao} style={{marginRight: '8px'}} />
-              <Typography className='basic'>확인하기</Typography>
+              <Typography className='basic'>확인</Typography>
             </span> :
             <div></div>
           }

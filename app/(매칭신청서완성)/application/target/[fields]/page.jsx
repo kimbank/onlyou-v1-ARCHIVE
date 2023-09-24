@@ -66,14 +66,14 @@ export default function Target({ params }) {
 
   const fields = params.fields.split('%2C')
 
-  // if (fields.length < 3 || fields.length > 12) {
-  //   window.location.href = '/application/target';
-  // }
-  // for (let i = 0; i < fields.length; i++) {
-  //   if (!Object.keys(options_eng).includes(fields[i])) {
-  //     window.location.href = '/application/target';
-  //   }
-  // }
+  if (fields.length < 3 || fields.length > 12) {
+    window.location.href = '/application/target';
+  }
+  for (let i = 0; i < fields.length; i++) {
+    if (!Object.keys(options_eng).includes(fields[i])) {
+      window.location.href = '/application/target';
+    }
+  }
 
   useEffect(() => {
     let cnt = fields.length;
@@ -88,7 +88,6 @@ export default function Target({ params }) {
         }
       }
     }
-    // console.log('progress count:', cnt);
 
     setProgress(cnt / fields.length * 100);
     if (cnt == fields.length) {
@@ -101,10 +100,9 @@ export default function Target({ params }) {
   const handleSubmit = async () => {
     const res = await axios.patch('/api/application/target/all', data);
     if (res.status == 200) {
-      // window.location.href = '/application/letter';
-      alert('이상형 정보 입력이 완료되었습니다.');
+      window.location.href = '/my_info';
     } else {
-      alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+      alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     }
   }
 
@@ -124,15 +122,15 @@ export default function Target({ params }) {
         gap: '64px',
         marginBottom: '80px',
       }}>
-        <button onClick={() => console.log(data)}>정보 보기</button>
+        {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
         <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
-        <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
+        {/* <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
         {fields.map((field, index) => (
           <>
             <div key={index}>{options_eng[field]}</div>
           </>
         ))}
-        </Container>
+        </Container> */}
         { fields.includes('height') && <Height data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('education') && <Education data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('divorce') && <Divorce data={data} setData={setData} sub={sub} setSub={setSub} /> }

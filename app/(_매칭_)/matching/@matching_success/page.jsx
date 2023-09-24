@@ -131,7 +131,7 @@ function UserCard({ user, setShowModal, left }) {
           { user.kakao_id ?
             <span onClick={() => setShowModal(true)} style={{display:'flex', alignItems:'center'}}>
               <Image src={Kakao} style={{marginRight: '8px'}} />
-              <Typography className='heading5'>확인하기</Typography>
+              <Typography className='heading5'>확인</Typography>
             </span> :
             <div></div>
           }

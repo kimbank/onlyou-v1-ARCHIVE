@@ -25,10 +25,10 @@ class UsersFemaleDataTarget(Base, BaseMixin):
                         default=func.utc_timestamp(), comment='생성 일자')
     modified_at = Column(DateTime, nullable=False, default=func.utc_timestamp(
     ), onupdate=func.utc_timestamp(), comment='변경 일자')
-    date_birth_s = Column(Date, comment="생년월일 시작")
-    date_birth_e = Column(Date, comment="생년월일 끝")
+    date_birth_s = Column(TINYINT, comment="생년월일 시작")
+    date_birth_e = Column(TINYINT, comment="생년월일 끝")
     date_birth_w = Column(TINYINT)
-    residence_sgg = Column(String(255))
+    residence = Column(String(255))
     residence_w = Column(TINYINT)
     job_type = Column(String(25))
     job_type_w = Column(TINYINT)

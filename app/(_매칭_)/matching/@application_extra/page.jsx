@@ -36,7 +36,7 @@ export default function ApplicationExtra() {
         <Typography className="basic-gray">매칭에 참여하고, 인연을 만나보세요!</Typography>
         <InfoText title={`약 ${userCount}명의 상대가 인연을 기다리고 있어요!`} />
       </Container>
-      <a href="/application/my">
+      <a href="/application/my/value">
         <MainButton buttonName="내 정보 이어서 완성하기" />
       </a>
     </Container>

@@ -26,7 +26,10 @@ export default function Before() {
         // marginY: '64px',
       }}>
         <Typography className='heading2'>인연을 찾는 중이에요</Typography>
-        <Typography className='basic-gray'>빠르게 인연을 찾아드릴게요!</Typography>
+        <Typography className='basic-gray'>
+        ONLYou는 오래 걸리더라도 정확한 매칭을 진행하는 것을 지향해요. 회원님의 조건과 이상형 조건에 따라 7일~10일 이상의 주기로 매칭이 진행됩니다.
+        회원님의 조건과 이상형 조건에 따라 7일~10일 이상의 주기로 매칭이 진행됩니다.
+        </Typography>
       </Container>
       <Container disableGutters sx={{
         display: 'flex',

@@ -164,8 +164,8 @@ const MyInfo = () => {
           {/* <a href='https://g8h7y7g082m.typeform.com/to/hbat7gbg' target='_blank'> */}
             <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
           {/* </a> */}
-          <a href=''>
-            <SubMiniFullButton buttonName={'편지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <a href='https://g8h7y7g082m.typeform.com/to/M8kI8xyb'>
+            <SubMiniFullButton buttonName={'편지 수정하기'} />
           </a>
         </Container>
         <Container disableGutters sx={{

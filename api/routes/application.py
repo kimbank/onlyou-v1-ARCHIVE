@@ -235,15 +235,11 @@ async def update_other(request: Request, other: UpdateOtherSchema = Body(...)):
 
 # 이상형 정보 입력 완료 버튼 클릭 시 점수 계산
 # user_data_target: 나의 이상형 정보, target_users: 전체 이성 정보
-@router.patch("/my/calculate")
-async def calculate_matching_score(request: Request, session: Session = Depends(db.session)):
-    user_info = await token_control(request)
-    if not user_info:
-        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
-    user = User.get(id=user_info.id)
-    # 조인
-    if user.gender == 0:
+# 조인 정보
+def get_info(user_info, session):
+    user_data_target, target_users = None, None
+    if user_info.gender == 0:
         # 이성 정보 스키마 별칭 -> 이름이 같은 컬럼 구분
         u = aliased(User)
         ud = aliased(UsersMaleData)
@@ -259,7 +255,7 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
                             .outerjoin(ue, join_cond2)).all()
         except Exception as e:
             print(e)
-            return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
+            return JSONResponse(status_code=500, content=dict(msg='여성 정보 획득 실패'))
     else:
         u = aliased(User)
         ud = aliased(UsersFemaleData)
@@ -274,11 +270,13 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
                             .outerjoin(ue, join_cond2)).all()
         except Exception as e:
             print(e)
-            return JSONResponse(status_code=500, content=dict(msg='이성 정보 획득 실패'))
+            return JSONResponse(status_code=500, content=dict(msg='남성 정보 획득 실패'))
+    return (user_data_target, target_users)
 
-    # 점수 계산 및 DB 저장
-    if user.gender == 0:
-        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+
+def calculate(user_info, session, user_data_target, target_users):
+    if user_info.gender == 0:
+        for score in get_scores(user_info.gender, user_data_target.__dict__, target_users):
             score = score.dict()
             record = ScoreFToM.filter(female_id=score['female_id'], male_id=score['male_id'])
             # (f_id, m_id) 존재시 update, 없으면 insert
@@ -291,9 +289,9 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
                     # ScoreFToM.create(session, auto_commit=True, **score)
             except Exception as e:
                 print(e)
-                return JSONResponse(status_code=500, content=dict(msg='점수 반영 실패'))
+                return JSONResponse(status_code=500, content=dict(msg='f2m 점수 반영 실패'))
     else:
-        for score in get_scores(user.gender, user_data_target.__dict__, target_users):
+        for score in get_scores(user_info.gender, user_data_target.__dict__, target_users):
             score = score.dict()
             record = ScoreMToF.filter(female_id=score['female_id'], male_id=score['male_id'])
             try:
@@ -304,12 +302,34 @@ async def calculate_matching_score(request: Request, session: Session = Depends(
                     session.commit()
             except Exception as e:
                 print(e)
-                return JSONResponse(status_code=500, content=dict(msg='점수 반영 실패'))
-    return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
-    # except Exception as e:
-    #     print(e)
-    #     return JSONResponse(status_code=500, content=dict(msg='점수 계산 실패'))
+                return JSONResponse(status_code=500, content=dict(msg='m2f 점수 반영 실패'))
 
+
+@router.patch("/my/calculate")
+async def calculate_matching_score(request: Request, session: Session = Depends(db.session)):
+    user_info = await token_control(request)
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+    try:
+        user_data_target, target_users = get_info(user_info, session)
+        calculate(user_info, session, user_data_target, target_users)
+        return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
+    except Exception as e:
+        print(e)
+        return JSONResponse(status_code=500, content=dict(msg='점수 계산 실패'))
+
+
+@router.post("/admin/calculate-all")
+async def calculate_all_scores(session: Session = Depends(db.session)):
+    users = session.query(User).all()
+    for user in users:
+        try:
+            user_data_target, target_users = get_info(user, session)
+            calculate(user, session, user_data_target, target_users)
+        except Exception as e:
+            print(e)
+            return JSONResponse(status_code=500, content=dict(msg='점수 계산 실패'))
+    return JSONResponse(status_code=200, content=dict(msg='점수 계산 완료'))
 
 @router.get("/target/height")
 async def get_target_height(request: Request):
@@ -335,8 +355,3 @@ async def get_target_education(request: Request):
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
     return JSONResponse(status_code=200, content=dict(education=ut.education, education_w=ut.education_w))
-
-
-@router.post("/admin/calculate-all")
-async def calculate_all_scores(request: Request, session: Session = Depends(db.session)):
-    pass

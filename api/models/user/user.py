@@ -19,6 +19,7 @@ class UserSchema(BaseModel):
     date_accept_marketing: Optional[datetime] = None
     date_dormant: Optional[datetime] = None
     date_suspension: Optional[datetime] = None
+    information_before_meeting: Optional[int] = None
 
     class Config:
         orm_mode = True

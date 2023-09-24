@@ -6,6 +6,7 @@ from pydantic.schema import Optional
 class UsersFemaleDataTargetSchema(BaseModel):
     female_id : int
     fill_status: Optional[int] = Field()
+    weight_standard: Optional[int]
     created_at :Optional[datetime]
     modified_at :Optional[datetime]
     date_birth_s : Optional[int] = Field()

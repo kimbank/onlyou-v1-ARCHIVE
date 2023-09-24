@@ -36,7 +36,7 @@ class UsersMaleDataTargetSchema(BaseModel):
     number_relationships_w: Optional[int] = Field()
     athletic_life: Optional[int] = Field()
     athletic_life_w: Optional[int] = Field()
-    pet_animal: Optional[int] = Field()
+    pet_animal: Optional[str] = Field()
     pet_animal_w: Optional[int] = Field()
     religion: Optional[str] = Field()
     religion_w: Optional[int] = Field()

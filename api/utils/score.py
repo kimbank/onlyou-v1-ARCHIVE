@@ -6,10 +6,10 @@ def get_score(data, target_data, score_record):
     PENALTY = -60
     BASIC_HATES = ['residence']
     PROMOTION_HATES = ['education, job_type']
-    EXTRA_SINGLES = ['athletic_life', 'pet_animal', 'consumption_values', 'preffered_dating',
+    EXTRA_SINGLES = ['athletic_life', 'consumption_values', 'preffered_dating',
                      'preferred_contact_method', 'contact_style', 'skinship', 'sns',
                      'conflict_resolution_method']  # Extra에서 단일 선택 정보
-    EXTRA_HATES = ['smoking_history', 'religion']  # Extra에서 꺼리는 선지 정보
+    EXTRA_HATES = ['smoking_history', 'religion', 'pet_animal']  # Extra에서 꺼리는 선지 정보
     target_standard = {}
     score = 0
     score_record['score_max'] = 0

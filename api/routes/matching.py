@@ -177,7 +177,6 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         'id': target.id,
         'gender': target.gender,
         'nickname': target.nickname,
-        'job_type': target.residence,
         'birth_year': f"{target.date_birth.year}년생",
         'kakao_id': target.kakao_id,
         'time_left': time_left

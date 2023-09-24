@@ -7,7 +7,7 @@ from api.database.schema.user.users_female_data import UsersFemaleData
 class UserFemaleDataSchema(BaseModel):
     female_id: int
     gender: Optional[int] = Field(description="0: female, 1: male")
-    job_type: Optional[str]
+    job_type: Optional[int]
     job_name: Optional[str]
     job_group: Optional[str]
     height: Optional[int]

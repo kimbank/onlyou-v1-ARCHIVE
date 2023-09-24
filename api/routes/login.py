@@ -54,7 +54,7 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
                 # db에 인증 관련 정보 추가
                 new_auth_code = AuthSens.create(session, auto_commit=True, mobile_number=auth_info.mobile_number,
                                                 code=generate_verification_code())
-                if (True): # 실제 문자 전송 안함 (개발 중일 때)
+                if (False): # 실제 문자 전송 안함 (개발 중일 때)
                     sens_result = dict(requestId="DEV_MODE", requestTime=str(new_auth_code.created_at), statusCode="DEV_MODE", statusName="DEV_MODE")
                     slack_chat_post(auth_info.mobile_number, new_auth_code.code, sens_result)
                 else: #   실제 문자 전송 (궁금하면 위에 False로 하고 잔행해보세용)

@@ -103,13 +103,6 @@ const Other = () => {
           <MainButton buttonName='이상형 입력하기' onClick={() => setShowModal(false)} />
           {/* </Link> */}
         </Modal>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-        <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
       </Container>
 
       <Backdrop

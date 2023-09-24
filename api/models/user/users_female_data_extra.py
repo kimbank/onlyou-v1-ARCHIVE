@@ -43,6 +43,7 @@ class UserFemaleDataExtraSchema(BaseModel):
     skinship: Optional[int] = Field(description="0 ~ 1")
     sns: Optional[int] = Field(description="0 ~ 1")
     conflict_resolution_method: Optional[int] = Field(description="0 ~ 1")
+    information_before_meeting: Optional[int]
 
     class Config:
         orm_mode = True

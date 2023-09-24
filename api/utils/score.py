@@ -31,7 +31,7 @@ def get_score(data, target_data, score_record):
     for key, value in target_data['u'].items():
         if key == 'date_birth' and 'date_birth_w' in target_standard:
             print(f"확인; {target_data['u']['date_birth'], target_standard[key + '_s'], target_standard[key + '_e']}")
-            if value is not None and target_standard[key + '_s'] <= value <= target_standard[key + '_e']:
+            if value is not None and target_standard[key + '_s'] <= int(value.year) <= target_standard[key + '_e']:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
@@ -146,9 +146,6 @@ def get_scores(gender, data, targets):
     for u, ud, ue in targets:
         score_record = {}
         target = {}
-        # del (u.__dict__['_sa_instance_state'])  # SQLAlchemy 추적 정보 삭제
-        # del (ud.__dict__['_sa_instance_state'])
-        # del (ue.__dict__['_sa_instance_state'])
         target['u'] = u.__dict__
         target['ud'] = ud.__dict__
         target['ue'] = ue.__dict__

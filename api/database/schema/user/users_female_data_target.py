@@ -54,7 +54,7 @@ class UsersFemaleDataTarget(Base, BaseMixin):
     number_relationships_w = Column(TINYINT)
     athletic_life = Column(TINYINT)
     athletic_life_w = Column(TINYINT)
-    pet_animal = Column(String(7))
+    pet_animal = Column(String(11))
     pet_animal_w = Column(TINYINT)
     religion = Column(String(11))
     religion_w = Column(TINYINT)

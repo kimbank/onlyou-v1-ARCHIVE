@@ -155,11 +155,15 @@ const MyInfo = () => {
         }}>
           {/*다음 아래의 버튼들의 크기가 컨테이너 가로길이를 전부 채우도록만 수정 부탁드립니다.*/}
           <Typography className='heading4' style={{marginBottom: '5px'}}>매칭 신청서 수정하기</Typography>
-          <SubMiniFullButton buttonName={'내 정보 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <Link href='/application/my/value'>
+            <SubMiniFullButton buttonName={'내 정보 수정하기'} />
+          </Link>
           <Link href='/application/target'>
             <SubMiniFullButton buttonName={'이상형 정보 수정하기'} />
           </Link>
-          <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          <a href='https://g8h7y7g082m.typeform.com/to/hbat7gbg' target='_blank'>
+            <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} />
+          </a>
           <SubMiniFullButton buttonName={'편지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
         </Container>
         <Container disableGutters sx={{

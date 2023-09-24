@@ -241,7 +241,7 @@ export function TimeInfo({ alertMessage, shadow = false }) {
                 color="secondary"
                 sx={{
                     borderRadius: '8px',
-                    height: '33px',
+                    minHeight: '33px',
                     padding: '8px 12px',
                     backgroundColor: '#F7F4F2',
                     display: 'flex',

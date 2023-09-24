@@ -120,7 +120,9 @@ function UserCard({ user }) {
         {/* 닉네임 */}
         <Typography className='heading2'> 
           {user.nickname}
-          <Image src={Report} width='18px' style={{marginLeft:'5.5px'}} />
+          <a href='https://g8h7y7g082m.typeform.com/to/pSQrGO9q' target='_blank'>
+            <Image src={Report} width='18px' style={{marginLeft:'5.5px'}} />
+          </a>
         </Typography>
 
         {/* 직장유형 */}
@@ -150,7 +152,7 @@ function UserCard({ user }) {
           { user.kakao_id ?
             <span style={{display:'flex', alignItems:'center'}}>
               <Image src={Kakao} style={{marginRight: '8px'}} />
-              <Typography className='basic'>확인하기</Typography>
+              <Typography className='basic'>확인</Typography>
             </span> :
             <div></div>
           }

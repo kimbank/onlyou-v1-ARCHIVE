@@ -22,13 +22,19 @@ from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 from api.database.schema.matching.matching_score_f2m import ScoreFToM
 from api.database.schema.matching.matching_score_m2f import ScoreMToF
 from api.models.user.data.data_extra import UpdateValueSchema, UpdateLifeStyleSchema, UpdatePersonalitySchema, \
-    UpdateDatingStyleSchema, UpdateAppearanceSchema
+    UpdateDatingStyleSchema, UpdateAppearanceSchema, UpdateOtherSchema
 from api.models.user.data.data_target import UpdateTargetSchema
 from api.models.matching.matching_score_f2m import ScoreFToMSchema
 from api.models.matching.matching_score_m2f import ScoreMToFSchema
 from api.utils.score import get_scores
 
 router = APIRouter(prefix="/application")
+
+
+async def get_user(request: Request):
+    user_info = await token_control(request)
+    user = User.filter(id=user_info.id)
+    return user
 
 
 # 사용자의 extra 데이터 반환
@@ -57,7 +63,7 @@ async def get_target_schema(request: Request):
 
 
 @router.patch("/target/all")
-async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...)):
+async def patch_target_all(request: Request, values: UpdateTargetSchema = Body(...)):
     try:
         ut = await get_target_schema(request)
         ut.update(auto_commit=True, **values.dict())
@@ -67,17 +73,45 @@ async def get_target_all(request: Request, values: UpdateTargetSchema = Body(...
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
 
+@router.get("/my/values")
+async def get_values(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    # print(ut.cls_attr('fill_status'))
+    return UpdateValueSchema(**ut.__dict__)
+
+
 # 가치관 정보 페이지에서 '다음으로' 버튼 클릭 시
 @router.patch("/my/values")
 async def update_values(request: Request, values: UpdateValueSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
-        values.modified_at = datetime.now()
+        # values.modified_at = datetime.now()
         ut.update(auto_commit=True, **values.dict())
         return JSONResponse(status_code=200, content=dict(msg='가치관 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='가치관 정보 업데이트 실패'))
+
+
+@router.get("/my/lifestyle")
+async def get_lifestyle(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateLifeStyleSchema(**ut.__dict__)
 
 
 # 생활 정보 페이지
@@ -85,12 +119,26 @@ async def update_values(request: Request, values: UpdateValueSchema = Body(...))
 async def update_lifestyle(request: Request, lifestyles: UpdateLifeStyleSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
-        lifestyles.modified_at = datetime.now()
+        # lifestyles.modified_at = datetime.now()
         ut.update(auto_commit=True, **lifestyles.dict())
         return JSONResponse(status_code=200, content=dict(msg='생활 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='생활 정보 업데이트 실패'))
+
+
+@router.get("/my/personality")
+async def get_personality(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdatePersonalitySchema(**ut.__dict__)
 
 
 # 성격 정보 페이지
@@ -98,12 +146,26 @@ async def update_lifestyle(request: Request, lifestyles: UpdateLifeStyleSchema =
 async def update_personality(request: Request, personalities: UpdatePersonalitySchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
-        personalities.modified_at = datetime.now()
+        # personalities.modified_at = datetime.now()
         ut.update(auto_commit=True, **personalities.dict())
         return JSONResponse(status_code=200, content=dict(msg='성격 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='성격 정보 업데이트 실패'))
+
+
+@router.get("/my/dating_style")
+async def get_dating_style(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateDatingStyleSchema(**ut.__dict__)
 
 
 # 연애 스타일 페이지
@@ -111,12 +173,26 @@ async def update_personality(request: Request, personalities: UpdatePersonalityS
 async def update_dating_style(request: Request, dating_styles: UpdateDatingStyleSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
-        dating_styles.modified_at = datetime.now()
+        # dating_styles.modified_at = datetime.now()
         ut.update(auto_commit=True, **dating_styles.dict())
         return JSONResponse(status_code=200, content=dict(msg='연애 스타일 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='연애 스타일 정보 업데이트 실패'))
+
+
+@router.get("/my/appearance")
+async def get_appearance(request: Request):
+    try:
+        ut = await get_extra_schema(request)
+        ut = ut.first()
+    except Exception as e:
+        print(e)
+        ut.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateAppearanceSchema(**ut.__dict__)
 
 
 # 외모 정보 페이지
@@ -124,12 +200,35 @@ async def update_dating_style(request: Request, dating_styles: UpdateDatingStyle
 async def update_appearance(request: Request, appearances: UpdateAppearanceSchema = Body(...)):
     try:
         ut = await get_extra_schema(request)
-        appearances.modified_at = datetime.now()
+        # appearances.modified_at = datetime.now()
         ut.update(auto_commit=True, **appearances.dict())
         return JSONResponse(status_code=200, content=dict(msg='외모 정보 업데이트 완료'))
     except Exception as e:
         print(e)
+        ut.close()
         return JSONResponse(status_code=500, content=dict(msg='외모 정보 업데이트 실패'))
+
+
+@router.get("/my/other")
+async def get_other(request: Request):
+    try:
+        ut = await get_user(request)
+        ut = ut.first()
+    except:
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
+
+    return UpdateOtherSchema(**ut.__dict__)
+
+
+@router.patch("/my/other")
+async def update_other(request: Request, other: UpdateOtherSchema = Body(...)):
+    try:
+        uu = await get_user(request)
+        uu.update(auto_commit=True, kakao_id=other.kakao_id, information_before_meeting=other.information_before_meeting)
+        return JSONResponse(status_code=200, content=dict(msg='기타 정보 업데이트 완료'))
+    except:
+        uu.close()
+        return JSONResponse(status_code=500, content=dict(msg='실패'))
 
 
 # 이상형 정보 입력 완료 버튼 클릭 시 점수 계산

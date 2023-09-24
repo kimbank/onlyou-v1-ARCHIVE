@@ -27,7 +27,6 @@ class User(Base, BaseMixin):
     date_birth = Column(Date, comment='[공개 정보] 생년 월일')
     residence = Column(
         Integer, comment='[공개 정보] 거주지 정보 -> location_emd.id 를 외래키로')
-    kakao_id = Column(String(20, collation='ascii_general_ci'), default=None)
     date_join = Column(TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'))
     date_accept_terms = Column(
         TIMESTAMP, comment='서비스 이용 약관 동의 일자', nullable=True)
@@ -40,6 +39,8 @@ class User(Base, BaseMixin):
     date_auth_block = Column(
         TIMESTAMP, nullable=True)
 
+    information_before_meeting = Column(TINYINT)
+    kakao_id = Column(String(20, collation='ascii_general_ci'), default=None)
     # 인증번호 외래키
     # auth_sens = relationship("AuthSens")
 

@@ -8,11 +8,53 @@ import { AppBar, Container, Typography, LinearProgress, Box, Slider, BottomNavig
 import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniButton } from "@/components/Button";
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
-import Height from "@/components/survey/height";
-import Education from "@/components/survey/education";
-import Divorce from "@/components/survey/divorce";
+
+import Height from "@/components/survey/target/height";
+import Education from "@/components/survey/target/education";
+import Divorce from "@/components/survey/target/divorce";
+import SmokingHistory from "@/components/survey/target/smoking_history";
+import DrinkingLife from "@/components/survey/target/drinking_life";
+import OwnedCar from "@/components/survey/target/owned_car";
+import Interests from "@/components/survey/target/interests";
+import NumberRelationships from "@/components/survey/target/number_relationships";
+import AthleticLife from "@/components/survey/target/athletic_life";
+import PetAnimal from "@/components/survey/target/pet_animal";
+import Religion from "@/components/survey/target/religion";
+
+import ExtrovertOrIntrovert from "@/components/survey/target/extrovert_or_introvert";
+import IntutiveOrRealistic from "@/components/survey/target/intutive_or_realistic";
+import EmotionalOrRational from "@/components/survey/target/emotional_or_rational";
+import ImpromptuOrPlanned from "@/components/survey/target/impromptu_or_planned";
+import SelfconfidenceOrCareful from "@/components/survey/target/selfconfidence_or_careful";
+
+import MarriageValues from '@/components/survey/target/marriage_values';
+import ReligiousValues from '@/components/survey/target/religious_values';
+import OppositeFriendsValues from '@/components/survey/target/opposite_friends_values';
+import PoliticalValues from '@/components/survey/target/political_values';
+import ConsumptionValues from '@/components/survey/target/consumption_values';
+import CareerFamilyValues from '@/components/survey/target/career_family_values';
+
+import AnimalImage from '@/components/survey/target/animal_image';
+import DoubleEyelid from '@/components/survey/target/double_eyelid';
+import FaceShape from '@/components/survey/target/face_shape';
+import BodyType from '@/components/survey/target/body_type';
+import SkinTone from '@/components/survey/target/skin_tone';
+import Tattoo from '@/components/survey/target/tattoo';
+import FashionStyle from '@/components/survey/target/fashion_style';
+
+import PrefferedDating from '@/components/survey/target/preffered_dating';
+import PreferredContactMethod from '@/components/survey/target/preferred_contact_method';
+import AttractivenessLevel from '@/components/survey/target/attractiveness_level';
+import JealousyLevel from '@/components/survey/target/jealousy_level';
+import LoveInitiative from '@/components/survey/target/love_initiative';
+import DatingFrequency from '@/components/survey/target/dating_frequency';
+import ContactStyle from '@/components/survey/target/contact_style';
+import Skinship from '@/components/survey/target/skinship';
+import Sns from '@/components/survey/target/sns';
+import ConflictResolutionMethod from '@/components/survey/target/conflict_resolution_method';
 
 import Modal from '@/components/Modal';
+import axios from 'axios';
 
 
 export default function Target({ params }) {
@@ -20,6 +62,8 @@ export default function Target({ params }) {
   const [data, setData] = useState(data_target);
   const [sub, setSub] = useState(false);
   const [valid, setValid] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const fields = params.fields.split('%2C')
 
   if (fields.length < 3 || fields.length > 12) {
@@ -32,13 +76,18 @@ export default function Target({ params }) {
   }
 
   useEffect(() => {
-    let cnt = 0;
+    let cnt = fields.length;
+    const d = Object.keys(data);
     for (let i = 0; i < fields.length; i++) {
-      if (data[fields[i]+"_w"] !== null) {
-        cnt++;
+      for (let j = 0; j < d.length; j++) {
+        if (d[j].startsWith(fields[i])) {
+          if (data[d[j]] == null) {
+            cnt--;
+            break;
+          }
+        }
       }
     }
-    console.log('progress count:', cnt);
 
     setProgress(cnt / fields.length * 100);
     if (cnt == fields.length) {
@@ -48,9 +97,13 @@ export default function Target({ params }) {
     }
   }, [sub])
 
-  const handleValid = () => {
-    setSub(false);
-    setValid(true);
+  const handleSubmit = async () => {
+    const res = await axios.patch('/api/application/target/all', data);
+    if (res.status == 200) {
+      window.location.href = '/my_info';
+    } else {
+      alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
   }
 
   return (
@@ -69,58 +122,58 @@ export default function Target({ params }) {
         gap: '64px',
         marginBottom: '80px',
       }}>
-        <button onClick={() => console.log(data)}>정보 보기</button>
+        {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
         <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
-        <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
+        {/* <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
         {fields.map((field, index) => (
           <>
             <div key={index}>{options_eng[field]}</div>
           </>
         ))}
-        </Container>
+        </Container> */}
         { fields.includes('height') && <Height data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('education') && <Education data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('divorce') && <Divorce data={data} setData={setData} sub={sub} setSub={setSub} /> }
-        { fields.includes('smoking_history') && <></> }
-        { fields.includes('drinking_life') && <></> }
-        { fields.includes('owned_car') && <></> }
-        { fields.includes('interests') && <></> }
-        { fields.includes('number_relationships') && <></> }
-        { fields.includes('athletic_life') && <></> }
-        { fields.includes('pet_animal') && <></> }
-        { fields.includes('religion') && <></> }
+        { fields.includes('smoking_history') && <SmokingHistory data={data} setData={setData} sub={sub} setSub={setSub}  /> }
+        { fields.includes('drinking_life') && <DrinkingLife data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('owned_car') && <OwnedCar data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('interests') && <Interests data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('number_relationships') && <NumberRelationships data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('athletic_life') && <AthleticLife data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('pet_animal') && <PetAnimal data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('religion') && <Religion data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('extrovert_or_introvert') && <></> }
-        { fields.includes('intutive_or_realistic') && <></> }
-        { fields.includes('emotional_or_rational') && <></> }
-        { fields.includes('impromptu_or_planned') && <></> }
-        { fields.includes('selfconfidence_or_careful') && <></> }
+        { fields.includes('extrovert_or_introvert') && <ExtrovertOrIntrovert data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('intutive_or_realistic') && <IntutiveOrRealistic data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('emotional_or_rational') && <EmotionalOrRational data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('impromptu_or_planned') && <ImpromptuOrPlanned data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('selfconfidence_or_careful') && <SelfconfidenceOrCareful data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('marriage_values') && <></> }
-        { fields.includes('religious_values') && <></> }
-        { fields.includes('opposite_friends_values') && <></> }
-        { fields.includes('political_values') && <></> }
-        { fields.includes('consumption_values') && <></> }
-        { fields.includes('career_family_values') && <></> }
+        { fields.includes('marriage_values') && <MarriageValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('religious_values') && <ReligiousValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('opposite_friends_values') && <OppositeFriendsValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('political_values') && <PoliticalValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('consumption_values') && <ConsumptionValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('career_family_values') && <CareerFamilyValues data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('animal_image') && <></> }
-        { fields.includes('double_eyelid') && <></> }
-        { fields.includes('face_shape') && <></> }
-        { fields.includes('body_type') && <></> }
-        { fields.includes('skin_tone') && <></> }
-        { fields.includes('tattoo') && <></> }
-        { fields.includes('fashion_style') && <></> }
+        { fields.includes('animal_image') && <AnimalImage data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('double_eyelid') && <DoubleEyelid data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('face_shape') && <FaceShape data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('body_type') && <BodyType data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('skin_tone') && <SkinTone data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('tattoo') && <Tattoo data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('fashion_style') && <FashionStyle data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
-        { fields.includes('preffered_dating') && <></> }
-        { fields.includes('preferred_contact_method') && <></> }
-        { fields.includes('attractiveness_level') && <></> }
-        { fields.includes('jealousy_level') && <></> }
-        { fields.includes('love_initiative') && <></> }
-        { fields.includes('dating_frequency') && <></> }
-        { fields.includes('contact_style') && <></> }
-        { fields.includes('skinship') && <></> }
-        { fields.includes('sns') && <></> }
-        { fields.includes('conflict_resolution_method') && <></> }
+        { fields.includes('preffered_dating') && <PrefferedDating data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('preferred_contact_method') && <PreferredContactMethod data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('attractiveness_level') && <AttractivenessLevel data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('jealousy_level') && <JealousyLevel data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('love_initiative') && <LoveInitiative data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('dating_frequency') && <DatingFrequency data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('contact_style') && <ContactStyle data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('skinship') && <Skinship data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('sns') && <Sns data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('conflict_resolution_method') && <ConflictResolutionMethod data={data} setData={setData} sub={sub} setSub={setSub} /> }
 
         <br />
         <BottomNavigation sx={{
@@ -135,7 +188,7 @@ export default function Target({ params }) {
               display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
             }}>
               <InfoText title={'매칭 예상 주기 7일'} />
-              <InfoText title={'경쟁률 높음'} />
+              {/* <InfoText title={'경쟁률 높음'} /> */}
             </Container>
 
             <Container disableGutters sx={{
@@ -145,14 +198,16 @@ export default function Target({ params }) {
                 <SubButton buttonName='이전 단계' />
               </Link>
               { !valid ?
-                <MainButton buttonName='설정 검토' onClick={() => handleValid()} /> :
-                <MainButton buttonName='다음 단계로' onClick={() => setSub(true)} />
+                <MainButton buttonName='입력을 완료해야 합니다' onClick={() => {}} /> :
+                <MainButton buttonName='이상형 정보 입력 완료' onClick={() => setClicked(true)} />
               }
             </Container>
           </Container>
         </BottomNavigation>
-        <Modal clicked={valid} setClicked={setValid}>
-          <Typography className='heading2'>선택한 정보를 저장하고 다음으로 넘어갑니다.</Typography>
+        <Modal clicked={clicked} setClicked={setClicked}>
+          <Typography className='heading2'>이상형을 꼭 찾아드릴게요!</Typography>
+          <Typography className='basic'>이제 정말 마지막 단계입니다 <br />조금만 힘내요! 💪</Typography>
+          <MainButton buttonName='편지 작성하기' onClick={() => handleSubmit()} />
         </Modal>
       </Container>
     </>
@@ -170,13 +225,13 @@ const options_eng = {
   smoking_history: '흡연 여부',
   drinking_life: '음주 여부',
   owned_car: '자차 유무',
-  interest: '관심사',
+  interests: '관심사',
   number_relationships: '연애 횟수',
   athletic_life: '운동 생활',
   pet_animal: '반려동물',
   religion: '종교',
 
-  extrovert_or_realistic: '외향/내향',
+  extrovert_or_introvert: '외향/내향',
   intutive_or_realistic: '직관/현실',
   emotional_or_rational: '감성/이성',
   impromptu_or_planned: '즉흥/계획',
@@ -328,4 +383,3 @@ const data_target = {
   conflict_resolution_method: null,
   conflict_resolution_method_w: null
 }
-

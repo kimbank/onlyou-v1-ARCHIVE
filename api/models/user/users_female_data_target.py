@@ -9,10 +9,10 @@ class UsersFemaleDataTargetSchema(BaseModel):
     weight_standard: Optional[int]
     created_at :Optional[datetime]
     modified_at :Optional[datetime]
-    date_birth_s : Optional[date] = Field()
-    date_birth_e : Optional[date] = Field()
+    date_birth_s : Optional[int] = Field()
+    date_birth_e : Optional[int] = Field()
     date_birth_w : Optional[int] = Field()
-    residence_sgg : Optional[str] = Field()
+    residence : Optional[str] = Field()
     residence_w : Optional[int] = Field()
     job_type : Optional[str] = Field()
     job_type_w : Optional[int] = Field()

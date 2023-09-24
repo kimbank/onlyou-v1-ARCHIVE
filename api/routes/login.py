@@ -90,7 +90,7 @@ async def current_code_exist(auth_info: UserLoginAuth, session: Session = Depend
                 token = f"{create_access_token(data=dict(id=auth_code.users.id,gender=auth_code.users.gender,mobile=auth_code.mobile_number))}"
 
                 response = Response(status_code=200, content='{"msg": "AUTH_SUCCESS"}')
-                response.set_cookie(key="access_token", value=token, httponly=True)
+                response.set_cookie(key="access_token", value=token, expires=60*60*24*7*3, secure=True)
 
                 session.close()
                 # return JSONResponse(status_code=200, content=dict(msg="AUTH_SUCCESS")).set_cookie(key="access_token", value=token, httponly=True)

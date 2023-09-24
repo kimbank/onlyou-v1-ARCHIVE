@@ -103,10 +103,12 @@ const Puller = styled(Box)(({ theme }) => ({
         >
           <Puller />
           <Image src={Cancel} style={{alignSelf: 'flex-end'}} onClick={() => setOpen(false)} />
-          <Container sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '24px'
+          <Container
+            disableGutters
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
           }}>
             {children}
           </Container>

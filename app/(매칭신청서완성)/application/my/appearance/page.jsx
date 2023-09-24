@@ -67,6 +67,7 @@ const Appearance = () => {
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
         <Typography className="heading2"> 외모 정보 입력하기 </Typography>
+        <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
 
         <Container disableGutters sx={{
           display: 'flex',

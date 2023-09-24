@@ -67,6 +67,7 @@ const DatingStyle = () => {
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
         <Typography className="heading2"> 연애 스타일 입력하기 </Typography>
+        <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
 
         <Container disableGutters sx={{
           display: 'flex',
@@ -75,8 +76,8 @@ const DatingStyle = () => {
         }}>
           <DropDownInput data={data} setData={setData} data_name={"preffered_dating"} title={"선호 데이트"} options={["정적인 데이트 선호", "활동적인 데이트 선호"]} />
           <DropDownInput data={data} setData={setData} data_name={"preferred_contact_method"} title={"선호 연락 수단"} options={["전화를 더 선호해요", "카톡을 더 선호해요"]} />
-          <DropDownInput data={data} setData={setData} data_name={"attractiveness_level"} title={"애교 레밸"} options={["애교가 많아요", "애교가 있어요", "중간이에요", "무뚝뚝해요", "많이 무뚝뚝해요"]} start_index={-2} />
-          <DropDownInput data={data} setData={setData} data_name={"jealousy_level"} title={"질투 레밸"} options={["질투가 많아요", "질투가 있어요", "중간이에요", "그저그래요", "전혀 없어요"]} start_index={-2} />
+          <DropDownInput data={data} setData={setData} data_name={"attractiveness_level"} title={"애교 레벨"} options={["애교가 많아요", "애교가 있어요", "중간이에요", "무뚝뚝해요", "많이 무뚝뚝해요"]} start_index={-2} />
+          <DropDownInput data={data} setData={setData} data_name={"jealousy_level"} title={"질투 레벨"} options={["질투가 많아요", "질투가 있어요", "중간이에요", "그저그래요", "전혀 없어요"]} start_index={-2} />
           <DropDownInput data={data} setData={setData} data_name={"love_initiative"} title={"연애 주도성"} options={["보통 따라간다", "가끔 리드한다", "종종 리드한다", "주로 리드한다"]} />
           <DropDownInput data={data} setData={setData} data_name={"dating_frequency"} title={"데이트 빈도"} options={["일주일에 1번 미만", "일주일에 1번", "일주일에 2번", "일주일에 3번 이상"]} />
           <DropDownInput data={data} setData={setData} data_name={"contact_style"} title={"연락 스타일"} options={[<>시간 여유가 있고 <br />서로 생각 날 때 연락했으면 해요</>, <>바쁘더라도 연락은<br />최대한 자주 하는 게 좋아요</>]} />

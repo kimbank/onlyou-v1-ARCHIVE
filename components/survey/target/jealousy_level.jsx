@@ -56,10 +56,10 @@ export default function JealousyLevel({ data, setData, sub, setSub }) {
         gap: "8px",
       }}
     >
-      <Typography className="heading2">질투 레밸</Typography>
+      <Typography className="heading2">질투 레벨</Typography>
       <Divider />
       <Typography className="basic-gray">
-        원하는 상대방의 질투 레밸을 모두 선택해주세요.
+        원하는 상대방의 질투 레벨을 모두 선택해주세요.
       </Typography>
 
 

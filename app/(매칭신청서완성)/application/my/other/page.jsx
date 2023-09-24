@@ -69,6 +69,7 @@ const Other = () => {
         }}
       >
         <Typography className='heading2'>기타 정보 입력하기</Typography>
+        <Typography className="basic-gray">본인의 정보를 입력해주세요.</Typography>
         <Container disableGutters sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -91,7 +92,9 @@ const Other = () => {
           flexDirection: 'column',
           gap: '8px',
         }}>
-          <MainButton buttonName="마침" onClick={() => { handleNext() }} />
+          <Link href={`application/target`}>
+            <MainButton buttonName="마침" onClick={() => { handleNext() }} />
+          </Link>
           <Link href={`application/my/appearance`}>
             <SubButton buttonName="이전 단계" />
           </Link>

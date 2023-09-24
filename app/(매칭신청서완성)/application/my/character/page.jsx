@@ -69,6 +69,7 @@ const Character = () => {
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
         <Typography className="heading2"> 내 성격 입력하기 </Typography>
+        <Typography className="basic-gray">본인의 성격 정보를 입력해주세요.</Typography>
 
         <Container disableGutters sx={{
           display: 'flex',

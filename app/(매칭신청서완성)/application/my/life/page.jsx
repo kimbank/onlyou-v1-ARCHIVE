@@ -70,6 +70,7 @@ const Life = () => {
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
         <Typography className="heading2"> 생활 정보 입력하기 </Typography>
+        <Typography className="basic-gray">본인의 생활 정보를 입력해주세요.</Typography>
 
         <Container disableGutters sx={{
           display: "flex",

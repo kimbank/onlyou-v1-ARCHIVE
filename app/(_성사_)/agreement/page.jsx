@@ -64,7 +64,7 @@ const Agreement = () => {
           }}>
             {/* 닉네임 */}
             <Typography className='heading2'> 
-              내 연인은 누구?
+              내 인연은 누구?
             </Typography>
 
             {/* 직장유형 */}

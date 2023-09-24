@@ -75,7 +75,7 @@ export default function ReligiousValues({ data, setData, sub, setSub }) {
     >
       <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>인생에서 종교는 중요하지 않아요</Button>
       <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>종교가 중요하긴 하지만, 가장 중요한 요소는 아니에요</Button>
-      <Button variant="contained" sx={sx} onClick={() => handleChange('2')} color={value.split(',').includes('2') ? "primary" : "secondary"}>사랑한다면 3년 내로 결혼도 생각할 것 같아요</Button>
+      <Button variant="contained" sx={sx} onClick={() => handleChange('2')} color={value.split(',').includes('2') ? "primary" : "secondary"}>종교가 매우 중요해요</Button>
     </Container>
 
 

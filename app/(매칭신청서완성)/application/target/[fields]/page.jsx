@@ -126,7 +126,7 @@ export default function Target({ params }) {
         gap: '64px',
         marginBottom: '80px',
       }}>
-        <button onClick={() => console.log(data)}>정보 보기</button>
+        {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
         <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
         { fields.includes('date_birth') && <DateBirth data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('residence') && <Residence data={data} setData={setData} sub={sub} setSub={setSub} /> }

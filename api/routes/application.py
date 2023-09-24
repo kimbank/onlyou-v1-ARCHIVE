@@ -67,6 +67,7 @@ async def patch_target_all(request: Request, values: UpdateTargetSchema = Body(.
     try:
         ut = await get_target_schema(request)
         ut.update(auto_commit=True, **values.dict())
+        ut.update(auto_commit=True, fill_status=1)
         return JSONResponse(status_code=200, content=dict(msg='성공'))
     except Exception as e:
         ut.close()
@@ -223,6 +224,8 @@ async def get_other(request: Request):
 async def update_other(request: Request, other: UpdateOtherSchema = Body(...)):
     try:
         uu = await get_user(request)
+        ut = await get_extra_schema(request)
+        ut.update(auto_commit=True, fill_status=1)
         uu.update(auto_commit=True, kakao_id=other.kakao_id, information_before_meeting=other.information_before_meeting)
         return JSONResponse(status_code=200, content=dict(msg='기타 정보 업데이트 완료'))
     except:

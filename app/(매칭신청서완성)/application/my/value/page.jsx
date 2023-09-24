@@ -66,8 +66,10 @@ const Value = () => {
         }}
       >
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
-        <Typography className="heading2"> 가치관 정보 입력하기 </Typography>
-        <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
+        <Container disableGutters sx={{display:'flex', flexDirection:'column', gap:'8px'}}>
+          <Typography className="heading2"> 가치관 정보 입력하기 </Typography>
+          <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
+        </Container>
 
         <Container disableGutters sx={{
           display: 'flex',
@@ -82,7 +84,7 @@ const Value = () => {
           <DropDownInput data={data} setData={setData} data_name={"career_family_values"} title={"커리어와 가정 가치관"} options={["두 사람 모두 가정이 커리어보다 우선이었으면 해요", "두 사람 중 한 명은 커리어보다 가정에 신경을 썼으면 해요"]} />
         </Container>
 
-        <MainButton buttonName='다음단계' onClick={() => handleNext()} />
+        <MainButton buttonName='다음 단계' onClick={() => handleNext()} />
       </Container>
 
       <Backdrop

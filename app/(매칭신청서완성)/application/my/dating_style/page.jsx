@@ -65,9 +65,10 @@ const DatingStyle = () => {
         }}
       >
         {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
-
-        <Typography className="heading2"> 연애 스타일 입력하기 </Typography>
-        <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
+        <Container disableGutters sx={{display:'flex', flexDirection:'column', gap:'8px'}}>
+          <Typography className="heading2"> 연애 스타일 입력하기 </Typography>
+          <Typography className="basic-gray">본인의 가치관 정보를 입력해주세요.</Typography>
+        </Container>
 
         <Container disableGutters sx={{
           display: 'flex',

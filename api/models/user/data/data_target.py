@@ -4,6 +4,7 @@ from pydantic.schema import Optional
 
 
 class UpdateTargetSchema(BaseModel):
+
     date_birth_s: Optional[int] = Field()
     date_birth_e: Optional[int] = Field()
     date_birth_w: Optional[int] = Field()

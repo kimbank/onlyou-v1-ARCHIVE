@@ -60,7 +60,7 @@ export default function SmokingHistory({ data, setData, sub, setSub }) {
     <Typography className="heading2">흡연 경력</Typography>
     <Divider />
     <Typography className="basic-gray">
-      꺼리는 상대방의 흡연 경력을 모두 선택해주세요.
+      <strong>꺼리는</strong> 상대방의 흡연 경력을 모두 선택해주세요.
     </Typography>
 
 

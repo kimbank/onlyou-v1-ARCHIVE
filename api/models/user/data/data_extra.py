@@ -74,3 +74,7 @@ class UpdateAppearanceSchema(BaseModel):
     skin_tone: Optional[int] = Field(description="0 ~ 2")
     tattoo: Optional[int] = Field(description="0 ~ 1")
     fashion_style: Optional[str] = Field(description="")
+
+class UpdateOtherSchema(BaseModel):
+    information_before_meeting: Optional[int] = Field(description="")
+    kakao_id: Optional[str] = Field(description="")

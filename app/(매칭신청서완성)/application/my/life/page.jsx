@@ -38,6 +38,23 @@ const Life = () => {
       })
   }, []);
 
+  const handleNext = () => {
+    if (canProceed) {
+      axios.patch('/api/application/my/lifestyle', data)
+        .then((res) => {
+          if (res.status == 200) {
+            window.location.href = '/application/my/character';
+          } else {
+            setDangerMessage('서버 오류가 발생했습니다.');
+            setDangerVisible(true);
+          }
+        })
+    } else {
+      setDangerMessage('비어 있는 항목이 존재합니다');
+      setDangerVisible(true);
+    }
+  }
+
   return (
     <Container
       disableGutters
@@ -47,6 +64,7 @@ const Life = () => {
         gap: "64px",
       }}
     >
+      <button onClick={() => console.log(data)}>정보 보기</button>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -81,12 +99,13 @@ const Life = () => {
           gap: "8px",
         }}
       >
-        {canProceed ?
+        {/* {canProceed ?
           <Link href={`application/my/character`}>
-            <MainButton buttonName="다음 단계" />
+            <MainButton buttonName="다음 단계" onClick={} />
           </Link> :
           <MainButton buttonName="다음 단계" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
-        }
+        } */}
+        <MainButton buttonName="다음 단계" onClick={() => { handleNext() }} />
         <Link href={`application/my/value`}>
           <SubButton buttonName="이전 단계" />
         </Link>

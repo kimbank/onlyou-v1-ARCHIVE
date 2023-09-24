@@ -37,14 +37,7 @@ const Character = () => {
     }, []);
 
     return (
-        <Container
-            disableGutters
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "64px",
-            }}
-        >
+        <>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
@@ -52,38 +45,47 @@ const Character = () => {
                 <CircularProgress color="inherit" />
             </Backdrop>
             <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
+            <Container
+                disableGutters
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "64px",
+                }}
+            >
 
-            {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
+                {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
 
-            <Typography className="heading2"> 내 성격 입력하기 </Typography>
+                <Typography className="heading2"> 내 성격 입력하기 </Typography>
 
-            <Container disableGutters sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '32px',
-            }}>
-                <DropDownInput data={data} setData={setData} data_name={"extrovert_or_introvert"} title={"외향/내향"} options={["매우 외향", "외향", "중립", "내향", "매우 내향"]} start_index={-2} />
-                <DropDownInput data={data} setData={setData} data_name={"intutive_or_realistic"} title={"직관/현실"} options={["매우 직관적", "직관적", "중립", "현실적", "매우 현실적"]} start_index={-2} />
-                <DropDownInput data={data} setData={setData} data_name={"emotional_or_rational"} title={"감성/이성"} options={["매우 감성적", "감성적", "중립", "이성적", "매우 이성적"]} start_index={-2} />
-                <DropDownInput data={data} setData={setData} data_name={"impromptu_or_planned"} title={"즉흥/계획"} options={["매우 즉흥적", "즉흥적", "중립", "계획적", "매우 계획적"]} start_index={-2} />
-                <DropDownInput data={data} setData={setData} data_name={"selfconfidence_or_careful"} title={"자기확신/신중"} options={["매우 자기확신", "자기확신", "중립", "신중", "매우 신중"]} start_index={-2} />
+                <Container disableGutters sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '32px',
+                }}>
+                    <DropDownInput data={data} setData={setData} data_name={"extrovert_or_introvert"} title={"외향/내향"} options={["매우 외향", "외향", "중립", "내향", "매우 내향"]} start_index={-2} />
+                    <DropDownInput data={data} setData={setData} data_name={"intutive_or_realistic"} title={"직관/현실"} options={["매우 직관적", "직관적", "중립", "현실적", "매우 현실적"]} start_index={-2} />
+                    <DropDownInput data={data} setData={setData} data_name={"emotional_or_rational"} title={"감성/이성"} options={["매우 감성적", "감성적", "중립", "이성적", "매우 이성적"]} start_index={-2} />
+                    <DropDownInput data={data} setData={setData} data_name={"impromptu_or_planned"} title={"즉흥/계획"} options={["매우 즉흥적", "즉흥적", "중립", "계획적", "매우 계획적"]} start_index={-2} />
+                    <DropDownInput data={data} setData={setData} data_name={"selfconfidence_or_careful"} title={"자기확신/신중"} options={["매우 자기확신", "자기확신", "중립", "신중", "매우 신중"]} start_index={-2} />
+                </Container>
+                <Container disableGutters sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                }}>
+                    {canProceed ?
+                        <Link href={`application/my/dating_style`}>
+                            <MainButton buttonName="다음 단계" />
+                        </Link> :
+                        <MainButton buttonName="다음 단계" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
+                    }
+                    <Link href={`application/my/life`}>
+                        <SubButton buttonName="이전 단계" />
+                    </Link>
+                </Container>
             </Container>
-            <Container disableGutters sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-            }}>
-                {canProceed ?
-                    <Link href={`application/my/dating_style`}>
-                        <MainButton buttonName="다음 단계" />
-                    </Link> :
-                    <MainButton buttonName="다음 단계" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
-                }
-                <Link href={`application/my/life`}>
-                    <SubButton buttonName="이전 단계" />
-                </Link>
-            </Container>
-        </Container>
+        </>
     );
 }
 

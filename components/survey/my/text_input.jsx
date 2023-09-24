@@ -18,14 +18,26 @@ export function TextInput({ data, setData, data_name, title = "!미정" }) {
         setData({ ...data, [data_name]: event.target.value });
     };
 
+    // React.useEffect(() => {
+    //     if (value == "") { setData({ ...data, kakao_id: null }); }
+    //     else { setData({ ...data, kakao_id: value }); }
+    // }, [value]);
+
+    React.useEffect(() => {
+        if (data.kakao_id == null) setValue(null);
+        else setValue(data.kakao_id);
+    }, [data]);
+
     return (
         <FormControl>
             <TextField
                 required
                 id="standard-required"
-                label={title}
+                // label={title}
                 variant="standard"
                 onChange={handleChange}
+                value={value}
+                placeholder={title}
             />
         </FormControl>
     );

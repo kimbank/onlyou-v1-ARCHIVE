@@ -49,13 +49,15 @@ export function DropDownInput({ data, setData, data_name, title = "!미정", opt
                     }}
                 >
                     <MenuItem value={null} disabled>
-                        <Typography className="basic">선택해주세요.</Typography>
+                        <Typography className="basic" color={'InactiveBorder'} fontStyle={'italic'}>선택해주세요.</Typography>
                     </MenuItem>
 
                     {options.map((option, index) => {
                         return (
                             <MenuItem value={index + start_index} key={(index + start_index).toString()}>
-                                {option}
+                                <Typography className="basic" sx={{ overflow: 'hidden', textOverflow:'ellipsis'}}>
+                                    {option}
+                                </Typography>
                             </MenuItem>
                         )
                     })}

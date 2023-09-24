@@ -39,6 +39,23 @@ const Other = () => {
             })
     }, []);
 
+    const handleNext = () => {
+        if (canProceed) {
+            axios.patch('/api/application/my/other', data)
+            .then((res) => {
+                if (res.status == 200) {
+                    setShowModal(true);
+                } else {
+                    setDangerMessage('서버 오류가 발생했습니다.');
+                    setDangerVisible(true);
+                }
+            })
+        } else {
+            setDangerMessage('비어 있는 항목이 존재합니다');
+            setDangerVisible(true);
+        }
+    }
+
     return (
         <Container
             disableGutters
@@ -48,23 +65,13 @@ const Other = () => {
                 gap: "64px",
             }}
         >
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={open}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
-
-            {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
-
             <Typography className='heading2'>기타 정보 입력하기</Typography>
             <Container disableGutters sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '32px',
             }}>
-                <DropDownInput data={data} setData={setData} data_name={"information_before_meeting"} title={"만나기 전 정보"} options={["!미정"]} />
+                <DropDownInput data={data} setData={setData} data_name={"information_before_meeting"} title={"만나기 전 정보"} options={["만나기 전에는 간단히 장소와 시간만 정하고 싶어요", "만나기 전에도 카톡, 전화 등으로 서로를 알아가고 싶어요"]} />
                 <TextInput data={data} setData={setData} data_name={"kakao_id"} title={"카카오톡 아이디"} />
             </Container>
             <Container disableGutters sx={{
@@ -82,7 +89,7 @@ const Other = () => {
                 gap: '8px',
             }}>
                 {canProceed ?
-                    <MainButton buttonName="마침" onClick={() => setShowModal(true)} />
+                    <MainButton buttonName="마침" onClick={() => handleNext()} />
                     :
                     <MainButton buttonName="마침" onClick={() => { setDangerMessage('비어 있는 항목이 존재합니다'); setDangerVisible(true) }} />
                 }
@@ -97,6 +104,13 @@ const Other = () => {
                 <MainButton buttonName='이상형 입력하기' onClick={() => setShowModal(false)} />
                 {/* </Link> */}
             </Modal>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <DangerNotification alertMessage={dangerMessage} visible={dangerVisible} setVisible={setDangerVisible} />
         </Container>
     );
 }

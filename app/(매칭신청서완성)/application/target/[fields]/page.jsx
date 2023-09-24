@@ -9,6 +9,10 @@ import { MainButton, SubButton, MainMiniButton, MainMiniCancelButton, SubMiniBut
 
 import { HeightRange, DrinkRange, RadioButtons } from "@/components/Input";
 
+import DateBirth from "@/components/survey/target/date_birth";
+import Residence from "@/components/survey/target/residence";
+
+import JobType from "@/components/survey/target/job_type";
 import Height from "@/components/survey/target/height";
 import Education from "@/components/survey/target/education";
 import Divorce from "@/components/survey/target/divorce";
@@ -122,15 +126,11 @@ export default function Target({ params }) {
         gap: '64px',
         marginBottom: '80px',
       }}>
-        {/* <button onClick={() => console.log(data)}>정보 보기</button> */}
+        <button onClick={() => console.log(data)}>정보 보기</button>
         <Typography className='heading2'>어떤 항목을 <br />어떻게 반영해드릴까요?</Typography>
-        {/* <Container disableGutters sx={{display:'flex',flexDirection:'row',flexWrap:'wrap',gap:'8px'}}>
-        {fields.map((field, index) => (
-          <>
-            <div key={index}>{options_eng[field]}</div>
-          </>
-        ))}
-        </Container> */}
+        { fields.includes('date_birth') && <DateBirth data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('residence') && <Residence data={data} setData={setData} sub={sub} setSub={setSub} /> }
+        { fields.includes('job_type') && <JobType data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('height') && <Height data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('education') && <Education data={data} setData={setData} sub={sub} setSub={setSub} /> }
         { fields.includes('divorce') && <Divorce data={data} setData={setData} sub={sub} setSub={setSub} /> }
@@ -215,9 +215,9 @@ export default function Target({ params }) {
 }
 
 const options_eng = {
-  // date_birth: '나이',
-  // residence: '거주지',
-  // job_type: '직장 유형',
+  date_birth: '나이',
+  residence: '거주지',
+  job_type: '직장 유형',
   height: '키',
   education: '학력',
   divorce: '돌싱 여부',
@@ -265,6 +265,16 @@ const options_eng = {
 }
 
 const data_target = {
+  date_birth_s: null,
+  date_birth_e: null,
+  date_birth_w: null,
+
+  job_type: null,
+  job_type_w: null,
+
+  residence: null,
+  residence_w: null,
+
   height_s: null,
   height_e: null,
   height_w: null,

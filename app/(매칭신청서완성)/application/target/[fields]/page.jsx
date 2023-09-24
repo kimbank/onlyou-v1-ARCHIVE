@@ -187,7 +187,7 @@ export default function Target({ params }) {
             <Container disableGutters sx={{
               display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
             }}>
-              <InfoText title={'매칭 예상 주기 7일'} />
+              <InfoText title={'회원님의 조건과 이상형 조건에 따라 7일~10일 이상의 주기로 매칭이 진행됩니다.'} />
               {/* <InfoText title={'경쟁률 높음'} /> */}
             </Container>
 

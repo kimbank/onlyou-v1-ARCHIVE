@@ -4,7 +4,8 @@ from api.models.matching.matching_score_m2f import ScoreMToFSchema
 
 def get_score(data, target_data, score_record):
     PENALTY = -60
-    PROMOTION_HATES = ['education']  # TODO: job_type 추후에 추가
+    BASIC_HATES = ['residence']
+    PROMOTION_HATES = ['education, job_type']
     EXTRA_SINGLES = ['athletic_life', 'pet_animal', 'consumption_values', 'preffered_dating',
                      'preferred_contact_method', 'contact_style', 'skinship', 'sns',
                      'conflict_resolution_method']  # Extra에서 단일 선택 정보
@@ -37,6 +38,17 @@ def get_score(data, target_data, score_record):
             elif key + '_w' in important_standard:
                 score += PENALTY
                 score_record[key] = PENALTY
+            continue
+        elif key == 'residence' and key in target_standard:
+            if value is None or str(value) in target_standard[key].split(','):
+                if key + '_w' in important_standard:
+                    score += PENALTY
+                    score_record[key] = PENALTY
+                else:
+                    score_record[key] = 0
+            else:
+                score += target_standard[key + '_w']
+                score_record[key] = target_standard[key + '_w']
             continue
 
     # 심사 정보

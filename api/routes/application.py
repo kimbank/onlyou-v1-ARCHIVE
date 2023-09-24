@@ -83,7 +83,6 @@ async def get_values(request: Request):
         ut.close()
         return JSONResponse(status_code=500, content=dict(msg='실패'))
 
-    # print(ut.cls_attr('fill_status'))
     return UpdateValueSchema(**ut.__dict__)
 
 

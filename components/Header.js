@@ -45,7 +45,7 @@ export function Header() {
                     <a href='https://coconut-belt-9f8.notion.site/ONLYou-ff96da8cb35c49e2a46d96e63829660a' target='_blank' style={{display:'flex', alignItems:'center'}}>
                         <NotificationsNoneIcon sx={{ color: '#FF7700' }} />
                     </a>
-                    <a href='/' target='_blank' style={{display:'flex', alignItems:'center'}}>
+                    <a href='https://pf.kakao.com/_XssdG' target='_blank' style={{display:'flex', alignItems:'center'}}>
                         <HelpOutlineIcon sx={{ color: '#FF7700' }} />
                     </a>
                 </Box>

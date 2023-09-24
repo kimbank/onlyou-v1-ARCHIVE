@@ -60,7 +60,7 @@ export default function Education({ data, setData, sub, setSub }) {
     <Typography className="heading2">학력</Typography>
     <Divider />
     <Typography className="basic-gray">
-      원하는 상대방의 학력을 모두 선택해주세요.
+      <strong>꺼리는</strong> 상대방의 학력을 모두 선택해주세요.
     </Typography>
 
 

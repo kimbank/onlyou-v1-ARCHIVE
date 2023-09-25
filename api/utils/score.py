@@ -5,7 +5,7 @@ from api.models.matching.matching_score_m2f import ScoreMToFSchema
 def get_score(data, target_data, score_record):
     PENALTY = -60
     BASIC_HATES = ['residence']
-    PROMOTION_HATES = ['education, job_type']
+    PROMOTION_HATES = ['education', 'job_type']
     EXTRA_SINGLES = ['athletic_life', 'consumption_values', 'preffered_dating',
                      'preferred_contact_method', 'contact_style', 'skinship', 'sns',
                      'conflict_resolution_method']  # Extra에서 단일 선택 정보

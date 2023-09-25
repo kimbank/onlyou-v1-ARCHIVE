@@ -7,28 +7,32 @@ import { Typography, Container, Button, Divider } from "@mui/material";
 
 import WeightPannel from "./weight_pannel";
 
-export default function PetAnimal({ data, setData, sub, setSub }) {
-  const [value, setValue] = React.useState(null);
+export default function NumerRelationships({ data, setData, sub, setSub }) {
+  const [value, setValue] = React.useState("");
   const [weight, setWeight] = useState(null);
 
   useEffect(() => {
-    setData({ ...data, pet_animal: value });
-    setSub(!sub);
+    if (value == "") { setData({ ...data, pet_animal: null }); setSub(!sub); }
+    else { setData({ ...data, pet_animal: value }); setSub(!sub); }
   }, [value]);
 
   const handleChange = (newValue) => {
     if (newValue == value) {
-      setValue(null)
-      setData({ ...data, pet_animal: null });
+      setValue("")
     }
-    else if (value == null) {
+    else if (value == "") {
       setValue(newValue)
-      setData({ ...data, pet_animal: newValue });
     } else {
-      setValue(newValue);
+      let d = value.split(',').sort(function(a,b) {return Number(a)-Number(b)})
+      if (d.includes(newValue)) {
+        d.splice(d.indexOf(newValue), 1)
+        setValue(d.join(','))
+      } else {
+        d.push(newValue)
+        setValue(d.sort(function(a,b) {return Number(a)-Number(b)}).join(','))
+      }
     }
     setSub(!sub);
-    // setData({ ...data, education: value });
   };
 
   const handleWeight = (newWeight) => {
@@ -37,7 +41,7 @@ export default function PetAnimal({ data, setData, sub, setSub }) {
     }
     else {
       setWeight(newWeight);
-      setData({ ...data,  pet_animal_w: newWeight });
+      setData({ ...data, pet_animal_w: newWeight });
     }
     setSub(!sub);
   };
@@ -55,7 +59,7 @@ export default function PetAnimal({ data, setData, sub, setSub }) {
       <Typography className="heading2">반려동물</Typography>
       <Divider />
       <Typography className="basic-gray">
-        원하는 상대방의 반려동물을 선택해주세요.
+        <strong>꺼리는</strong> 상대방의 반려동물 조건을 모두 선택해 주세요.
       </Typography>
 
 
@@ -66,13 +70,12 @@ export default function PetAnimal({ data, setData, sub, setSub }) {
           flexDirection: "row",
           flexWrap: "wrap",
           gap: "8px",
-          overflowX: "scroll",
         }}
       >
-        <Button variant="contained" sx={sx} onClick={() => handleChange(0)} color={value == 0 ? "primary" : "secondary"}>키우기 어렵습니다</Button>
-        <Button variant="contained" sx={sx} onClick={() => handleChange(1)} color={value == 1 ? "primary" : "secondary"}>키우지 않으나 반려동물에 거부감은 없습니다</Button>
-        <Button variant="contained" sx={sx} onClick={() => handleChange(2)} color={value == 2 ? "primary" : "secondary"}>한 마리 키웁니다</Button>
-        <Button variant="contained" sx={sx} onClick={() => handleChange(3)} color={value == 3 ? "primary" : "secondary"}>두 마리 이상 키웁니다</Button>
+        <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>키우기 어렵습니다</Button>
+        <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>키우지 않으나 반려동물에 거부감은 없습니다</Button>
+        <Button variant="contained" sx={sx} onClick={() => handleChange('2')} color={value.split(',').includes('2') ? "primary" : "secondary"}>한 마리 키웁니다</Button>
+        <Button variant="contained" sx={sx} onClick={() => handleChange('3')} color={value.split(',').includes('3') ? "primary" : "secondary"}>두 마리 이상 키웁니다</Button>
       </Container>
 
 

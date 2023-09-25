@@ -161,10 +161,12 @@ const MyInfo = () => {
           <Link href='/application/target'>
             <SubMiniFullButton buttonName={'이상형 정보 수정하기'} />
           </Link>
-          <a href='https://g8h7y7g082m.typeform.com/to/hbat7gbg' target='_blank'>
-            <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} />
+          {/* <a href='https://g8h7y7g082m.typeform.com/to/hbat7gbg' target='_blank'> */}
+            <SubMiniFullButton buttonName={'인증 뱃지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
+          {/* </a> */}
+          <a href='https://g8h7y7g082m.typeform.com/to/M8kI8xyb'>
+            <SubMiniFullButton buttonName={'편지 수정하기'} />
           </a>
-          <SubMiniFullButton buttonName={'편지 수정하기'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
         </Container>
         <Container disableGutters sx={{
           display: 'flex',
@@ -176,7 +178,7 @@ const MyInfo = () => {
           <SubMiniFullButton buttonName={'지인 차단'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
           <SubMiniFullButton buttonName={'경고 점수 조회'} onClick={() => {setAlertMessage('준비중인 기능입니다.');setVisible(true)}} />
           <a href="/logout" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '16px', marginLeft: '14px'}}>로그아웃</a>
-          <a href="/leave" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</a>
+          <a href="https://g8h7y7g082m.typeform.com/to/BZedJjPX" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</a>
         </Container>
       </Container>
     </Container>

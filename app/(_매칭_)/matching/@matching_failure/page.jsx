@@ -67,7 +67,7 @@ export default function Failure() {
         gap: '16px',
       }}>
         <InfoText title="예상 경쟁률" alertMessage="매칭 정보가 쌓이면 계산되어요" shadow={false} />
-        <InfoText title="예상 매칭 난이도" alertMessage="매칭 정보가 쌓이면 계산되어요" shadow={false} />
+        <InfoText title="예상 매칭 주기" alertMessage="매칭 정보가 쌓이면 계산되어요" shadow={false} />
       </Container>
     </Container>
   );

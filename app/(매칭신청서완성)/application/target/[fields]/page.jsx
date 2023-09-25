@@ -104,7 +104,7 @@ export default function Target({ params }) {
   const handleSubmit = async () => {
     const res = await axios.patch('/api/application/target/all', data);
     if (res.status == 200) {
-      window.location.href = '/my_info';
+      setClicked(true);
     } else {
       alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     }
@@ -187,7 +187,7 @@ export default function Target({ params }) {
             <Container disableGutters sx={{
               display: 'flex', flexDirection:'row', flexWrap:'wrap', alignItems: 'center', gap: '16px',
             }}>
-              <InfoText title={'매칭 예상 주기 7일'} />
+              <InfoText title={'회원님의 조건과 이상형 조건에 따라 7일~10일 이상의 주기로 매칭이 진행됩니다.'} />
               {/* <InfoText title={'경쟁률 높음'} /> */}
             </Container>
 
@@ -199,7 +199,7 @@ export default function Target({ params }) {
               </Link>
               { !valid ?
                 <MainButton buttonName='입력을 완료해야 합니다' onClick={() => {}} /> :
-                <MainButton buttonName='이상형 정보 입력 완료' onClick={() => setClicked(true)} />
+                <MainButton buttonName='이상형 정보 입력 완료' onClick={() => handleSubmit()} />
               }
             </Container>
           </Container>
@@ -207,7 +207,9 @@ export default function Target({ params }) {
         <Modal clicked={clicked} setClicked={setClicked}>
           <Typography className='heading2'>이상형을 꼭 찾아드릴게요!</Typography>
           <Typography className='basic'>이제 정말 마지막 단계입니다 <br />조금만 힘내요! 💪</Typography>
-          <MainButton buttonName='편지 작성하기' onClick={() => handleSubmit()} />
+          <a href='https://g8h7y7g082m.typeform.com/to/p66iQin2'>
+            <MainButton buttonName='편지 작성하기' />
+          </a>
         </Modal>
       </Container>
     </>

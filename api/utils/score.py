@@ -30,17 +30,20 @@ def get_score(data, target_data, score_record):
 
     # 무조건 반영 부합 안 할시 -60점 처리, 성별은 이미 필터링 되어 있기 때문에 생략-
     for key, value in target_data['u'].items():
+        if value is None:
+            continue
+
         if key == 'date_birth' and 'date_birth_w' in target_standard:
-            print(f"확인; {target_data['u']['date_birth'], target_standard[key + '_s'], target_standard[key + '_e']}")
-            if value is not None and target_standard[key + '_s'] <= int(value.year) <= target_standard[key + '_e']:
+            if target_standard[key + '_s'] <= int(value.year) <= target_standard[key + '_e']:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
                 score += PENALTY
                 score_record[key] = PENALTY
             continue
+
         elif key == 'residence' and key in target_standard:
-            if value is None or str(value) in target_standard[key].split(','):
+            if str(value) in target_standard[key].split(','):
                 if key + '_w' in important_standard:
                     score += PENALTY
                     score_record[key] = PENALTY
@@ -53,9 +56,11 @@ def get_score(data, target_data, score_record):
 
     # 심사 정보
     for key, value in target_data['ud'].items():
+        if value is None:
+            continue
         # 꺼리는 정보
         if key in PROMOTION_HATES and key in target_standard:
-            if value is None or str(value) in target_standard[key].split(','):
+            if str(value) in target_standard[key].split(','):
                 if key + '_w' in important_standard:
                     score += PENALTY
                     score_record[key] = PENALTY
@@ -67,8 +72,7 @@ def get_score(data, target_data, score_record):
             continue
 
         elif key == 'height' and 'height_w' in target_standard:
-            if value is not None and (
-                    target_standard[key + '_s'] <= value <= target_standard[key + '_e'] or value >= 185):
+            if target_standard[key + '_s'] <= value <= target_standard[key + '_e'] or value >= 185:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
@@ -79,7 +83,7 @@ def get_score(data, target_data, score_record):
             continue
 
         elif key == 'divorce' and key in target_standard:
-            if value is not None and target_standard[key] == value:
+            if target_standard[key] == value:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
@@ -91,9 +95,11 @@ def get_score(data, target_data, score_record):
 
     # 부가 정보
     for key, value in target_data['ue'].items():
+        if value is None:
+            continue
         # 꺼리는 정보
         if key in EXTRA_HATES and key in target_standard:
-            if value is not None and str(value) in target_standard[key].split(','):
+            if str(value) in target_standard[key].split(','):
                 if key + '_w' in important_standard:
                     score += PENALTY
                     score_record[key] = PENALTY
@@ -106,7 +112,7 @@ def get_score(data, target_data, score_record):
 
         # 단일 선택 정보
         elif key in EXTRA_SINGLES and key in target_standard:
-            if value is not None and target_standard[key] == value:
+            if target_standard[key] == value:
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
@@ -118,13 +124,6 @@ def get_score(data, target_data, score_record):
 
         # interests는 extra, target 모두 중복 선택 가능 -> 하나라도 겹친다면 점수 부여
         elif key == 'interests' and key in target_standard:
-            if value is None:
-                if key + '_w' in important_standard:
-                    score += PENALTY
-                    score_record[key] = PENALTY
-                else:
-                    score_record[key] = 0
-                continue
             mine, target = set(target_standard[key].split(',')), set(value.split(','))
             # 2개 이상 겹쳐야 점수 부여
             if len(mine & target) > 1:
@@ -139,7 +138,7 @@ def get_score(data, target_data, score_record):
 
         # 다중 선택 정보
         else:
-            if key in target_standard and value is not None and str(value) in target_standard[key].split(','):
+            if key in target_standard and str(value) in target_standard[key].split(','):
                 score += target_standard[key + '_w']
                 score_record[key] = target_standard[key + '_w']
             elif key + '_w' in important_standard:
@@ -163,7 +162,6 @@ def get_scores(gender, data, targets):
         target['ue'] = ue.__dict__
         score_sum = get_score(data, target, score_record)
         score_record['score_sum'] = score_sum
-        print(f'점수: {score_record.items()}')
         if gender == 0:
             score_record['female_id'] = data['female_id']
             score_record['male_id'] = target['u']['id']

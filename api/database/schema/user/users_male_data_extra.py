@@ -85,5 +85,6 @@ class UsersMaleDataExtra(Base, BaseMixin):
     sns = Column(TINYINT, comment='소셜 미디어 0: 비공개 1: 공개', nullable=True)
     conflict_resolution_method = Column(
         TINYINT, comment='갈등 해결 방식 0: SOFT 1: HARD', nullable=True)
+    information_before_meeting = Column(TINYINT)
 
     user = relationship("User", uselist=False)

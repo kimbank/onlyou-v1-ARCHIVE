@@ -95,7 +95,7 @@ function AcceptItem({ setAcceptFinal }) {
     >
       <CheckedCheckbox
         onClick={() => setShowModal(true)}
-        buttonName="taykim01님 수락하기"
+        buttonName="수락하기"
       />
       <DefaultCheckbox buttonName="거절하기" />
       <Modal clicked={showModal} setClicked={setShowModal}>
@@ -139,7 +139,7 @@ export default function Layout({ children, params }) {
       }}
     >
       {/* 제목입니다. */}
-      <Title name={params.u_id} pathName={pathName} />
+      <Title name={'은행나무'} pathName={pathName} />
       {/* 주황 박스 안의 내용 입니다. */}
       <Container
         disableGutters
@@ -164,9 +164,9 @@ export default function Layout({ children, params }) {
             }}>
                 <RatingToggle />
             </Container> */}
-      <MainButton>
-
-      </MainButton>
+      <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
+        <MainButton buttonName='프로필 평가하기' />
+      </a>
     </Container>
   );
 }

@@ -97,7 +97,7 @@ const MyInfo = () => {
           <Container disableGutters sx={{
             display: 'flex',
             flexDirection: 'row',
-            gap: '0px',
+            gap: '8px',
             flexDirection: 'row-reverse'
           }}>
             {data.job_type && <Certification alertMessage="학력 인증" />}

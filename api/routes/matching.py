@@ -24,6 +24,8 @@ from api.database.schema.matching.matching_history import MatchingHistory
 from api.models.models import UserToken
 from api.utils.matching_slack import slack_chat_post
 
+import api.utils.mapper as mapper
+
 import math
 
 
@@ -155,10 +157,12 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
     try:
         if user_info.gender is 0:
             mp = MatchingPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
+            ud = UsersFemaleData.get(female_id=user_info.id)
             due = mp.deadline
             target_id = mp.male_id
         else:
             mp = MatchingPublic.get(male_id=user_info.id, phase=request.state.phase, status=1)
+            ud = UsersMaleData.get(male_id=user_info.id)
             due = mp.deadline
             target_id = mp.female_id
 
@@ -166,7 +170,7 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         if diff.days > 0 or datetime.now() > due:
             raise Exception
 
-        target = User.get(id=target_id)
+        u = User.get(id=target_id)
         time_left = diff.seconds
 
     # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
@@ -174,12 +178,15 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         return JSONResponse(status_code=200, content=dict(msg='exp'))
 
     d = {
-        'id': target.id,
-        'gender': target.gender,
-        'nickname': target.nickname,
-        'birth_year': f"{target.date_birth.year}년생",
-        'kakao_id': target.kakao_id,
-        'time_left': time_left
+        'id': u.id,
+        'gender': u.gender,
+        'nickname': u.nickname,
+        'date_birth': f"{u.date_birth.year}년생",
+        'kakao_id': u.kakao_id,
+        'residence': mapper.residence(u.residence),
+        'job_type': mapper.job_type(ud.job_type),
+        'education': mapper.education(ud.education),
+        'time_left': time_left,
     }
 
     return JSONResponse(status_code=200, content=d)

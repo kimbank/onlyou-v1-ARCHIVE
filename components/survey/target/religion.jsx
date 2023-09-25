@@ -60,7 +60,7 @@ export default function Religion({ data, setData, sub, setSub }) {
     <Typography className="heading2">종교</Typography>
     <Divider />
     <Typography className="basic-gray">
-      꺼리는 종교를 선택해주세요.
+      <strong>꺼리는</strong> 종교를 선택해주세요.
     </Typography>
 
 

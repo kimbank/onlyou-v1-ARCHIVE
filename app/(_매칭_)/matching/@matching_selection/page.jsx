@@ -8,6 +8,7 @@ import { MainSelectButton, SubButton, SubSelectButton, MainButton } from '@/comp
 import { TimeInfo } from '@/components/Notification';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
 import People from "@/public/people.svg";
@@ -128,7 +129,9 @@ function UserCard({ user, acp, rej, left }) {
         <MainSelectButton buttonName='수락하기' onClick={() => acp(true)} />
         <SubSelectButton buttonName='거절하기' onClick={() => rej(true)} />
       </Container>
-      <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+      <Link href={`/user/${user.id}/letter`}>
+        <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+      </Link>
     </Container>
   )
 }

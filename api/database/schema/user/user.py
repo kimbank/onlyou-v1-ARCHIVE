@@ -5,6 +5,7 @@ from sqlalchemy import (
     Date,
     TIMESTAMP,
     text,
+    TEXT,
 )
 from sqlalchemy.dialects.mysql import TINYINT
 
@@ -41,6 +42,8 @@ class User(Base, BaseMixin):
 
     information_before_meeting = Column(TINYINT)
     kakao_id = Column(String(20, collation='ascii_general_ci'), default=None)
+
+    letter = Column(TEXT)
     # 인증번호 외래키
     # auth_sens = relationship("AuthSens")
 

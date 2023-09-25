@@ -20,6 +20,7 @@ class UserSchema(BaseModel):
     date_dormant: Optional[datetime] = None
     date_suspension: Optional[datetime] = None
     information_before_meeting: Optional[int] = None
+    letter: Optional[str] = None
 
     class Config:
         orm_mode = True

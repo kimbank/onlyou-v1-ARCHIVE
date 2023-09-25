@@ -16,6 +16,8 @@ from api.database.schema.user.user import User
 from api.database.schema.user.users_female_data import UsersFemaleData
 from api.database.schema.user.users_male_data import UsersMaleData
 
+import api.utils.mapper as mapper
+
 from api.utils.dormant_slack import slack_chat_post
 
 
@@ -37,10 +39,10 @@ async def get_user_info(request: Request):
 
     res = {
         'nickname': user.nickname,
-        'job_type': user_data.job_type,
-        'residence': user.residence,
+        'job_type': mapper.job_type(user_data.job_type),
+        'residence': mapper.residence(user.residence),
         'date_birth': user.date_birth.year,
-        'education': user_data.education,
+        'education': mapper.education(user_data.education),
         'dormant': str(user.date_dormant) if user.date_dormant else None,
     }
 

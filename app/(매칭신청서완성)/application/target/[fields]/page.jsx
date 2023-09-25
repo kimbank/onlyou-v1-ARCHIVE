@@ -94,7 +94,7 @@ export default function Target({ params }) {
     }
 
     setProgress(cnt / fields.length * 100);
-    if (cnt == fields.length) {
+    if (cnt >= fields.length) {
       setValid(true)
     } else {
       setValid(false)
@@ -205,7 +205,7 @@ export default function Target({ params }) {
           </Container>
         </BottomNavigation>
         <Modal clicked={clicked} setClicked={setClicked}>
-          <Typography className='heading2'>이상형을 꼭 찾아드릴게요!</Typography>
+          <Typography className='heading2'>저장을 완료했습니다!</Typography>
           <Typography className='basic'>이제 정말 마지막 단계입니다 <br />조금만 힘내요! 💪</Typography>
           <a href='https://g8h7y7g082m.typeform.com/to/p66iQin2'>
             <MainButton buttonName='편지 작성하기' />

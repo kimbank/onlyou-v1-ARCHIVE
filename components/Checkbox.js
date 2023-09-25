@@ -8,7 +8,7 @@ import { useState } from "react";
 
 
 // Figma: Default checkbox
-export function DefaultCheckbox({ onClick, buttonName }) {
+export function DefaultCheckbox({ onClick, buttonName, shadow = false }) {
   return (
     <div>
       <Button
@@ -19,6 +19,7 @@ export function DefaultCheckbox({ onClick, buttonName }) {
           height: '33px',
           padding: '8px 12px',
           backgroundColor: '#F7F4F2',
+          boxShadow: !shadow && 'none',
         }}
       >
         <Typography
@@ -42,7 +43,7 @@ export function DefaultCheckbox({ onClick, buttonName }) {
 
 
 // Figma: Checked checkbox
-export function CheckedCheckbox({ onClick, buttonName }) {
+export function CheckedCheckbox({ onClick, buttonName, shadow = false }) {
   return (
     <div>
       <Button
@@ -53,6 +54,7 @@ export function CheckedCheckbox({ onClick, buttonName }) {
           height: '33px',
           padding: '8px 12px',
           backgroundColor: '#FF7700',
+          boxShadow: !shadow && 'none',
         }}
       >
         <Typography
@@ -75,7 +77,7 @@ export function CheckedCheckbox({ onClick, buttonName }) {
 
 
 // Figma: Cancel checkbox
-export function CancelCheckbox({ onClick, buttonName }) {
+export function CancelCheckbox({ onClick, buttonName, shadow = false }) {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleCancelClick = () => {
@@ -95,6 +97,7 @@ export function CancelCheckbox({ onClick, buttonName }) {
             backgroundColor: '#FF7700',
             display: 'flex',
             alignItems: 'center',
+            boxShadow: !shadow && 'none',
           }}
         >
           <Typography

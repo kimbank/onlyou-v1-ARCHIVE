@@ -7,7 +7,7 @@ import { Container, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { SubMiniButton, MainButton } from "@/components/Button";
+import { MainSelectButton, SubSelectButton, SubMiniButton, MainButton } from "@/components/Button";
 import { CheckedCheckbox, DefaultCheckbox } from "@/components/Checkbox";
 import { RatingToggle } from "@/components/Steps";
 import Modal from "@/components/Modal";
@@ -85,7 +85,17 @@ function AcceptItem({ setAcceptFinal }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Container
+    <>
+      <Container disableGutters sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: '8px',
+        marginTop: '24px',
+      }}>
+        <MainSelectButton buttonName='수락하기' />
+        <SubSelectButton buttonName='거절하기' />
+      </Container>
+    {/* <Container
       disableGutters
       sx={{
         display: "flex",
@@ -113,7 +123,8 @@ function AcceptItem({ setAcceptFinal }) {
           }}
         />
       </Modal>
-    </Container>
+    </Container> */}
+    </>
   );
 }
 
@@ -165,7 +176,7 @@ export default function Layout({ children, params }) {
                 <RatingToggle />
             </Container> */}
       <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
-        <MainButton buttonName='프로필 평가하기' />
+        <MainButton buttonName='매칭 피드백하기' />
       </a>
     </Container>
   );

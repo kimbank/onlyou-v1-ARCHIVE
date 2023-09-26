@@ -16,6 +16,7 @@ from api.database.schema.user.users_female_data_target import UsersFemaleDataTar
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 from api.database.schema.user.users_photo import UserPhoto
 
+import api.utils.mapper as mapper
 from api.database.schema.matching.matching_public import MatchingPublic
 
 from starlette.requests import Request
@@ -76,10 +77,17 @@ async def detail(u_id: int,
     for key in sel_info:
         if key in u.__dict__.keys():
             ret[key] = u.__dict__[key]
+            if key == 'date_birth': ret[key] = f"{ret[key].year}년생"
+            if key == 'residence': ret[key] = mapper.residence(ret[key])
         if key in ud.__dict__.keys():
             ret[key] = ud.__dict__[key]
+            if key == 'job_type': ret[key] = mapper.job_type(ret[key])
+            if key == 'education': ret[key] = mapper.education(ret[key])
+            if key == 'divorce': ret[key] = mapper.divorce(ret[key])
         elif key in ue.__dict__.keys():
             ret[key] = ue.__dict__[key]
+            if key == 'marriage_values': ret[key] = mapper.marriage_values(ret[key])
+            if key == 'religious_values': ret[key] = mapper.religious_values(ret[key])
 
 
     return ret
@@ -98,6 +106,7 @@ async def photo(request: Request, u_id: int):
         return JSONResponse(status_code=401, content=dict(msg='exp'))
 
     u = UserPhoto.filter(id=target_id).all()
+    print(target_id, u, type(u))
 
     if len(u) < 1:
         return JSONResponse(status_code=404, content=dict(msg='사진이 없습니다.'))

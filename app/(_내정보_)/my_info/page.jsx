@@ -100,8 +100,8 @@ const MyInfo = () => {
             gap: '8px',
             flexDirection: 'row-reverse'
           }}>
-            {data.job_type && <Certification alertMessage="학력 인증" />}
-            {data.education && <Certification alertMessage="직장 인증" />}
+            {data.job_type && <Certification alertMessage="직장 인증" />}
+            {data.education && <Certification alertMessage="신분 인증" />}
           </Container>
 
           {/* 닉네임 */}

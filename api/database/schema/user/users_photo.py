@@ -13,5 +13,5 @@ class UserPhoto(Base, BaseMixin):
     __tablename__ = 'users_photo'
 
     id = Column(Integer, primary_key=True)
-    number = Column(Integer, nullable=False)
+    number = Column(Integer, primary_key=True, nullable=False)
     url = Column(TEXT, nullable=False)

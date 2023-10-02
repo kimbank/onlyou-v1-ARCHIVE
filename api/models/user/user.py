@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from pydantic import BaseModel, Field, validator
-from pydantic.schema import Optional
+from typing import Optional
 
 from api.database.schema.user.user import User
 
@@ -47,10 +47,10 @@ class UserSchema(BaseModel):
 와이어프레임: 회원가입 
 '''
 class UserCreate(BaseModel):
-    name: str = Field(max_length=34, regex=r'^[\uac00-\ud7a3]+$', description="한글만 입력 가능")
-    mobile_number: str = Field(max_length=11, regex=r'^010\d{8}$', description="010으로 시작하는 숫자 11자리")
+    name: str = Field(max_length=34, pattern=r'^[\uac00-\ud7a3]+$', description="한글만 입력 가능")
+    mobile_number: str = Field(max_length=11, pattern=r'^010\d{8}$', description="010으로 시작하는 숫자 11자리")
     gender: int = Field(ge=0, le=1, description="0: female, 1: male")
-    nickname: str = Field(max_length=20, regex=r'^\S+$', description="공백 없어야함")
+    nickname: str = Field(max_length=20, pattern=r'^\S+$', description="공백 없어야함")
     date_birth: date = Field(description="YYYY-MM-DD 형태로 요청될 것으로 기대됨")
     # residence? kakao_id?
 

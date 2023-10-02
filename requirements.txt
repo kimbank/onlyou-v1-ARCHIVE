@@ -1,11 +1,11 @@
-boto3==1.28.57
+boto3==1.17.3
 fastapi==0.103.2
 pydantic==2.4.2
 PyJWT==2.8.0
 python-dotenv==1.0.0
 python_bcrypt==0.3.2
-Requests==2.31.0
+requests==2.31.0
 slack_sdk==3.22.0
 SQLAlchemy==2.0.21
 starlette <0.28.0, >=0.27.0
-uvicorn==0.23.2
+uvicorn==0.13.1

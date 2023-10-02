@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, Field
-from pydantic.schema import Optional
+from typing import Optional
 
 
 class UserMaleDataExtraSchema(BaseModel):

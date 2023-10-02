@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, validator
-from pydantic.schema import Optional
+from typing import Optional
 
 
 class JobNameSchema(BaseModel):

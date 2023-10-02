@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from pydantic.schema import Optional
+from typing import Optional
 
 
 class ScoreFToMSchema(BaseModel):

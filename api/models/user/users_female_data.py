@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, validator
-from pydantic.schema import Optional
+from typing import Optional
 
 from api.database.schema.user.users_female_data import UsersFemaleData
 

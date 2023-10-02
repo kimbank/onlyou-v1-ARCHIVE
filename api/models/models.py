@@ -7,8 +7,8 @@ from pydantic.main import BaseModel
 
 
 class UserLoginAuth(BaseModel):
-    mobile_number: str = Field(regex=r"^010[1-9]\d{7}$")
-    code: str = Field(regex=r"^\d{6}$")
+    mobile_number: str = Field(pattern=r"^010[1-9]\d{7}$")
+    code: str = Field(pattern=r"^\d{6}$")
 
 
 class UserRegister(BaseModel):

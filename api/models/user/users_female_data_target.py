@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from pydantic import BaseModel, Field
-from pydantic.schema import Optional
+from typing import Optional
 
 
 class UsersFemaleDataTargetSchema(BaseModel):

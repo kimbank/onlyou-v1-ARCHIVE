@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from os import path, environ
+from dotenv import load_dotenv
 from typing import List
 
 base_dir = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
-
+load_dotenv(path.join(base_dir, ".env"))
 
 @dataclass
 class Config:
@@ -15,7 +16,7 @@ class Config:
     DB_ECHO: bool = True
     DEBUG: bool = False
     TEST_MODE: bool = False
-    DB_URL: str = environ.get("DB_URL", "mysql+pymysql://whatever:whatever@14.39.24.213:44444/only_you_operational?charset=utf8mb4")
+    DB_URL: str = environ.get("MYSQL_URL")
 
 
 @dataclass

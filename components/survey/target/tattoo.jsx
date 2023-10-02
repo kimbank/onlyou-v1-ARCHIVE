@@ -73,8 +73,8 @@ export default function Tattoo({ data, setData, sub, setSub }) {
             gap: "8px",
           }}
         >
-          <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>있음</Button>
-          <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>없음</Button>
+          <Button variant="contained" sx={sx} onClick={() => handleChange('0')} color={value.split(',').includes('0') ? "primary" : "secondary"}>없음</Button>
+          <Button variant="contained" sx={sx} onClick={() => handleChange('1')} color={value.split(',').includes('1') ? "primary" : "secondary"}>있음</Button>
         </Container>
 
 

@@ -39,7 +39,7 @@ class UpdateLifeStyleSchema(BaseModel):
     number_relationships: Optional[int] = Field(description="0 ~ 4")
     athletic_life: Optional[int] = Field(description="0 ~ 1")
     pet_animal: Optional[int] = Field(description="0 ~ 3")
-    religion: Optional[str] = Field(description="")
+    religion: Optional[int] = Field(description="")
 
 
 class UpdatePersonalitySchema(BaseModel):

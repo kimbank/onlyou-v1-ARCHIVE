@@ -7,6 +7,7 @@ class UserMaleDataExtraSchema(BaseModel):
     male_id: int
     created_at: Optional[datetime]
     modified_at: Optional[datetime]
+
     smoking_history: Optional[int] = Field(description="0 ~ 2")
     drinking_life: Optional[int] = Field(description="0 ~ 4")
     owned_car: Optional[int] = Field(description="0 ~ 1")
@@ -14,7 +15,8 @@ class UserMaleDataExtraSchema(BaseModel):
     number_relationships: Optional[int] = Field(description="0 ~ 4")
     athletic_life: Optional[int] = Field(description="0 ~ 1")
     pet_animal: Optional[int] = Field(description="0 ~ 3")
-    religion: Optional[str] = Field(description="")
+    religion: Optional[int] = Field(description="")
+
     extrovert_or_introvert: Optional[int] = Field(description="0 ~ 4")
     intutive_or_realistic: Optional[int] = Field(description="0 ~ 4")
     emotional_or_rational: Optional[int] = Field(description="0 ~ 4")

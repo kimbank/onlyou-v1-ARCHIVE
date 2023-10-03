@@ -73,7 +73,7 @@ class UpdateAppearanceSchema(BaseModel):
     body_type: Optional[int] = Field(description="0 ~ 4")
     skin_tone: Optional[int] = Field(description="0 ~ 2")
     tattoo: Optional[int] = Field(description="0 ~ 1")
-    fashion_style: Optional[str] = Field(description="")
+    fashion_style: Optional[int] = Field(description="")
 
 class UpdateOtherSchema(BaseModel):
     information_before_meeting: Optional[int] = Field(description="")

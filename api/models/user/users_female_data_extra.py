@@ -8,6 +8,7 @@ class UserFemaleDataExtraSchema(BaseModel):
     created_at: Optional[datetime]
     modified_at: Optional[datetime]
 
+    # 생활 정보
     smoking_history: Optional[int] = Field(description="0 ~ 2")
     drinking_life: Optional[int] = Field(description="0 ~ 4")
     owned_car: Optional[int] = Field(description="0 ~ 1")
@@ -17,24 +18,31 @@ class UserFemaleDataExtraSchema(BaseModel):
     pet_animal: Optional[int] = Field(description="0 ~ 3")
     religion: Optional[int] = Field(description="")
 
+    # 성격
     extrovert_or_introvert: Optional[int] = Field(description="0 ~ 4")
     intutive_or_realistic: Optional[int] = Field(description="0 ~ 4")
     emotional_or_rational: Optional[int] = Field(description="0 ~ 4")
     impromptu_or_planned: Optional[int] = Field(description="0 ~ 4")
     selfconfidence_or_careful: Optional[int] = Field(description="0 ~ 4")
+
+    # 가치관 정보
     marriage_values: Optional[int] = Field(description="0 ~ 2")
     religious_values: Optional[int] = Field(description="0 ~ 2")
     opposite_friends_values: Optional[int] = Field(description="0 ~ 2")
     political_values: Optional[int] = Field(description="0 ~ 3")
     consumption_values: Optional[int] = Field(description="0 ~ 1")
     career_family_values: Optional[int] = Field(description="0 ~ 1")
+
+    # 외모 정보
     animal_image: Optional[int] = Field(description="")
     double_eyelid: Optional[int] = Field(description="0 ~ 2")
     face_shape: Optional[int] = Field(description="0 ~ 1")
     body_type: Optional[int] = Field(description="0 ~ 4")
     skin_tone: Optional[int] = Field(description="0 ~ 2")
     tattoo: Optional[int] = Field(description="0 ~ 1")
-    fashion_style: Optional[str] = Field(description="")
+    fashion_style: Optional[int] = Field(description="")
+
+    # 연애 스타일 정보
     preffered_dating: Optional[int] = Field(description="0 ~ 1")
     preferred_contact_method: Optional[int] = Field(description="0 ~ 1")
     attractiveness_level: Optional[int] = Field(description="0 ~ 4")
@@ -45,6 +53,8 @@ class UserFemaleDataExtraSchema(BaseModel):
     skinship: Optional[int] = Field(description="0 ~ 1")
     sns: Optional[int] = Field(description="0 ~ 1")
     conflict_resolution_method: Optional[int] = Field(description="0 ~ 1")
+
+    # 기타정보
     information_before_meeting: Optional[int]
 
     class Config:

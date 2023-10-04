@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           </CssBaseline>
           <br /><br />
         </div>
-        { process.env.NODE_ENV !== 'development' && <Hotjar />}
+        { process.env.NEXT_PUBLIC_HOTJAR === 'true' && <Hotjar />}
       </body>
     </html>
   )

@@ -42,7 +42,7 @@ def sens_sms(mobile_number):
             {
                 "to": mobile_number,
                 "subject": "성사 안내",
-                "content": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
+                "content": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 연락처가 공개되었어요!",
             }
         ]
     }
@@ -60,7 +60,7 @@ def sens_sms(mobile_number):
     return res.json()
 
 
-def slack_chat_post(female, male, female_result, male_result):
+def slack_chat_post(female, male, female_result: dict, male_result: dict):
 
     blocks_female = [
         {

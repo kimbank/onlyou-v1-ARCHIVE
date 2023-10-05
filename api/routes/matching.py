@@ -212,7 +212,7 @@ async def get_target_profile(request: Request, choice: bool):
         if choice:
             if pmf.m_choice == 1:
                 female = User.get(id=user_info.id); male = User.get(id=pmf.male_id);
-                await slack_chat_post(female=female, male=male)
+                slack_chat_post(female=female, male=male)
             pm.update(f_choice=1, auto_commit=True)
             pm.close()
         else:
@@ -225,7 +225,7 @@ async def get_target_profile(request: Request, choice: bool):
         if choice:
             if pmf.f_choice == 1:
                 female = User.get(id=pmf.female_id); male = User.get(id=user_info.id);
-                await slack_chat_post(female=female, male=male)
+                slack_chat_post(female=female, male=male)
             pm.update(m_choice=1, auto_commit=True)
             pm.close()
         else:

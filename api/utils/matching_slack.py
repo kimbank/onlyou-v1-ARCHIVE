@@ -20,7 +20,7 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
     return str(signing_key)
 
 
-def sens_sms(mobile_number):
+async def sens_sms(mobile_number):
     url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
 
     service_id = "ncp:sms:kr:316329234095:only_you_sms"
@@ -55,7 +55,7 @@ def sens_sms(mobile_number):
         'x-ncp-apigw-signature-v2': key
     }
 
-    res = requests.post(url, json=body, headers=headers)
+    res = await requests.post(url, json=body, headers=headers)
 
     return res.json()
 
@@ -67,7 +67,7 @@ def slack_chat_post(female, male, female_result: dict, male_result: dict):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"*전화번호: {female.mobile_number}*",
+                "text": f"*[{female.nickname} && {male.nickname}]*\n" + f"*전화번호: {female.mobile_number}*",
             }
         },
         {
@@ -86,7 +86,7 @@ def slack_chat_post(female, male, female_result: dict, male_result: dict):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"*전화번호: {male.mobile_number}*",
+                "text": f"*[{female.nickname} && {male.nickname}]*\n" + f"*전화번호: {male.mobile_number}*",
             }
         },
         {

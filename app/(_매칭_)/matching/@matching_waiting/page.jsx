@@ -5,7 +5,9 @@ import axios from "axios";
 
 import { Container, Typography } from "@mui/material";
 import { SuccessNotification, Certification, TimeInfo } from '@/components/Notification';
+import { SubButton } from '@/components/Button';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
@@ -104,6 +106,9 @@ function UserCard({ user, left }) {
         <div></div>
         <TimeInfo alertMessage={`상대의 선택 마감까지 ${left}`} /> 
       </Container>
+      <Link href={`/user/${user.id}/letter`}>
+        <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+      </Link>
     </Container>
   )
 }

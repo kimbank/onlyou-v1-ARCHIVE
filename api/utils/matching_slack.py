@@ -12,6 +12,21 @@ from slack_sdk.errors import SlackApiError
 client = WebClient(token="xoxb-5301475984646-5866797928001-MGeFcgoU42Cfgaz8yHsxmmBC")
 
 
+msg = '''축하드립니다! 매칭이 성사되셨습니다.
+아래 링크에서 인연의 연락처를 확인해보세요:)
+
+https://only-you.co.kr
+
+매너 있는 ONLYou만의 문화를 위해 몇 가지 주의사항을 안내드릴게요!!
+
+- 매너 있는 채팅 및 대화 부탁드려요
+- 술, 자취 관련 이야기는 자제해주세요 
+- 답장이 느리다고 지속적으로 연락을 하거나, 동의 없이 전화를 거는 행위는 자제해주세요 
+- 이유 없는 지각과 잠수를 주의해주세요 서로에게 좋은 인상으로 남도록 함께 노력해요. 
+
+ONLYou의 시작과 함께해주셔서 정말 감사합니다.'''
+
+
 def make_signature(access_key, secret_key, method, uri, timestamp):
     message = method + " " + uri + "\n" + timestamp + "\n" + access_key
     message = bytes(message, "UTF-8")
@@ -20,7 +35,7 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
     return str(signing_key)
 
 
-async def sens_sms(mobile_number):
+def sens_sms(female, male):
     url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
 
     service_id = "ncp:sms:kr:316329234095:only_you_sms"
@@ -32,7 +47,7 @@ async def sens_sms(mobile_number):
     timestamp = str(int(time.time() * 1000))
 
     body = {
-        "type": "SMS",
+        "type": "LMS",
         "contentType": "COMM",
         "countryCode": "82",
         "from": "01052418394",
@@ -40,9 +55,14 @@ async def sens_sms(mobile_number):
         "content": "성사 안내 컨텐츠",
         "messages": [
             {
-                "to": mobile_number,
-                "subject": "성사 안내",
-                "content": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 연락처가 공개되었어요!",
+                "to": female,
+                "subject": "[온리유]",
+                "content": msg,
+            },
+            {
+                "to": male,
+                "subject": "[온리유]",
+                "content": msg,
             }
         ]
     }
@@ -55,14 +75,14 @@ async def sens_sms(mobile_number):
         'x-ncp-apigw-signature-v2': key
     }
 
-    res = await requests.post(url, json=body, headers=headers)
+    res = requests.post(url, json=body, headers=headers)
 
     return res.json()
 
 
-def slack_chat_post(female, male, female_result: dict, male_result: dict):
+def slack_chat_post(female, male, sens_result: dict):
 
-    blocks_female = [
+    blocks = [
         {
             "type": "section",
             "text": {
@@ -74,46 +94,14 @@ def slack_chat_post(female, male, female_result: dict, male_result: dict):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"requestId: {female_result['requestId']}\n" +
-                        f"requestTime: {female_result['requestTime']}\n" +
-                        f"statusCode: {female_result['statusCode']}\n" +
-                        f"statusName: {female_result['statusName']}\n"
+                "text": f"requestId: {sens_result['requestId']}\n" +
+                        f"requestTime: {sens_result['requestTime']}\n" +
+                        f"statusCode: {sens_result['statusCode']}\n" +
+                        f"statusName: {sens_result['statusName']}\n"
             }
         },
     ]
-    blocks_male = [
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"*[{female.nickname} && {male.nickname}]*\n" + f"*전화번호: {male.mobile_number}*",
-            }
-        },
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"requestId: {male_result['requestId']}\n" +
-                        f"requestTime: {male_result['requestTime']}\n" +
-                        f"statusCode: {male_result['statusCode']}\n" +
-                        f"statusName: {male_result['statusName']}\n"
-            }
-        },
-    ]
-    attchements_female = [
-        {
-            "blocks": [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
-                    }
-                },
-            ]
-        }
-    ]
-    attchements_male = [
+    attchements = [
         {
             "blocks": [
                 {
@@ -130,13 +118,8 @@ def slack_chat_post(female, male, female_result: dict, male_result: dict):
     try:
         client.chat_postMessage(
             channel="C05TWRW1SDN",
-            blocks=blocks_female,
-            attachments=attchements_female
-        )
-        client.chat_postMessage(
-            channel="C05TWRW1SDN",
-            blocks=blocks_male,
-            attachments=attchements_male
+            blocks=blocks,
+            attachments=attchements
         )
         # print(res)
 

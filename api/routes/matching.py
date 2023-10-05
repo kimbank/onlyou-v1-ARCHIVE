@@ -208,17 +208,15 @@ async def get_target_profile(request: Request, choice: bool):
     if user_info.gender == 0:
         pm = MatchingPublic.filter(female_id=user_info.id, phase=request.state.phase, status=1)
         pmf = pm.first()
-        if not pmf or pmf.deadline < datetime.now(): return ""
+        if not pmf or pmf.deadline < datetime.now() or (pmf.f_choice > 0 and pmf.m_choice > 0): return ""
         if choice:
             if pmf.m_choice == 1:
                 female = User.get(id=user_info.id); male = User.get(id=pmf.male_id);
                 try:
-                    female_result = sens_sms(female.mobile_number)
-                    male_result = sens_sms(male.mobile_number)
+                    sens_result = sens_sms(female.mobile_number, male.mobile_number)
                 except:
-                    female_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
-                    male_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
-                slack_chat_post(female, male, female_result, male_result)
+                    sens_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
+                slack_chat_post(female, male, sens_result)
             pm.update(f_choice=1, auto_commit=True)
             pm.close()
         else:
@@ -227,17 +225,15 @@ async def get_target_profile(request: Request, choice: bool):
     else:
         pm = MatchingPublic.filter(male_id=user_info.id, phase=request.state.phase, status=1)
         pmf = pm.first()
-        if not pmf or pmf.deadline < datetime.now(): return ""
+        if not pmf or pmf.deadline < datetime.now() or (pmf.f_choice > 0 and pmf.m_choice > 0): return ""
         if choice:
             if pmf.f_choice == 1:
                 female = User.get(id=pmf.female_id); male = User.get(id=user_info.id);
                 try:
-                    female_result = sens_sms(female.mobile_number)
-                    male_result = sens_sms(male.mobile_number)
+                    sens_result = sens_sms(female.mobile_number, male.mobile_number)
                 except:
-                    female_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
-                    male_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
-                slack_chat_post(female, male, female_result, male_result)
+                    sens_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
+                slack_chat_post(female, male, sens_result)
             pm.update(m_choice=1, auto_commit=True)
             pm.close()
         else:

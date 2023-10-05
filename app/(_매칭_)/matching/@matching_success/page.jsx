@@ -137,7 +137,7 @@ function UserCard({ user, setShowModal, left }) {
           }
           <TimeInfo alertMessage={`공개마감 ${left}`} />
         </Container>
-        <Link href={`/user/${user.id}/detail`}>
+        <Link href={`/user/${user.id}/letter`}>
           <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
         </Link>
     </Container>

@@ -1,4 +1,7 @@
-'''기본-가입정보'''
+##################
+### 기본-가입정보 ###
+# users
+
 # 거주지
 def residence(num):
     mapping = ['서울 남부', '서울 서부', '서울 중부', '서울 북부', '서울 동부', '경기 북부', '경기 고양', '경기 서부', '경기 남부', '경기 동부', '인천']
@@ -6,35 +9,43 @@ def residence(num):
     return mapping[int(num)]
 
 
-'''기본-심사정보'''
+##################
+### 기본-심사정보 ###
+# users_?_data
+
 # 직장 유형
 def job_type(num):
     mapping = ['대학생', '대학원생', '중견기업', '중소기업', '스타트업', '자영업자', '프리랜서', '전문직', '공무원', '공기업', '대기업', '법인 대표', '기타']
 
     return mapping[int(num)]
 
-# 학력
+
+# 학력 #
 def education(num):
     mapping = ['미진학', '전문대', '일반 4년제 대학', '명문대', '일류대']
 
     return mapping[int(num)]
 
-# 돌싱 여부
+
+# 돌싱 여부 #
 def divorce(num):
     mapping = ['초혼', '돌싱']
 
     return mapping[int(num)]
 
 
-'''부가정보'''
+##############
+### 부가정보 ###
+# users_?_data_extra
 
-# 흡연 경력
+# 흡연 경력 #
 def smoking_history(num):
     mapping = ['비흡연', '금연', '흡연']
 
     return mapping[int(num)]
 
-# 음주 생활
+
+# 음주 생활 #
 def drinking_life(num):
     mapping = ['전혀 마시지 않음', '거의 마시지 않음', '이따금 마심(한 달 1 회 이상)', '종종 마심(주 1 회 이상)', '자주 마심(주 2 회 이상)']
     ret = ''
@@ -44,7 +55,8 @@ def drinking_life(num):
 
     return ret
 
-# 자차 유무
+
+# 자차 유무 #
 def owned_car(num):
     mapping = ['미소유', '소유']
     ret = ''
@@ -54,7 +66,7 @@ def owned_car(num):
 
     return ret
 
-# 관심사
+# 관심사 #
 def intersets(nums):
     mapping = ['여행', '운동/스포츠', '책', '직무', '외국/언어', '영화/넷플릭스', '콘서트/공연/뮤지컬', '전시회', '재태크', '공예/만들기', '음악/악기', '댄스/무용',
                '봉사', '사교/인맥', '차/오토바이', '반려동물', '게임/오락', '사진/영상', '요리', '맛집/카페', '애니메이션']
@@ -69,7 +81,7 @@ def intersets(nums):
 
     return ret
 
-# 연애 횟수
+# 연애 횟수 #
 def number_relationships(num):
     mapping = ['0회', '1~2회', '3~4회', '5~6회', '7회 이상']
     ret = ''
@@ -79,7 +91,7 @@ def number_relationships(num):
 
     return ret
 
-# 운동 생활
+# 운동 생활 #
 def athletic_life(num):
     mapping = ['중요성엔 공감하지만 규칙적으로 하고 있진 않다', '운동을 규칙적으로 꾸준히 한다']
     ret = ''
@@ -89,7 +101,7 @@ def athletic_life(num):
 
     return ret
 
-# 반려동물
+# 반려동물 #
 def pet_animal(num):
     mapping = ['키우기 어렵습니다', '키우지 않으나 반려동물에 거부감은 없습니다', '한 마리 키웁니다', '두 마리 이상 키웁니다']
     ret = ''
@@ -99,7 +111,7 @@ def pet_animal(num):
 
     return ret
 
-# 종교
+# 종교 #
 def religion(num):
     mapping = ['무교', '기독교', '천주교', '불교', '원불교', '기타']
     ret = ''
@@ -109,7 +121,7 @@ def religion(num):
 
     return ret
 
-# 외향/내향
+# 외향/내향 #
 def extrovert_or_introvert(num):
     mapping = ['매우 외향적', '외향적', '중립', '내향적', '매우 내향적']
     ret = ''
@@ -119,7 +131,7 @@ def extrovert_or_introvert(num):
 
     return ret
 
-# 직관/현실
+# 직관/현실 #
 def intuitive_or_realistic(num):
     mapping = ['매우 직관적', '직관적', '중립', '현실적', '매우 현실적']
     ret = ''
@@ -129,7 +141,7 @@ def intuitive_or_realistic(num):
 
     return ret
 
-# 감성/이성
+# 감성/이성 #
 def emotional_or_rational(num):
     mapping = ['매우 감성적', '감성적', '중립', '이성적', '매우 이성적']
     ret = ''
@@ -139,7 +151,7 @@ def emotional_or_rational(num):
 
     return ret
 
-# 즉흥/계획
+# 즉흥/계획 #
 def impromptu_or_planned(num):
     mapping = ['매우 즉흥적', '즉흥적', '중립', '계획적', '매우 계획적']
     ret = ''

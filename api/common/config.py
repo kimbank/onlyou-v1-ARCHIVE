@@ -30,8 +30,10 @@ class LocalConfig(Config):
 
 @dataclass
 class ProdConfig(Config):
+    DB_ECHO = False
+
     TRUSTED_HOSTS = ["*"]
-    ALLOW_SITE = ["*"]
+    ALLOW_SITE = ["https://only-you.co.kr"]
 
 
 @dataclass

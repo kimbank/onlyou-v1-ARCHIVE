@@ -62,7 +62,7 @@ async def detail(u_id: int,
         me = UsersFemaleDataTarget.get(female_id=user_info.id)
         u = User.get(id=target_id)
         ud = UsersMaleData.get(male_id=target_id)
-        ue = UsersMaleDataExtra.get(fale_id=target_id)
+        ue = UsersMaleDataExtra.get(male_id=target_id)
     else:
         me = UsersMaleDataTarget.get(male_id=user_info.id)
         u = User.get(id=target_id)

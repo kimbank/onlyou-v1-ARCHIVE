@@ -119,7 +119,7 @@ function UserCard({ user, setShowModal, left }) {
       {/* 생년월일 */}
       <Typography className='basic-gray' sx={{display: 'flex', verticalAlign: 'center'}}>
         <Image src={People} width='20px' style={{marginRight: '10px'}}/>
-        {user.birth_year ? user.birth_year : "?"}
+        {user.date_birth ? user.date_birth : "?"}
       </Typography>
       
       <Container disableGutters sx={{

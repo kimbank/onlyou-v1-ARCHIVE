@@ -60,76 +60,74 @@ def sens_sms(mobile_number):
     return res.json()
 
 
-async def slack_chat_post(female, male):
+def slack_chat_post(female, male, female_result, male_result):
+
+    blocks_female = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*전화번호: {female.mobile_number}*",
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"requestId: {female_result['requestId']}\n" +
+                        f"requestTime: {female_result['requestTime']}\n" +
+                        f"statusCode: {female_result['statusCode']}\n" +
+                        f"statusName: {female_result['statusName']}\n"
+            }
+        },
+    ]
+    blocks_male = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*전화번호: {male.mobile_number}*",
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"requestId: {male_result['requestId']}\n" +
+                        f"requestTime: {male_result['requestTime']}\n" +
+                        f"statusCode: {male_result['statusCode']}\n" +
+                        f"statusName: {male_result['statusName']}\n"
+            }
+        },
+    ]
+    attchements_female = [
+        {
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
+                    }
+                },
+            ]
+        }
+    ]
+    attchements_male = [
+        {
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
+                    }
+                },
+            ]
+        }
+    ]
+
     try:
-        female_result = sens_sms(female.mobile_number)
-        male_result = sens_sms(male.mobile_number)
-
-        blocks_female = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*전화번호: {female.mobile_number}*",
-                }
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"requestId: {female_result['requestId']}\n" +
-                            f"requestTime: {female_result['requestTime']}\n" +
-                            f"statusCode: {female_result['statusCode']}\n" +
-                            f"statusName: {female_result['statusName']}\n"
-                }
-            },
-        ]
-        blocks_male = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*전화번호: {male.mobile_number}*",
-                }
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"requestId: {male_result['requestId']}\n" +
-                            f"requestTime: {male_result['requestTime']}\n" +
-                            f"statusCode: {male_result['statusCode']}\n" +
-                            f"statusName: {male_result['statusName']}\n"
-                }
-            },
-        ]
-        attchements_female = [
-            {
-                "blocks": [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
-                        }
-                    },
-                ]
-            }
-        ]
-        attchements_male = [
-            {
-                "blocks": [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "[온리유] 축하드려요! 🎉\n" + "서로가 서로를 선택하여 카카오톡 아이디가 공개되었어요!",
-                        }
-                    },
-                ]
-            }
-        ]
-
         client.chat_postMessage(
             channel="C05TWRW1SDN",
             blocks=blocks_female,

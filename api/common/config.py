@@ -50,7 +50,7 @@ def conf():
     :return:
     """
     config = dict(prod=ProdConfig, local=LocalConfig, test=TestConfig)
-    print('config =',environ.get("API_ENV", "local"))
+    # print('config =',environ.get("API_ENV", "local"))
     return config[environ.get("API_ENV", "local")]()
 
 

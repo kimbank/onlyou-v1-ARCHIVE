@@ -24,7 +24,7 @@ from api.database.schema.matching.matching_public import MatchingPublic
 from api.database.schema.matching.matching_history import MatchingHistory
 
 from api.models.models import UserToken
-from api.utils.matching_slack import slack_chat_post
+from api.utils.matching_slack import sens_sms, slack_chat_post
 
 import api.utils.mapper as mapper
 
@@ -212,7 +212,9 @@ async def get_target_profile(request: Request, choice: bool):
         if choice:
             if pmf.m_choice == 1:
                 female = User.get(id=user_info.id); male = User.get(id=pmf.male_id);
-                slack_chat_post(female=female, male=male)
+                female_result = sens_sms(female.mobile_number)
+                male_result = sens_sms(male.mobile_number)
+                slack_chat_post(female=female, male=male, female_result=female_result, male_result=male_result)
             pm.update(f_choice=1, auto_commit=True)
             pm.close()
         else:

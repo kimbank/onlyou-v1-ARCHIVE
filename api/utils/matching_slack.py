@@ -20,7 +20,7 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
     return str(signing_key)
 
 
-async def sens_sms(mobile_number):
+def sens_sms(mobile_number):
     url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
 
     service_id = "ncp:sms:kr:316329234095:only_you_sms"
@@ -35,8 +35,6 @@ async def sens_sms(mobile_number):
         "type": "SMS",
         "contentType": "COMM",
         "countryCode": "82",
-
-        #Todo: .env화 시켜야함
         "from": "01052418394",
         "subject": "성사 안내",
         "content": "성사 안내 컨텐츠",
@@ -64,8 +62,8 @@ async def sens_sms(mobile_number):
 
 async def slack_chat_post(female, male):
     try:
-        female_result = await sens_sms(female.mobile_number)
-        male_result = await sens_sms(male.mobile_number)
+        female_result = sens_sms(female.mobile_number)
+        male_result = sens_sms(male.mobile_number)
 
         blocks_female = [
             {

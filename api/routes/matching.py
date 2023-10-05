@@ -213,8 +213,8 @@ async def get_target_profile(request: Request, choice: bool):
             if pmf.m_choice == 1:
                 female = User.get(id=user_info.id); male = User.get(id=pmf.male_id);
                 try:
-                    female_result = await sens_sms(female.mobile_number)
-                    male_result = await sens_sms(male.mobile_number)
+                    female_result = sens_sms(female.mobile_number)
+                    male_result = sens_sms(male.mobile_number)
                 except:
                     female_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
                     male_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
@@ -232,8 +232,8 @@ async def get_target_profile(request: Request, choice: bool):
             if pmf.f_choice == 1:
                 female = User.get(id=pmf.female_id); male = User.get(id=user_info.id);
                 try:
-                    female_result = await sens_sms(female.mobile_number)
-                    male_result = await sens_sms(male.mobile_number)
+                    female_result = sens_sms(female.mobile_number)
+                    male_result = sens_sms(male.mobile_number)
                 except:
                     female_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")
                     male_result = dict(requestId="ERROR!", requestTime="ERROR!", statusCode="ERROR!", statusName="ERROR!")

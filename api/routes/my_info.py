@@ -39,7 +39,8 @@ async def get_user_info(request: Request):
 
     res = {
         'nickname': user.nickname,
-        'job_type': mapper.job_type(user_data.job_type),
+        # 'job_type': mapper.job_type(user_data.job_type),
+        'job_type': user.tmp_job,
         'residence': mapper.residence(user.residence),
         'date_birth': user.date_birth.year,
         'education': mapper.education(user_data.education),

@@ -103,6 +103,7 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
                 my_choice = candidate.m_choice
                 trgt_choice = candidate.f_choice
 
+            print(datetime.now(), due)
             if datetime.now() > due:
                 raise Exception
 
@@ -189,8 +190,9 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
         'date_birth': f"{u.date_birth.year}년생",
         'kakao_id': u.kakao_id,
         'residence': mapper.residence(u.residence),
-        'job_type': mapper.job_type(ud.job_type),
-        'education': mapper.education(ud.education),
+        # 'job_type': mapper.job_type(ud.job_type),
+        'job_type': u.tmp_job,
+        # 'education': mapper.education(ud.education),
         'time_left': time_left,
     }
 

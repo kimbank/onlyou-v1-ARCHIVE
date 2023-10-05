@@ -148,9 +148,10 @@ async def public_validation(user_info, phase):
             due = mp.deadline
             target_id = mp.female_id
 
-        diff = due - datetime.now()
-        if diff.days > 0 or datetime.now() > due:
-            raise Exception
+        # Todo: 공개 시간 및 권한 관리 필요해 보임
+        # diff = due - datetime.now()
+        # if diff.days > 0 or datetime.now() > due:
+        #     raise Exception
 
     # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
     except:

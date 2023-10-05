@@ -207,9 +207,11 @@ async def get_target_profile(request: Request, choice: bool):
 
     if user_info.gender == 0:
         pm = MatchingPublic.filter(female_id=user_info.id, phase=request.state.phase, status=1)
+        pmf = pm.first()
+        if not pmf or pmf.deadline < datetime.now(): return ""
         if choice:
-            if pm.first().m_choice == 1:
-                female = await User.get(id=user_info.id); male = await User.get(id=pm.first().male_id);
+            if pmf.m_choice == 1:
+                female = User.get(id=user_info.id); male = User.get(id=pmf.male_id);
                 await slack_chat_post(female=female, male=male)
             pm.update(f_choice=1, auto_commit=True)
             pm.close()
@@ -218,9 +220,11 @@ async def get_target_profile(request: Request, choice: bool):
             pm.close()
     else:
         pm = MatchingPublic.filter(male_id=user_info.id, phase=request.state.phase, status=1)
+        pmf = pm.first()
+        if not pmf or pmf.deadline < datetime.now(): return ""
         if choice:
-            if pm.first().f_choice == 1:
-                female = await User.get(id=pm.first().female_id); male = await User.get(id=user_info.id);
+            if pmf.f_choice == 1:
+                female = User.get(id=pmf.female_id); male = User.get(id=user_info.id);
                 await slack_chat_post(female=female, male=male)
             pm.update(m_choice=1, auto_commit=True)
             pm.close()

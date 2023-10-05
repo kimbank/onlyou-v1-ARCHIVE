@@ -1,6 +1,8 @@
 'use client'
 
-import { Typography } from '@mui/material';
+import Link from 'next/link';
+import { Container, Typography, Button } from '@mui/material';
+import { MainSelectButton, SubSelectButton } from '@/components/Button';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -17,6 +19,24 @@ export default function Detial({ params }) {
 
   return (
     <>
+      <Container
+        disableGutters
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+          gap: "10px",
+        }}
+      >
+        <Link href={`/user/${params.u_id}/letter`}>
+          <Button sx={sx_default}>편지</Button>
+        </Link>
+        <Button sx={sx_selected}>상세</Button>
+        <Link href={`/user/${params.u_id}/photo`}>
+          <Button sx={sx_default}>사진</Button>
+        </Link>
+      </Container>
+
       <Typography className='basic'>
         { Object.keys(data).map((key, index) => {
           return (
@@ -29,8 +49,30 @@ export default function Detial({ params }) {
         })
         }
       </Typography>
+
+
+      <Container disableGutters sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: '8px',
+        marginTop: '24px',
+      }}>
+        <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
+        <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+      </Container>
     </>
   );
+}
+
+
+async function handleAccept() {
+  const res = await axios.get('/api/matching/select/true');
+  window.location.href = '/matching';
+}
+
+async function handleReject() {
+  const res = await axios.get('/api/matching/select/false');
+  window.location.href = '/matching';
 }
 
 const options_eng = {
@@ -81,4 +123,30 @@ const options_eng = {
   skinship: '스킨십(혼전순결)',
   sns: '소셜 미디어(SNS)',
   conflict_resolution_method: '갈등 해결 방식',
+}
+
+
+const sx_default = {
+  borderRadius: '8px',
+  height: '35px',
+  width: '56px',
+  boxShadow: 'none',
+  backgroundColor: '#F7F4F2',
+  color: '#3C3B3A',
+  fontFamily: 'Pretendard-Semibold',
+  fontSize: '14px',
+  letterSpacing: '1.25px',
+}
+
+const sx_selected = {
+  borderRadius: '8px',
+  height: '35px',
+  width: '56px',
+  boxShadow: 'none',
+  backgroundColor: '#3C3B3A',
+  color: '#FFFFFF',
+  fontFamily: 'Pretendard-Semibold',
+  fontSize: '14px',
+  letterSpacing: '1.25px',
+  pointerEvents: 'none',
 }

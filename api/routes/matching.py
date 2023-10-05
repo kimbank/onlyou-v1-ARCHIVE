@@ -3,6 +3,8 @@ from starlette.requests import Request
 from api.utils.token_validator import token_control
 from starlette.responses import JSONResponse
 
+from api.common.config import conf
+
 import time
 from datetime import datetime
 from datetime import timedelta
@@ -40,52 +42,55 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
 
     msg = "error"
 
-    if (user_info.gender == 0):
-        female_result = (
-            session.query(User, UsersFemaleData, UsersFemaleDataExtra, UsersFemaleDataTarget)
-            .filter(user_info.id == User.id)
-            .filter(user_info.id == UsersFemaleData.female_id)
-            .filter(user_info.id == UsersFemaleDataExtra.female_id)
-            .filter(user_info.id == UsersFemaleDataTarget.female_id)
-            .first()
-        )
-        user, data, data_extra, data_target = female_result
-    else:
-        male_result = (
-            session.query(User, UsersMaleData, UsersMaleDataExtra, UsersMaleDataTarget)
-            .filter(user_info.id == User.id)
-            .filter(user_info.id == UsersMaleData.male_id)
-            .filter(user_info.id == UsersMaleDataExtra.male_id)
-            .filter(user_info.id == UsersMaleDataTarget.male_id)
-            .first()
-        )
-        user, data, data_extra, data_target = male_result
+    try:
+        if user_info.gender == 0:
+            female_result = (
+                session.query(User, UsersFemaleData, UsersFemaleDataExtra, UsersFemaleDataTarget)
+                .filter(user_info.id == User.id)
+                .filter(user_info.id == UsersFemaleData.female_id)
+                .filter(user_info.id == UsersFemaleDataExtra.female_id)
+                .filter(user_info.id == UsersFemaleDataTarget.female_id)
+                .first()
+            )
+            user, data, data_extra, data_target = female_result
+        else:
+            male_result = (
+                session.query(User, UsersMaleData, UsersMaleDataExtra, UsersMaleDataTarget)
+                .filter(user_info.id == User.id)
+                .filter(user_info.id == UsersMaleData.male_id)
+                .filter(user_info.id == UsersMaleDataExtra.male_id)
+                .filter(user_info.id == UsersMaleDataTarget.male_id)
+                .first()
+            )
+            user, data, data_extra, data_target = male_result
+    except:
+        return msg
 
 
     # [휴면 확인] 데이터가 있다면 날짜가 나오고 비휴면일 경우 NULL에 해당하는 None이 리턴됨
     if user.date_dormant:
         msg = "dormancy"
     # [승급심사 확인]
-    elif data.fill_status is not 2:
+    elif data.fill_status != 2:
         # [승급심사 제출 확인 후 대기중]
-        if data.fill_status is 1:
+        if data.fill_status == 1:
             msg = "promotion_waiting"
         # [승급심사 반려]
-        elif data.fill_status is -1:
+        elif data.fill_status == -1:
             msg = "promotion_rejected"
         # [승급심사 미제출]
         else:
             msg = "promotion_apply"
     # [매칭신청서: 본인부가정보 제출 확인]
-    elif data_extra.fill_status is not 1:
+    elif data_extra.fill_status != 1:
         msg = "application_extra"
     # [매칭신청서: 타겟희망정보 제출 확인]
-    elif data_target.fill_status is not 1:
+    elif data_target.fill_status != 1:
         msg = "application_target"
     # [[[ 매칭 조건 충족 ]]]
     else:
         try:
-            if user_info.gender is 0:
+            if user_info.gender == 0:
                 # 현 페이즈의 공개 매칭을 조회
                 candidate = MatchingPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
                 due = candidate.deadline
@@ -105,19 +110,19 @@ async def get_matching(request: Request, session: Session = Depends(db.session))
             candidate = None
 
         # [매칭: 매칭 전]
-        if candidate is None:
+        if not candidate:
             msg = "matching_before"
 
         # [매칭: 매칭 선택]
-        elif my_choice is 0:
+        elif my_choice == 0:
             msg = "matching_selection"
 
         # [매칭: 매칭(상대) 결과 대기]
-        elif trgt_choice is 0:
+        elif trgt_choice == 0 and my_choice > 0:
             msg = "matching_waiting"
 
         # [매칭: 매칭 성사]
-        elif my_choice is 1 and trgt_choice is 1:
+        elif my_choice == 1 and trgt_choice == 1:
             msg = "matching_success"
 
         # [매칭: 매칭 미성사]
@@ -134,7 +139,7 @@ async def get_competitor_count(request: Request):
     if not user_info:
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
-    if user_info.gender is 0:
+    if user_info.gender == 0:
         user = UsersFemaleDataTarget().filter(fill_status=1)
     else:
         user = UsersMaleDataTarget().filter(fill_status=1)
@@ -155,7 +160,7 @@ async def get_target_info(request: Request, session: Session = Depends(db.sessio
 
 
     try:
-        if user_info.gender is 0:
+        if user_info.gender == 0:
             mp = MatchingPublic.get(female_id=user_info.id, phase=request.state.phase, status=1)
             ud = UsersFemaleData.get(female_id=user_info.id)
             due = mp.deadline
@@ -198,12 +203,12 @@ async def get_target_profile(request: Request, choice: bool):
     if not user_info:
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
-    if user_info.gender is 0:
+    if user_info.gender == 0:
         pm = MatchingPublic.filter(female_id=user_info.id, phase=request.state.phase, status=1)
         if choice:
-            if pm.m_choice[0] is 1:
-                female = User.get(id=user_info.id); male = User.get(id=pm.first().male_id);
-                slack_chat_post(female=female, male=male)
+            if pm.first().m_choice == 1:
+                female = await User.get(id=user_info.id); male = await User.get(id=pm.first().male_id);
+                await slack_chat_post(female=female, male=male)
             pm.update(f_choice=1, auto_commit=True)
             pm.close()
         else:
@@ -212,9 +217,9 @@ async def get_target_profile(request: Request, choice: bool):
     else:
         pm = MatchingPublic.filter(male_id=user_info.id, phase=request.state.phase, status=1)
         if choice:
-            if pm.first().f_choice is 1:
-                female = User.get(id=pm.first().female_id); male = User.get(id=user_info.id);
-                slack_chat_post(female=female, male=male)
+            if pm.first().f_choice == 1:
+                female = await User.get(id=pm.first().female_id); male = await User.get(id=user_info.id);
+                await slack_chat_post(female=female, male=male)
             pm.update(m_choice=1, auto_commit=True)
             pm.close()
         else:
@@ -226,7 +231,7 @@ async def get_target_profile(request: Request, choice: bool):
 
 def check_matching_public(user_id, gender, phase, session):
 
-    if gender is 0:
+    if gender == 0:
         matching = (session.query(MatchingPublic)
                         .filter(MatchingPublic.female_id == user_id)
                         .filter(MatchingPublic.phase == phase)

@@ -18,6 +18,8 @@ class Config:
     TEST_MODE: bool = False
     DB_URL: str = environ.get("MYSQL_URL")
 
+    SMS: bool = True if environ.get("SMS") is "true" else False
+
 
 @dataclass
 class LocalConfig(Config):

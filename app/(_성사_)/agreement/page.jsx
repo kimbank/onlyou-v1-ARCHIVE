@@ -8,6 +8,7 @@ import { MainHalfButton, MainMiniButton, SubHalfButton, SubButton, SubMiniButton
 import { DefaultCheckbox } from '@/components/Checkbox';
 import { TimeInfo } from '@/components/Notification';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import Bag from "@/public/bag.svg";
 import House from "@/public/house.svg";
@@ -161,7 +162,9 @@ function UserCard({ user }) {
             <TimeInfo alertMessage='카카오톡 공개가 마감되었어요.' />
           } */}
         </Container>
-        <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+        <Link href={`/user/${user.id}/letter`}>
+          <SubButton buttonName='프로필 상세보기' height='40px'></SubButton>
+        </Link>
         {/* {!user.public_exp && <p className='caption' style={{textDecoration: 'underline', color: '#FF8982', alignSelf:'end', margin:'0px', marginTop:'8px'}}>삭제하기</p>} */}
       </Container>
     </span>

@@ -18,49 +18,76 @@ export default function Detial({ params }) {
   }, [])
 
   return (
-    <>
+    <Container
+      disableGutters
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "48px",
+      }}
+    >
+      <Typography className="heading2">
+        {data && data.nickname}님의
+        <br />
+        상세 정보에요
+      </Typography>
+
       <Container
         disableGutters
         sx={{
           display: "flex",
-          justifyContent: "center",
-          flexDirection: "row",
-          gap: "10px",
+          flexDirection: "column",
+          borderRadius: "24px",
+          border: 1,
+          padding: "24px",
+          gap: "48px",
+          borderColor: "#FFC999",
         }}
       >
-        <Link href={`/user/${params.u_id}/letter`}>
-          <Button sx={sx_default}>편지</Button>
-        </Link>
-        <Button sx={sx_selected}>상세</Button>
-        <Link href={`/user/${params.u_id}/photo`}>
-          <Button sx={sx_default}>사진</Button>
-        </Link>
+        <Container
+          disableGutters
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "row",
+            gap: "10px",
+          }}
+        >
+          <Link href={`/user/${params.u_id}/letter`}>
+            <Button sx={sx_default}>편지</Button>
+          </Link>
+          <Button sx={sx_selected}>상세</Button>
+          <Link href={`/user/${params.u_id}/photo`}>
+            <Button sx={sx_default}>사진</Button>
+          </Link>
+        </Container>
+
+        <Typography className='basic'>
+          { Object.keys(data).map((key, index) => {
+            if (key === 'nickname') return;
+            return (
+              <div key={index}>
+                <strong>{options_eng[key]}</strong>
+                : {data[key]}
+                <br />
+              </div>
+            )
+          })
+          }
+        </Typography>
+
+
+        <Container disableGutters sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '8px',
+          marginTop: '24px',
+        }}>
+          <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
+          <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+        </Container>
       </Container>
-
-      <Typography className='basic'>
-        { Object.keys(data).map((key, index) => {
-          return (
-            <div key={index}>
-              <strong>{options_eng[key]}</strong>
-              : {data[key]}
-              <br />
-            </div>
-          )
-        })
-        }
-      </Typography>
-
-
-      <Container disableGutters sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        gap: '8px',
-        marginTop: '24px',
-      }}>
-        <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
-        <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
-      </Container>
-    </>
+    </Container>
   );
 }
 

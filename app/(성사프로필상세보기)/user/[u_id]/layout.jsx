@@ -100,16 +100,16 @@ function AcceptItem({ setAcceptFinal }) {
 }
 
 export default function Layout({ children, params }) {
-  const [user, setUser] = useState([]);
-  const [acceptFinal, setAcceptFinal] = useState(false);
-  const pathName = usePathname();
+  // const [user, setUser] = useState(null);
+  // const [acceptFinal, setAcceptFinal] = useState(false);
+  // const pathName = usePathname();
 
-  useEffect(() => {
-    axios.get(`/api/user/detail/${params.u_id}`).then((response) => {
-      setUser(response.data);
-      console.log(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`/api/user/detail/${params.u_id}`).then((response) => {
+  //     setUser(response.data);
+  //     console.log(response.data);
+  //   });
+  // }, []);
 
   return (
     <Container
@@ -121,9 +121,9 @@ export default function Layout({ children, params }) {
       }}
     >
       {/* 제목입니다. */}
-      <Title name={'은행나무'} pathName={pathName} />
+      {/* {user && user.nickname && <Title name={user.nickname} pathName={pathName} />} */}
       {/* 주황 박스 안의 내용 입니다. */}
-      <Container
+      {/* <Container
         disableGutters
         sx={{
           display: "flex",
@@ -134,11 +134,11 @@ export default function Layout({ children, params }) {
           gap: "48px",
           borderColor: "#FFC999",
         }}
-      >
+      > */}
         {/* <ButtonGrop u_id={params.u_id} pathName={pathName} /> */}
         {children}
         {/* <AcceptItem setAcceptFinal={setAcceptFinal} /> */}
-      </Container>
+      {/* </Container> */}
       {/* <Container disableGutters sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -146,9 +146,9 @@ export default function Layout({ children, params }) {
             }}>
                 <RatingToggle />
             </Container> */}
-      <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
+      {/* <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
         <MainButton buttonName='매칭 피드백하기' />
-      </a>
+      </a> */}
     </Container>
   );
 }

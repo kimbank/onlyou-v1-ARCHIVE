@@ -44,6 +44,7 @@ async def get_agreement(request: Request, session: Session = Depends(db.session)
         for e in matchings.all():
             # print(e.MatchingPublic.deadline.year)
             d = dict(
+                id=e.User.id,
                 date_matching=e.MatchingHistory.date_agreement.isoformat().split('T')[0],
                 nickname=e.User.nickname,
                 job_type=e.User.residence,

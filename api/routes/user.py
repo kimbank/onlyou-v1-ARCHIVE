@@ -40,7 +40,7 @@ async def letter(u_id: int,
 
     u = User.get(id=target_id)
 
-    return JSONResponse(status_code=200, content=dict(letter=u.letter))
+    return JSONResponse(status_code=200, content=dict(letter=u.letter, nickname=u.nickname))
 
 
 @router.get('/detail/{u_id}')
@@ -70,7 +70,7 @@ async def detail(u_id: int,
         ue = UsersFemaleDataExtra.get(female_id=target_id)
 
     sel_info = []
-    ret = {}
+    ret = {'nickname': u.nickname}
     for key, val in me.__dict__.items():
         if val is not None and key.endswith('_w'):
             sel_info.append(key[:-2])
@@ -106,12 +106,13 @@ async def photo(request: Request, u_id: int):
         return JSONResponse(status_code=401, content=dict(msg='exp'))
 
     u = UserPhoto.filter(id=target_id).all()
+    un = User.get(id=target_id)
     print(target_id, u, type(u))
 
     if len(u) < 1:
-        return JSONResponse(status_code=404, content=dict(msg='사진이 없습니다.'))
+        return JSONResponse(status_code=404, content=dict(msg='사진이 없습니다.', nickname=un))
 
-    return u
+    return {'photos': u, 'nickname': un.nickname}
 
 
 async def user_result(user_info, session):

@@ -3,29 +3,114 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Button } from '@mui/material';
+import { MainSelectButton, SubSelectButton } from '@/components/Button';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Photo({ params }) {
+  const [data, setData] = useState([]);
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     axios.get(`/api/user/photo/${params.u_id}`)
       .then((res) => {
-        setPhotos(res.data);
+        setData(res.data);
+        setPhotos(res.data.photos);
       })
   }, [])
 
   return (
-    <Container disableGutters sx={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems:'center', justifyItems:'center' }}>
-      {
-        photos.map((photo, index) => {
-          return (
-            <img style={{borderRadius: '16px', width: '100%'}}
-              src={photo.url} key={index}/>
-          )
-        })
-      }
+    <Container
+      disableGutters
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "48px",
+      }}
+    >
+      <Typography className="heading2">
+        {data && data.nickname}님의
+        <br />
+        사진이에요
+      </Typography>
+
+      <Container
+        disableGutters
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: "24px",
+          border: 1,
+          padding: "24px",
+          gap: "48px",
+          borderColor: "#FFC999",
+        }}
+      >
+        <Container
+          disableGutters
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "row",
+            gap: "10px",
+          }}
+        >
+          <Link href={`/user/${params.u_id}/letter`}>
+            <Button sx={sx_default}>편지</Button>
+          </Link>
+          <Link href={`/user/${params.u_id}/detail`}>
+          <Button sx={sx_default}>상세</Button>
+          </Link>
+          <Button sx={sx_selected}>사진</Button>
+        </Container>
+        <Container disableGutters sx={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems:'center', justifyItems:'center' }}>
+          { photos &&
+            photos.map((photo, index) => {
+              return (
+                <img style={{borderRadius: '16px', width: '100%'}}
+                  src={photo.url} key={index}/>
+              )
+            })
+          }
+        </Container>
+
+
+        <Container disableGutters sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '8px',
+          marginTop: '24px',
+        }}>
+          <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
+          <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+        </Container>
+      </Container>
     </Container>
   );
+}
+
+
+const sx_default = {
+  borderRadius: '8px',
+  height: '35px',
+  width: '56px',
+  boxShadow: 'none',
+  backgroundColor: '#F7F4F2',
+  color: '#3C3B3A',
+  fontFamily: 'Pretendard-Semibold',
+  fontSize: '14px',
+  letterSpacing: '1.25px',
+}
+
+const sx_selected = {
+  borderRadius: '8px',
+  height: '35px',
+  width: '56px',
+  boxShadow: 'none',
+  backgroundColor: '#3C3B3A',
+  color: '#FFFFFF',
+  fontFamily: 'Pretendard-Semibold',
+  fontSize: '14px',
+  letterSpacing: '1.25px',
+  pointerEvents: 'none',
 }

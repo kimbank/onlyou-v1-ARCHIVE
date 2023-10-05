@@ -95,35 +95,6 @@ function AcceptItem({ setAcceptFinal }) {
         <MainSelectButton buttonName='수락하기' />
         <SubSelectButton buttonName='거절하기' />
       </Container>
-    {/* <Container
-      disableGutters
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "8px",
-      }}
-    >
-      <CheckedCheckbox
-        onClick={() => setShowModal(true)}
-        buttonName="수락하기"
-      />
-      <DefaultCheckbox buttonName="거절하기" />
-      <Modal clicked={showModal} setClicked={setShowModal}>
-        <Typography className="heading2" style={{ marginRight: "56px" }}>
-          정말로 선택하시겠어요?
-        </Typography>
-        <Typography className="basic" style={{ color: "#666563" }}>
-          한 번 선택하면 변경할 수 없습니다.
-        </Typography>
-        <MainButton
-          buttonName="선택하기"
-          onClick={() => {
-            setShowModal(false);
-            setAcceptFinal(true);
-          }}
-        />
-      </Modal>
-    </Container> */}
     </>
   );
 }
@@ -164,9 +135,9 @@ export default function Layout({ children, params }) {
           borderColor: "#FFC999",
         }}
       >
-        <ButtonGrop u_id={params.u_id} pathName={pathName} />
+        {/* <ButtonGrop u_id={params.u_id} pathName={pathName} /> */}
         {children}
-        <AcceptItem setAcceptFinal={setAcceptFinal} />
+        {/* <AcceptItem setAcceptFinal={setAcceptFinal} /> */}
       </Container>
       {/* <Container disableGutters sx={{
                 display: 'flex',
@@ -181,6 +152,8 @@ export default function Layout({ children, params }) {
     </Container>
   );
 }
+
+
 
 const sx_default = {
   borderRadius: '8px',

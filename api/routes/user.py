@@ -62,7 +62,7 @@ async def detail(u_id: int,
         me = UsersFemaleDataTarget.get(female_id=user_info.id)
         u = User.get(id=target_id)
         ud = UsersMaleData.get(male_id=target_id)
-        ue = UsersMaleDataExtra.get(fale_id=target_id)
+        ue = UsersMaleDataExtra.get(male_id=target_id)
     else:
         me = UsersMaleDataTarget.get(male_id=user_info.id)
         u = User.get(id=target_id)
@@ -148,9 +148,10 @@ async def public_validation(user_info, phase):
             due = mp.deadline
             target_id = mp.female_id
 
-        diff = due - datetime.now()
-        if diff.days > 0 or datetime.now() > due:
-            raise Exception
+        # Todo: 공개 시간 및 권한 관리 필요해 보임
+        # diff = due - datetime.now()
+        # if diff.days > 0 or datetime.now() > due:
+        #     raise Exception
 
     # 찾을 수 없으면 메인으로 리다이렉트 요청 메시지
     except:

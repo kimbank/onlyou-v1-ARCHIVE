@@ -42,14 +42,15 @@ async def get_agreement(request: Request, session: Session = Depends(db.session)
 
         targets = []
         for e in matchings.all():
-            print(e.MatchingPublic.deadline.year)
+            # print(e.MatchingPublic.deadline.year)
             d = dict(
                 date_matching=e.MatchingHistory.date_agreement.isoformat().split('T')[0],
                 nickname=e.User.nickname,
                 job_type=e.User.residence,
                 # education=e.User.education,
                 residence=e.User.residence,
-                birth_year=e.User.date_birth.year,
+                date_birth=f"{e.User.date_birth.year}년생",
+                kakao_id=e.User.kakao_id,
             )
             targets.append(d)
 

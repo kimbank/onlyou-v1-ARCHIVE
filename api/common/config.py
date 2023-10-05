@@ -18,6 +18,8 @@ class Config:
     TEST_MODE: bool = False
     DB_URL: str = environ.get("MYSQL_URL")
 
+    SMS: bool = True if environ.get("SMS") is "true" else False
+
 
 @dataclass
 class LocalConfig(Config):
@@ -28,8 +30,10 @@ class LocalConfig(Config):
 
 @dataclass
 class ProdConfig(Config):
+    DB_ECHO = False
+
     TRUSTED_HOSTS = ["*"]
-    ALLOW_SITE = ["*"]
+    ALLOW_SITE = ["https://only-you.co.kr"]
 
 
 @dataclass
@@ -46,6 +50,7 @@ def conf():
     :return:
     """
     config = dict(prod=ProdConfig, local=LocalConfig, test=TestConfig)
+    print('config =',environ.get("API_ENV", "local"))
     return config[environ.get("API_ENV", "local")]()
 
 

@@ -22,6 +22,8 @@ class UserSchema(BaseModel):
     information_before_meeting: Optional[int] = None
     letter: Optional[str] = None
 
+    tmp_job: Optional[str] = None
+
     class Config:
         orm_mode = True
         json_schema_extra = {

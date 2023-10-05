@@ -44,6 +44,9 @@ class User(Base, BaseMixin):
     kakao_id = Column(String(20, collation='ascii_general_ci'), default=None)
 
     letter = Column(TEXT)
+
+    tmp_job = Column(String(200, collation='utf8mb4_unicode_ci'), default=None)
+
     # 인증번호 외래키
     # auth_sens = relationship("AuthSens")
 

@@ -68,7 +68,8 @@ def create_app():
     # app.add_middleware(middleware_class=BaseHTTPMiddleware, dispatch=sql_tap)
 
     # 라우터 정의
-    app.include_router(index.router, tags=["헬스 체크 (정상 작동 확인)"])
+    if conf().DEBUG:
+        app.include_router(index.router, tags=["헬스 체크 (정상 작동 확인)"])
     app.include_router(login.router, tags=["로그인"], prefix="/api", dependencies=[Depends(API_KEY_HEADER)])
     app.include_router(signup.router, tags=["회원가입"], prefix="/api")
     # if conf().DEBUG:

@@ -30,6 +30,7 @@ async def get_agreement(request: Request, session: Session = Depends(db.session)
             matchings = (session.query(MatchingHistory, MatchingPublic, User)
                          .filter(MatchingHistory.female_id == user_info.id)
                          .outerjoin(User, User.id == MatchingHistory.male_id)
+                         .outerjoin(MatchingPublic, MatchingPublic.male_id == MatchingHistory.male_id)
                          .order_by(desc(MatchingHistory.phase))
                          )
         else:

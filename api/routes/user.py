@@ -171,7 +171,7 @@ async def public_validation(user_info, phase):
 
 def is_selectable(female, male, phase, my_gender):
     pm = MatchingPublic.get(female_id=female, male_id=male, phase=phase, status=1)
-    
+
     if not pm or pm.deadline < datetime.now():
         return False
 

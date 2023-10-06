@@ -66,7 +66,11 @@ export default function Letter({ params }) {
         </Container>
 
         <Typography className='basic'>
-          {data && data.letter}
+          { data && 
+            data.letter.split('\n').map((line, index) => {
+              return (<span key={index}>{line}<br/></span>)
+            })
+          }
         </Typography>
 
 

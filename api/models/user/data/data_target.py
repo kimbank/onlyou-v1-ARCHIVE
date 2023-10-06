@@ -46,7 +46,7 @@ class UpdateTargetSchema(BaseModel):
     athletic_life: Optional[int] = Field()
     athletic_life_w: Optional[int] = Field(description="0 ~ 5")
 
-    pet_animal: Optional[int] = Field()
+    pet_animal: Optional[str] = Field()
     pet_animal_w: Optional[int] = Field(description="0 ~ 5")
 
     religion: Optional[str] = Field()

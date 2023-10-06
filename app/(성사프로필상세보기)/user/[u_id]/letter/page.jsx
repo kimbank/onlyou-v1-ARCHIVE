@@ -10,11 +10,13 @@ import Link from 'next/link';
 
 export default function Letter({ params }) {
   const [data, setData] = useState(null);
+  const [selectable, setSelectable] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/user/letter/${params.u_id}`)
       .then((res) => {
         setData(res.data);
+        setSelectable(res.data.selectable);
       })
   }, [])
 
@@ -68,20 +70,24 @@ export default function Letter({ params }) {
         </Typography>
 
 
-        <Container disableGutters sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: '8px',
-          marginTop: '24px',
-        }}>
-          <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
-          <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+        { selectable === true &&
+          <Container disableGutters sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '8px',
+            marginTop: '24px',
+          }}>
+            <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
+            <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+          </Container>
+        }
         </Container>
-      </Container>
 
-      <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
-        <MainButton buttonName='매칭 피드백하기' />
-      </a>
+        { selectable === true &&
+        <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
+          <MainButton buttonName='매칭 피드백하기' />
+        </a>
+        }
     </Container>
   );
 }

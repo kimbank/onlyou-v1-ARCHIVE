@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Button } from '@mui/material';
-import { MainSelectButton, SubSelectButton } from '@/components/Button';
+import { MainSelectButton, SubSelectButton, MainButton } from '@/components/Button';
 import Link from 'next/link';
 import Image from 'next/image';
 
+
 export default function Photo({ params }) {
   const [data, setData] = useState([]);
+  const [selectable, setSelectable] = useState(false);
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
@@ -16,6 +18,7 @@ export default function Photo({ params }) {
       .then((res) => {
         setData(res.data);
         setPhotos(res.data.photos);
+        setSelectable(res.data.selectable);
       })
   }, [])
 
@@ -75,16 +78,24 @@ export default function Photo({ params }) {
         </Container>
 
 
-        <Container disableGutters sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: '8px',
-          marginTop: '24px',
-        }}>
-          <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
-          <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
-        </Container>
+        { selectable === true &&
+          <Container disableGutters sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '8px',
+            marginTop: '24px',
+          }}>
+            <MainSelectButton buttonName='수락하기' onClick={() => handleAccept()} />
+            <SubSelectButton buttonName='거절하기' onClick={() => handleReject()} />
+          </Container>
+        }
       </Container>
+
+      { selectable === true &&
+        <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
+          <MainButton buttonName='매칭 피드백하기' />
+        </a>
+      }
     </Container>
   );
 }

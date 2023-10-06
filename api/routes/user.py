@@ -16,6 +16,9 @@ from api.database.schema.user.users_female_data_target import UsersFemaleDataTar
 from api.database.schema.user.users_male_data_target import UsersMaleDataTarget
 from api.database.schema.user.users_photo import UserPhoto
 
+from api.models.user.data.data_extra import UpdateValueSchema, UpdateLifeStyleSchema, UpdatePersonalitySchema, \
+    UpdateDatingStyleSchema, UpdateAppearanceSchema, UpdateOtherSchema
+
 import api.utils.mapper as mapper
 from api.database.schema.matching.matching_public import MatchingPublic
 
@@ -39,8 +42,9 @@ async def letter(u_id: int,
         return JSONResponse(status_code=401, content=dict(msg='exp'))
 
     u = User.get(id=target_id)
+    selectable = is_selectable(user_info.id, target_id, request.state.phase, user_info.gender)
 
-    return JSONResponse(status_code=200, content=dict(letter=u.letter, nickname=u.nickname))
+    return JSONResponse(status_code=200, content=dict(letter=u.letter, nickname=u.nickname, selectable=selectable))
 
 
 @router.get('/detail/{u_id}')
@@ -52,13 +56,14 @@ async def detail(u_id: int,
         return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
 
     target_id = await public_validation(user_info, request.state.phase)
-    # print(target_id, type(target_id), u_id, type(u_id))
+    selectable = is_selectable(user_info.id, target_id, request.state.phase, user_info.gender)
+
     if target_id != u_id:
         return JSONResponse(status_code=401, content=dict(msg='exp'))
 
 
     # Todo: 이상형 정보를 수정하면서 모든 정보를 보는 취약점이 있음
-    if user_info.gender is 0:
+    if user_info.gender == 0:
         me = UsersFemaleDataTarget.get(female_id=user_info.id)
         u = User.get(id=target_id)
         ud = UsersMaleData.get(male_id=target_id)
@@ -70,27 +75,28 @@ async def detail(u_id: int,
         ue = UsersFemaleDataExtra.get(female_id=target_id)
 
     sel_info = []
-    ret = {'nickname': u.nickname}
+    ret = {}
     for key, val in me.__dict__.items():
         if val is not None and key.endswith('_w'):
             sel_info.append(key[:-2])
+    print(sel_info)
     for key in sel_info:
         if key in u.__dict__.keys():
             ret[key] = u.__dict__[key]
-            if key == 'date_birth': ret[key] = f"{ret[key].year}년생"
-            if key == 'residence': ret[key] = mapper.residence(ret[key])
+            ret[key] = mapper.decode_value_with_key(key, ret[key])
         if key in ud.__dict__.keys():
             ret[key] = ud.__dict__[key]
-            if key == 'job_type': ret[key] = mapper.job_type(ret[key])
-            if key == 'education': ret[key] = mapper.education(ret[key])
-            if key == 'divorce': ret[key] = mapper.divorce(ret[key])
+            if key == 'height':
+                ret[key] = str(ret[key]) + 'cm'
+            else:
+                ret[key] = mapper.decode_value_with_key(key, ret[key])
         elif key in ue.__dict__.keys():
             ret[key] = ue.__dict__[key]
-            if key == 'marriage_values': ret[key] = mapper.marriage_values(ret[key])
-            if key == 'religious_values': ret[key] = mapper.religious_values(ret[key])
+            ret[key] = mapper.decode_value_with_key(key, ret[key])
+    print(ret)
 
 
-    return ret
+    return {'nickname': u.nickname, 'selectable': selectable, 'data': ret}
 
 
 @router.get('/photo/{u_id}')
@@ -112,7 +118,9 @@ async def photo(request: Request, u_id: int):
     if len(u) < 1:
         return JSONResponse(status_code=404, content=dict(msg='사진이 없습니다.', nickname=un))
 
-    return {'photos': u, 'nickname': un.nickname}
+    selectable = is_selectable(user_info.id, target_id, request.state.phase, user_info.gender)
+
+    return {'photos': u, 'nickname': un.nickname, 'selectable': selectable}
 
 
 async def user_result(user_info, session):
@@ -140,7 +148,7 @@ async def user_result(user_info, session):
 
 async def public_validation(user_info, phase):
     try:
-        if user_info.gender is 0:
+        if user_info.gender == 0:
             mp = MatchingPublic.get(female_id=user_info.id, phase=phase, status=1)
             due = mp.deadline
             target_id = mp.male_id
@@ -159,3 +167,21 @@ async def public_validation(user_info, phase):
         return None
 
     return target_id
+
+
+def is_selectable(female, male, phase, my_gender):
+    pm = MatchingPublic.get(female_id=female, male_id=male, phase=phase, status=1)
+
+    if my_gender == 0:
+        if pm.f_choice != 0:
+            return False
+    else:
+        if pm.m_choice != 0:
+            return False
+
+    if not pm or pm.deadline < datetime.now():
+        return False
+    if pm is None:
+        return False
+
+    return True

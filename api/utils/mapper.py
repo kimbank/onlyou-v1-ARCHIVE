@@ -2,6 +2,9 @@
 ### 기본-가입정보 ###
 # users
 
+def date_birth(num):
+    return f"{num.year}년생"
+
 # 거주지
 def residence(num):
     mapping = ['서울 남부', '서울 서부', '서울 중부', '서울 북부', '서울 동부', '경기 북부', '경기 고양', '경기 서부', '경기 남부', '경기 동부', '인천']
@@ -67,7 +70,7 @@ def owned_car(num):
     return ret
 
 # 관심사 #
-def intersets(nums):
+def interests(nums):
     mapping = ['여행', '운동/스포츠', '책', '직무', '외국/언어', '영화/넷플릭스', '콘서트/공연/뮤지컬', '전시회', '재태크', '공예/만들기', '음악/악기', '댄스/무용',
                '봉사', '사교/인맥', '차/오토바이', '반려동물', '게임/오락', '사진/영상', '요리', '맛집/카페', '애니메이션']
 
@@ -76,6 +79,7 @@ def intersets(nums):
     try:
         for n in nums.split(','):
             ret.append(mapping[int(n)])
+        ret = ', '.join(ret)
     except:
         return None
 
@@ -126,17 +130,17 @@ def extrovert_or_introvert(num):
     mapping = ['매우 외향적', '외향적', '중립', '내향적', '매우 내향적']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
 
 # 직관/현실 #
-def intuitive_or_realistic(num):
+def intutive_or_realistic(num):
     mapping = ['매우 직관적', '직관적', '중립', '현실적', '매우 현실적']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
@@ -146,7 +150,7 @@ def emotional_or_rational(num):
     mapping = ['매우 감성적', '감성적', '중립', '이성적', '매우 이성적']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
@@ -156,17 +160,17 @@ def impromptu_or_planned(num):
     mapping = ['매우 즉흥적', '즉흥적', '중립', '계획적', '매우 계획적']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
 
 # 자기확신/신중
-def self_confidence_or_careful(num):
+def selfconfidence_or_careful(num):
     mapping = ['매우 자기확신', '자기확신', '중립', '신중', '매우 신중']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
@@ -312,7 +316,7 @@ def preffered_dating(num):
     return ret
 
 # 선호 연락 수단
-def preffered_contact(num):
+def preferred_contact_method(num):
     mapping = ['전화', '카톡']
     ret = ''
 
@@ -326,7 +330,7 @@ def attractiveness_level(num):
     mapping = ['매우 많음', '많음', '보통', '적음', '매우 적음']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
@@ -336,7 +340,7 @@ def jealousy_level(num):
     mapping = ['매우 많음', '많음', '보통', '적음', '매우 적음']
     ret = ''
 
-    try: ret = mapping[int(num)]
+    try: ret = mapping[int(num) + 2]
     except: return None
 
     return ret
@@ -408,5 +412,103 @@ def information_before_meeting(num):
 
     try: ret = mapping[int(num)]
     except: return None
+
+    return ret
+
+def decode_dict(data):
+    ret = []
+    for key, val in data.items():
+        ret.append(val)
+
+    return ret
+
+def decode_value_with_key(key, value):
+    ret = "?"
+
+    if key == "date_birth":
+        ret = date_birth(value)
+    elif key == "residence":
+        ret = residence(value)
+    elif key == "job_type":
+        ret = job_type(value)
+    elif key == "education":
+        ret = education(value)
+    elif key == "divorce":
+        ret = divorce(value)
+    elif key == "smoking_history":
+        ret = smoking_history(value)
+    elif key == "drinking_life":
+        ret = drinking_life(value)
+    elif key == "owned_car":
+        ret = owned_car(value)
+    elif key == "interests":
+        ret = interests(value)
+    elif key == "number_relationships":
+        ret = number_relationships(value)
+    elif key == "athletic_life":
+        ret = athletic_life(value)
+    elif key == "pet_animal":
+        ret = pet_animal(value)
+    elif key == "religion":
+        ret = religion(value)
+    elif key == "extrovert_or_introvert":
+        ret = extrovert_or_introvert(value)
+    elif key == "intutive_or_realistic":
+        ret = intutive_or_realistic(value)
+    elif key == "emotional_or_rational":
+        ret = emotional_or_rational(value)
+    elif key == "impromptu_or_planned":
+        ret = impromptu_or_planned(value)
+    elif key == "selfconfidence_or_careful":
+        ret = selfconfidence_or_careful(value)
+    elif key == "marriage_values":
+        ret = marriage_values(value)
+    elif key == "religious_values":
+        ret = religious_values(value)
+    elif key == "opposite_friends_values":
+        ret = opposite_friends_values(value)
+    elif key == "political_values":
+        ret = political_values(value)
+    elif key == "consumption_values":
+        ret = consumption_values(value)
+    elif key == "career_family_values":
+        ret = career_family_values(value)
+    elif key == "animal_image":
+        ret = animal_image(value)
+    elif key == "double_eyelid":
+        ret = double_eyelid(value)
+    elif key == "face_shape":
+        ret = face_shape(value)
+    elif key == "body_type":
+        ret = body_type(value)
+    elif key == "skin_tone":
+        ret = skin_tone(value)
+    elif key == "tattoo":
+        ret = tattoo(value)
+    elif key == "fashion_style":
+        ret = fashion_style(value)
+    elif key == "preffered_dating":
+        ret = preffered_dating(value)
+    elif key == "preferred_contact_method":
+        ret = preferred_contact_method(value)
+    elif key == "attractiveness_level":
+        ret = attractiveness_level(value)
+    elif key == "jealousy_level":
+        ret = jealousy_level(value)
+    elif key == "love_initiative":
+        ret = love_initiative(value)
+    elif key == "dating_frequency":
+        ret = dating_frequency(value)
+    elif key == "contact_style":
+        ret = contact_style(value)
+    elif key == "skinship":
+        ret = skinship(value)
+    elif key == "sns":
+        ret = sns(value)
+    elif key == "conflict_resolution_method":
+        ret = conflict_resolution_method(value)
+    elif key == "information_before_meeting":
+        ret = information_before_meeting(value)
+
 
     return ret

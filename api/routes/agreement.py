@@ -14,6 +14,8 @@ from api.database.schema.user.user import User
 from api.database.schema.matching.matching_public import MatchingPublic
 from api.database.schema.matching.matching_history import MatchingHistory
 
+import api.utils.mapper as mapper
+
 router = APIRouter(prefix="/agreement")
 
 
@@ -48,9 +50,9 @@ async def get_agreement(request: Request, session: Session = Depends(db.session)
                 id=e.User.id,
                 date_matching=e.MatchingHistory.date_agreement.isoformat().split('T')[0],
                 nickname=e.User.nickname,
-                job_type=e.User.residence,
+                job_type=mapper.job_type(e.User.residence),
                 # education=e.User.education,
-                residence=e.User.residence,
+                residence=mapper.residence(e.User.residence),
                 date_birth=f"{e.User.date_birth.year}년생",
                 kakao_id=e.User.kakao_id,
             )

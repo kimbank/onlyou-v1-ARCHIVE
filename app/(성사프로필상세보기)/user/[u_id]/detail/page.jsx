@@ -126,7 +126,7 @@ export default function Detial({ params }) {
         }
         </Container>
 
-        { selectable === true &&
+        { selectable === true || true &&
         <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
           <MainButton buttonName='매칭 피드백하기' />
         </a>

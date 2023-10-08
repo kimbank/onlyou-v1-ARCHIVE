@@ -1,52 +1,52 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
 class ScoreMToFSchema(BaseModel):
     female_id: int
     male_id: int
-    score_sum: Optional[int]
-    score_max: Optional[int]
-    date_birth: Optional[int]
-    residence: Optional[int]
-    job_type: Optional[int]
-    job_name: Optional[int]
-    height: Optional[int]
-    education: Optional[int]
-    divorce: Optional[int]
-    smoking_history: Optional[int]
-    drinking_life: Optional[int]
-    owned_car: Optional[int]
-    interests: Optional[int]
-    number_relationships: Optional[int]
-    athletic_life: Optional[int]
-    pet_animal: Optional[int]
-    religion: Optional[int]
-    extrovert_or_introvert: Optional[int]
-    intutive_or_realistic: Optional[int]
-    emotional_or_rational: Optional[int]
-    impromptu_or_planned: Optional[int]
-    selfconfidence_or_careful: Optional[int]
-    marriage_values: Optional[int]
-    religious_values: Optional[int]
-    opposite_friends_values: Optional[int]
-    political_values: Optional[int]
-    consumption_values: Optional[int]
-    career_family_values: Optional[int]
-    animal_image: Optional[int]
-    double_eyelid: Optional[int]
-    face_shape: Optional[int]
-    body_type: Optional[int]
-    skin_tone: Optional[int]
-    tattoo: Optional[int]
-    fashion_style: Optional[int]
-    preffered_dating: Optional[int]
-    preferred_contact_method: Optional[int]
-    attractiveness_level: Optional[int]
-    jealousy_level: Optional[int]
-    love_initiative: Optional[int]
-    dating_frequency: Optional[int]
-    contact_style: Optional[int]
-    skinship: Optional[int]
-    sns: Optional[int]
-    conflict_resolution_method: Optional[int]
+    score_sum: Optional[int] = None
+    score_max: Optional[int] = None
+    date_birth: Optional[int] = None
+    residence: Optional[int] = None
+    job_type: Optional[int] = None
+    job_name: Optional[int] = None
+    height: Optional[int] = None
+    education: Optional[int] = None
+    divorce: Optional[int] = None
+    smoking_history: Optional[int] = None
+    drinking_life: Optional[int] = None
+    owned_car: Optional[int] = None
+    interests: Optional[int] = None
+    number_relationships: Optional[int] = None
+    athletic_life: Optional[int] = None
+    pet_animal: Optional[int] = None
+    religion: Optional[int] = None
+    extrovert_or_introvert: Optional[int] = None
+    intutive_or_realistic: Optional[int] = None
+    emotional_or_rational: Optional[int] = None
+    impromptu_or_planned: Optional[int] = None
+    selfconfidence_or_careful: Optional[int] = None
+    marriage_values: Optional[int] = None
+    religious_values: Optional[int] = None
+    opposite_friends_values: Optional[int] = None
+    political_values: Optional[int] = None
+    consumption_values: Optional[int] = None
+    career_family_values: Optional[int] = None
+    animal_image: Optional[int] = None
+    double_eyelid: Optional[int] = None
+    face_shape: Optional[int] = None
+    body_type: Optional[int] = None
+    skin_tone: Optional[int] = None
+    tattoo: Optional[int] = None
+    fashion_style: Optional[int] = None
+    preffered_dating: Optional[int] = None
+    preferred_contact_method: Optional[int] = None
+    attractiveness_level: Optional[int] = None
+    jealousy_level: Optional[int] = None
+    love_initiative: Optional[int] = None
+    dating_frequency: Optional[int] = None
+    contact_style: Optional[int] = None
+    skinship: Optional[int] = None
+    sns: Optional[int] = None
+    conflict_resolution_method: Optional[int] = None

@@ -92,10 +92,18 @@ export default function Photo({ params }) {
       </Container>
 
       { selectable === true || true &&
-        <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
-          <MainButton buttonName='매칭 피드백하기' />
-        </a>
-      }
+        <span>
+          <Typography className='basic-gray' style={{padding:'8px', fontStyle:'italic'}}>
+            <strong>
+              이번 매칭 어떠셨나요?<br/>
+            </strong>
+            답변 내용을 바탕으로 다음 매칭을 개선해드리려 해요
+          </Typography>
+          <a href="https://g8h7y7g082m.typeform.com/to/htWbQxB7">
+            <MainButton buttonName='매칭 피드백하기' />
+          </a>
+        </span>
+        }
     </Container>
   );
 }

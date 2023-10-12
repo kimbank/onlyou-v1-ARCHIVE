@@ -9,7 +9,25 @@ from datetime import datetime
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-client = WebClient(token="xoxb-5301475984646-5866797928001-MGeFcgoU42Cfgaz8yHsxmmBC")
+from dotenv import load_dotenv
+from os import path, environ
+
+base_dir = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
+load_dotenv(path.join(base_dir, ".env"))
+
+
+################ ENVIRONMENT VARIABLES ################
+NCP_API_ACCESS_KEY = environ.get("NCP_API_ACCESS_KEY")
+NCP_API_SECRET_KEY = environ.get("NCP_API_SECRET_KEY")
+
+NCP_SENS_MOBILE_NUMBER = environ.get("NCP_SENS_MOBILE_NUMBER")
+NCP_SENS_URL_LOGIN = environ.get("NCP_SENS_URL_LOGIN")
+NCP_SENS_SERVICE_ID_LOGIN = environ.get("NCP_SENS_SERVICE_ID_LOGIN")
+
+SLACK_TOKEN_LOGIN = environ.get("SLACK_TOKEN_LOGIN")
+SLACK_CHANNEL_MATCHING_AGREEMENT = environ.get("SLACK_CHANNEL_MATCHING_AGREEMENT")
+client = WebClient(token=SLACK_TOKEN_LOGIN)
+########################################################
 
 
 msg = '''축하드립니다! 매칭이 성사되셨습니다.
@@ -36,12 +54,12 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
 
 
 def sens_sms(female, male):
-    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
+    url = NCP_SENS_URL_LOGIN
 
-    service_id = "ncp:sms:kr:316329234095:only_you_sms"
+    service_id = NCP_SENS_SERVICE_ID_LOGIN
 
-    access_key = "Yx6kQbwM43TXNprGMeIP"
-    secret_key = bytes("WKW2OXoTa0ltZbSPaJIuRoVjKQbfM0td10hV56dL", 'UTF-8')
+    access_key = NCP_API_ACCESS_KEY
+    secret_key = bytes(NCP_API_SECRET_KEY, 'UTF-8')
     method = "POST"
     uri = f"/sms/v2/services/{service_id}/messages"
     timestamp = str(int(time.time() * 1000))
@@ -50,7 +68,7 @@ def sens_sms(female, male):
         "type": "LMS",
         "contentType": "COMM",
         "countryCode": "82",
-        "from": "01052418394",
+        "from": NCP_SENS_MOBILE_NUMBER,
         "subject": "성사 안내",
         "content": "성사 안내 컨텐츠",
         "messages": [
@@ -117,7 +135,7 @@ def slack_chat_post(female, male, sens_result: dict):
 
     try:
         client.chat_postMessage(
-            channel="C05TWRW1SDN",
+            channel=SLACK_CHANNEL_MATCHING_AGREEMENT,
             blocks=blocks,
             attachments=attchements
         )

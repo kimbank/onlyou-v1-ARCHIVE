@@ -3,7 +3,18 @@ from datetime import datetime
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-client = WebClient(token="xoxb-5301475984646-5866797928001-MGeFcgoU42Cfgaz8yHsxmmBC")
+from dotenv import load_dotenv
+from os import path, environ
+
+base_dir = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
+load_dotenv(path.join(base_dir, ".env"))
+
+
+################ ENVIRONMENT VARIABLES ################
+SLACK_TOKEN_LOGIN = environ.get("SLACK_TOKEN_LOGIN")
+SLACK_CHANNEL_DORMANT = environ.get("SLACK_CHANNEL_DORMANT")
+client = WebClient(token=SLACK_TOKEN_LOGIN)
+########################################################
 
 
 def slack_chat_post(mobile_number, user_id, gender, nickname, dormant: bool):

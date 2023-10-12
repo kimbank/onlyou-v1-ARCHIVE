@@ -11,7 +11,25 @@ import random
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-client = WebClient(token="xoxb-5301475984646-5866797928001-MGeFcgoU42Cfgaz8yHsxmmBC")
+from dotenv import load_dotenv
+from os import path, environ
+
+base_dir = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
+load_dotenv(path.join(base_dir, ".env"))
+
+
+################ ENVIRONMENT VARIABLES ################
+NCP_API_ACCESS_KEY = environ.get("NCP_API_ACCESS_KEY")
+NCP_API_SECRET_KEY = environ.get("NCP_API_SECRET_KEY")
+
+NCP_SENS_MOBILE_NUMBER = environ.get("NCP_SENS_MOBILE_NUMBER")
+NCP_SENS_URL_LOGIN = environ.get("NCP_SENS_URL_LOGIN")
+NCP_SENS_SERVICE_ID_LOGIN = environ.get("NCP_SENS_SERVICE_ID_LOGIN")
+
+SLACK_TOKEN_LOGIN = environ.get("SLACK_TOKEN_LOGIN")
+SLACK_CHANNEL_LOGIN = environ.get("SLACK_CHANNEL_LOGIN")
+client = WebClient(token=SLACK_TOKEN_LOGIN)
+########################################################
 
 
 def make_signature(access_key, secret_key, method, uri, timestamp):
@@ -23,12 +41,12 @@ def make_signature(access_key, secret_key, method, uri, timestamp):
 
 
 def send_auth_code(mobile_number, auth_code):
-    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:316329234095:only_you_sms/messages"
+    url = NCP_SENS_URL_LOGIN
 
-    service_id = "ncp:sms:kr:316329234095:only_you_sms"
+    service_id = NCP_SENS_SERVICE_ID_LOGIN
 
-    access_key = "Yx6kQbwM43TXNprGMeIP"
-    secret_key = bytes("WKW2OXoTa0ltZbSPaJIuRoVjKQbfM0td10hV56dL", 'UTF-8')
+    access_key = NCP_API_ACCESS_KEY
+    secret_key = bytes(NCP_API_SECRET_KEY, 'UTF-8')
     method = "POST"
     uri = f"/sms/v2/services/{service_id}/messages"
     timestamp = str(int(time.time() * 1000))
@@ -37,7 +55,7 @@ def send_auth_code(mobile_number, auth_code):
         "type": "SMS",
         "contentType": "COMM",
         "countryCode": "82",
-        "from": "01052418394",
+        "from": NCP_SENS_MOBILE_NUMBER,
         "subject": "인증번호 발송 제목",
         "content": "인증번호 발송 컨텐츠",
         "messages": [
@@ -109,7 +127,7 @@ def slack_chat_post(mobile_number, auth_code, sens_result: dict):
 
     try:
         res = client.chat_postMessage(
-            channel="C05QPM5RPFZ",
+            channel=SLACK_CHANNEL_LOGIN,
             blocks=blocks,
             attachments=attchements
         )

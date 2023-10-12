@@ -157,7 +157,6 @@ export default function Home() {
           
           
           <Container disableGutters sx={{
-            marginTop: '80px',
             display: 'flex',
             flexDirection: 'column',
             gap: '64px'

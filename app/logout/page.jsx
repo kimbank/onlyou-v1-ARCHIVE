@@ -42,7 +42,7 @@ const theme = createTheme({
         <Header/>  
         {/* <GuestHeader /> */}
         {/* <ErrorModal /> */}
-        <Container sx={{ marginBottom: '80px', }}>
+        <Container disableGutters sx={{ padding: '64px 32px 0 32px', height: '100vh' }}>
   
   
           <Container disableGutters sx={{

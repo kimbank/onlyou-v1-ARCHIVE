@@ -73,14 +73,13 @@ const MyInfo = () => {
   if(!data) return <Error />;
 
   return (
-    <Container disableGutters sx={{marginBottom: '80px'}}>
+    <>
       <DangerNotification alertMessage={alertMessage} visible={visible} setVisible={setVisible} />
 
       <Container disableGutters sx={{
-        marginTop: '80px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px'
+        gap: '16px',
       }}> 
         <Typography className='heading2'>내 정보</Typography>
         {/*백엔드로 구현되는 부분인거 같아 오렌지색 박스 안의 부분은
@@ -181,7 +180,7 @@ const MyInfo = () => {
           <a href="https://g8h7y7g082m.typeform.com/to/BZedJjPX" className='heading7' style={{textDecoration: 'underline', color: 'rgba(178, 176, 174, 1)', marginTop: '0px', marginLeft: '14px'}}>회원 탈퇴</a>
         </Container>
       </Container>
-    </Container>
+    </>
   );
 }
 

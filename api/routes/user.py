@@ -28,6 +28,21 @@ from api.utils.token_validator import token_control
 router = APIRouter(prefix="/user")
 
 
+@router.get('/matching/{u_id}')
+async def matching(u_id: int, request: Request, session: Session = Depends(db.session)):
+    # Todo: 토큰 적합성 검사 미들웨어 리펙터링 필요함.
+    user_info = await token_control(request)
+    if not user_info:
+        return JSONResponse(status_code=401, content=dict(msg='권한이 없습니다.'))
+
+    target_id = await public_validation(user_info, request.state.phase)
+    if target_id != u_id:
+        return JSONResponse(status_code=401, content=dict(msg='exp'))
+    u = User.get(id=target_id)
+
+    return { 'nickname': u.nickname, }
+
+
 @router.get('/letter/{u_id}')
 async def letter(u_id: int,
                  request: Request, session: Session = Depends(db.session)):
